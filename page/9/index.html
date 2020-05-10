@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=en>
 <head>
-  <meta charset="utf-8">
-  
-
-  
-  <title>Strazzere</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta property="og:type" content="website">
 <meta property="og:title" content="Strazzere">
 <meta property="og:url" content="https://strazzere.com/blog/page/9/index.html">
 <meta property="og:site_name" content="Strazzere">
@@ -25,658 +24,391 @@
 <meta property="article:tag" content=" vulnerabilities">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@timstrazz">
-  
-    <link rel="alternate" href="/blog/atom.xml" title="Strazzere" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  
+    
+    
+        
+          
+              <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=16">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+    
+    <!-- title -->
+    <title>Strazzere</title>
+    <!-- styles -->
+    
 <link rel="stylesheet" href="/blog/css/style.css">
 
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/blog/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/blog/true" title="Strazzere" type="application/atom+xml" />
+    
 <meta name="generator" content="Hexo 4.2.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/blog/" id="logo">Strazzere</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/blog/" id="subtitle">... it all can be reversed</a>
-        </h2>
-      
+<body class="max-width mx-auto px3 ltr">
+    
+    <div class="content index py4">
+        
+          <header id="header">
+  <a href="/blog/">
+  
+    
+      <div id="logo" style="background-image: url(https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93);"></div>
+    
+  
+    <div id="title">
+      <h1>Strazzere</h1>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/blog/">Home</a>
-        
-          <a class="main-nav-link" href="/blog/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://strazzere.com/blog"></form>
-      </div>
-    </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/blog/">Home</a></li>
+       
+        <li><a href="/blog/about/">About</a></li>
+       
+        <li><a href="/blog/archives/">Writing</a></li>
+       
+        <li><a href="/blog/projects_url">Projects</a></li>
+      
+    </ul>
   </div>
 </header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-promising-result-for-injecting-code" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2008/11/promising-result-for-injecting-code/" class="article-date">
-  <time datetime="2008-11-21T01:08:24.000Z" itemprop="datePublished">2008-11-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>►<a class="article-category-link" href="/blog/categories/android/dex-bytecode/">dex bytecode</a>►<a class="article-category-link" href="/blog/categories/android/dex-bytecode/reverse-engineering/">reverse engineering</a>
-  </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
         
+        <section id="about">
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2008/11/promising-result-for-injecting-code/">Promising result for injecting code...</a>
-    </h1>
   
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>It’s coming along, but it doesn’t seem to be as easy as I’d have hoped. Sort of have a working example but I don’t want to release it until I can definitely identify what needs to be patched and why and other things like exactly by how much etc for things to be injected. Just a little output of some of my notes from the tests I’ve been running. Nothing to mind blowing but some notes incase someone is interested, slash incase I lose the piece of paper;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Things you must patch to successively inject code:</span><br><span class="line"></span><br><span class="line">Length of file in bytes (0x20)</span><br><span class="line">Absolute offet of string table (0x34)</span><br><span class="line">type of checksum? (0x38)</span><br><span class="line">number of fields in field table (0x44)</span><br><span class="line">Absolute offet to field table (0x48)</span><br><span class="line">number of methods in method table (0x4C)</span><br><span class="line">absolute offset of method table (0x50)</span><br><span class="line">another checksum? (0x54)</span><br><span class="line">absolute offset of class definition? (0x58)</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2008/11/promising-result-for-injecting-code/" data-id="ck8dqrf3d00qtojgj8ovjc43l" class="article-share-link">Share</a>
+    <p>
+      Find me on
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/dex/" rel="tag">dex</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/dex-code/" rel="tag">dex code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/file-format/" rel="tag">file format</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/inject-code/" rel="tag">inject code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/injection/" rel="tag">injection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/offset/" rel="tag">offset</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-injecting-code-into-dex-files" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2008/11/injecting-code-into-dex-files/" class="article-date">
-  <time datetime="2008-11-18T19:19:25.000Z" itemprop="datePublished">2008-11-18</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>►<a class="article-category-link" href="/blog/categories/android/coding/">coding</a>►<a class="article-category-link" href="/blog/categories/android/coding/dex-bytecode/">dex bytecode</a>►<a class="article-category-link" href="/blog/categories/android/coding/dex-bytecode/reverse-engineering/">reverse engineering</a>►<a class="article-category-link" href="/blog/categories/android/coding/dex-bytecode/reverse-engineering/secure-code/">secure code</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2008/11/injecting-code-into-dex-files/">Injecting code into DEX Files</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://173.230.150.16/blog/wp-content/uploads/2008/11/04_datainjection-300x200.jpg" alt="Injecting code plausible and possible!" title="Inject code"><br><em>Success!</em> It seems completely possible, though quiet a pain to inject new code into existing dex files. This doesn’t not appear like it would easily be done ON a device, though in the development setting it seems perfectly possible and completely do-able.</p>
-<p>I’m working on a nice proof-of-concept example to show, though I don’t think this is a “backdoor” to malware. Android has been set up well enough that to properly inject things it would require many things to be done, making it in my opinion extremely hard to do it on the fly on the device. I had to inject the code directly to the dex, resigned both the signature and hash makings for the file, then resign the whole package before reinstalling (after a complete uninstall since we don’t have the same keys as the original package) onto the device. This is a <em>long</em> way away from actually being able to do nasty things with it, which is clearly a good thing, since we don’t want that to happen. This <em>does</em> have practical uses of course, though it seems Google has done security rather well so that this process would most likely only be done by an actual developer for a user to <em>not</em> notice an injected file… Otherwise they would have to allow unknown sources, packages would complain about key, so on and so on…</p>
-<p>Hopefully more to come on this subject soon!</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2008/11/injecting-code-into-dex-files/" data-id="ck8dqrf2g00pdojgj0cbg7b53" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/dex-code/" rel="tag">dex code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/g1/" rel="tag">g1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/inject/" rel="tag">inject</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/inline/" rel="tag">inline</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/secure-code/" rel="tag">secure code</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-inlining-a-android-programming" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2008/11/inlining-a-android-programming/" class="article-date">
-  <time datetime="2008-11-17T21:22:41.000Z" itemprop="datePublished">2008-11-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>►<a class="article-category-link" href="/blog/categories/android/coding/">coding</a>►<a class="article-category-link" href="/blog/categories/android/coding/dex-bytecode/">dex bytecode</a>►<a class="article-category-link" href="/blog/categories/android/coding/dex-bytecode/reverse-engineering/">reverse engineering</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+          <a class="icon" target="_blank" rel="noopener" href="https://github.com/strazzere">
+            <i class="fab fa-github"></i><!--
+      ---></a><!--
+    ---><!--
+    --->, 
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2008/11/inlining-a-android-programming/">Inlining an Android programming?</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <p>Been doing some experimentation with some extremely interesting results. Looks like inlining a program is possible, though it does get a little messy… I’ve been doing mostly everything by hand and guessing - but it looks like I might be able to write up a program to do it for me. I don’t have a whole lot of time right now as I’m time crunched with some exams, so I can’t do into explicit detail, though if you understand the DEX file system and the Android OS it’s rather similar to injecting in to normal java vm’s. This process is well described <a href="http://xantorohara.blogspot.com/2007/09/java-code-injection-via-winapis.html" target="_blank" rel="noopener">here</a>.</p>
-<p>Hopefully I’ll have some time later to post to tests and results of what I’ve been doing and how it’s being done.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2008/11/inlining-a-android-programming/" data-id="ck8dqrf2k00phojgjax21351o" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/dalvik/" rel="tag">dalvik</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/dex-code/" rel="tag">dex code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/g1/" rel="tag">g1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/injection/" rel="tag">injection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/inline/" rel="tag">inline</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-something-to-chuckle-about" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2008/11/something-to-chuckle-about/" class="article-date">
-  <time datetime="2008-11-13T23:35:31.000Z" itemprop="datePublished">2008-11-13</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>►<a class="article-category-link" href="/blog/categories/android/coding/">coding</a>►<a class="article-category-link" href="/blog/categories/android/coding/random/">random</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2008/11/something-to-chuckle-about/">Something to chuckle about...</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Ok so I’m scouring the internet using my vast knowledge of googling and I come stumbling across a well… Quiet hilarious web site that has actual useful stuff related to the Android system. It’s a double-edged sword too, because the code actually works <em>and</em> it was funny - you know, in an immature way of course!<br>I guess I’ll just have to throw it all out there and let you see it for yourself, the base of the project is located here: <a href="http://code.google.com/p/android-for-gods/" target="_blank" rel="noopener">http://code.google.com/p/android-for-gods/</a>. Yes, that’s right, Android…. FOR GODS! Yet, such a fitting title to let our mear human minds grasp what this project is about;</p>
-<blockquote>
-<p>android-for-gods Software that destroys mere mortals. Go suck a lemon, you <a href="http://en.wikipedia.org/wiki/Plebeian#Modern_usage" target="_blank" rel="noopener">pleb</a>.</p>
-</blockquote>
-<p>Yes, it did actually include a link to wikipedia for the meaning of “pleb” I did not add that myself. Even if you didn’t know <em>what</em> android was or even that this is open source, you <em>need</em> to buy it for the tag line alone… Me? I’ll take three already!</p>
-<p>What is this project you ask? Let me use the creators own words to describe it:</p>
-<blockquote>
-<p><strong>Native Tongue</strong> Take a bed full of rambunctious, naked wet sorority girls and add several pints of Guinness and you get “Android for Gods.” It marks the most important event in humanity after the second coming of Christ and before the approach of a technological singularity. We bring a new, young, fresh, hip flavor to the otherwise old, saggy, wrinkled, smelly, disease-ridden mobile phone world ruled by BREW and Windows Mobile tyrants. We aim to design the most fun and attractive mobile software ever that brings girl’s panties to their knees and saves puppies from euthanasia. Aimed at smart software reuse and intuitive user interface design, “Android for Gods” will leave a stain on your dress that you will not soon be able to wash out. Oh yeah, and it will run on Android OS too. Bitch.</p>
-</blockquote>
-<p>You had me at panties… Wait, no the saving puppies… Wait, no - you had me at panties. But what does all this mean?! Can’t we get some translation for this? Oh, sweet - they even provided that right below it…</p>
-<blockquote>
-<p><strong>Translation</strong> “Android for Gods” is an experimental project started for two main reasons: (1) Learn the capabilities of the Android platform (2) Give something back to the world. The world is tired of unresponsive proprietary software that runs on expensive phones, we hope to make a difference.</p>
-</blockquote>
-<p>Some of the true gold comes into play on a few of the examples that the authors have brilliantly created. It has useful information and it can argueably be the best commented code I’ve ever seen;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public void onReceiveIntent(Context context, Intent intent) &#123;</span><br><span class="line">        Log.i(&quot;SMS IR&quot;, &quot;We got a goddamn SMS of type:&quot;);</span><br><span class="line">        Log.i(&quot;SMS IR&quot;, intent.getAction().toString());</span><br><span class="line">        if (intent.getAction().equals(ACTION) ) &#123;</span><br><span class="line">                Log.i(&quot;SMS IR&quot;, &quot;YUP, it&#39;s a fucking SMS&quot;);</span><br><span class="line">                Log.i(&quot;SMS IR&quot;, &quot;Let&#39;s screw around with it&quot;);</span><br><span class="line">                SmsMessage[] messages &#x3D;</span><br><span class="line">                        Telephony.Sms.Intents.getMessagesFromIntent(intent);</span><br><span class="line">                for(SmsMessage currentMessage : messages) &#123;</span><br><span class="line">                        Log.i(&quot;SMS IR&quot;, &quot;This puppy is from:&quot;);</span><br><span class="line">                        Log.i(&quot;SMS IR&quot;, currentMessage.getDisplayOriginatingAddress());</span><br><span class="line">                        Log.i(&quot;SMS IR&quot;, &quot;And it says:&quot;);</span><br><span class="line">                        Log.i(&quot;SMS IR&quot;, currentMessage.getDisplayMessageBody());</span><br><span class="line">                &#125;</span><br><span class="line">                Log.i(&quot;SMS IR&quot;,</span><br><span class="line">                                &quot;We&#39;re done now, quit sending messages to yourself, loser.&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Or the equally creative;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">TextView tv &#x3D; new TextView(this);</span><br><span class="line">&#x2F;&#x2F; Here we can change the text of the TextView to</span><br><span class="line">&#x2F;&#x2F; something that hits rooster&#39;s character spot on.</span><br><span class="line">tv.setText(&quot;jcmb loves men&quot;);</span><br><span class="line">&#x2F;&#x2F; Now let&#39;s get get our toaster from out of the closet,</span><br><span class="line">&#x2F;&#x2F; just like rooster&#39;s sexuality.</span><br><span class="line">Toast toast &#x3D; new Toast(this);</span><br><span class="line">&#x2F;&#x2F; Lets push some rye into that bad boy, just like</span><br><span class="line">&#x2F;&#x2F; when rooster went to county and met Bubbha</span><br><span class="line">toast.setView(tv);</span><br><span class="line">&#x2F;&#x2F; We don&#39;t want that toast getting burnt, set it for</span><br><span class="line">&#x2F;&#x2F; an appropriate amount of time.</span><br><span class="line">toast.setDuration(Toast.LENGTH_LONG);</span><br><span class="line">&#x2F;&#x2F; Pop it out before it burns!</span><br><span class="line">toast.show();</span><br></pre></td></tr></table></figure>
-
-<p>Lastly, I’d like to close this entry in tribute to the authors by using a quote from step 5, of the LogHowTo. Hopefully this brightened the day a little bit, and added a little humor to those android developers who might find this code via google.</p>
-<blockquote>
-<p>5. You’re welcome, bitch.</p>
-</blockquote>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2008/11/something-to-chuckle-about/" data-id="ck8dqrf3t00s1ojgjcyjpdvs0" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android-for-gods/" rel="tag">android-for-gods</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/code/" rel="tag">code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/comments/" rel="tag">comments</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/humor/" rel="tag">humor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/slow-news/" rel="tag">slow-news</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-virus-protection-for-the-g1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2008/11/virus-protection-for-the-g1/" class="article-date">
-  <time datetime="2008-11-08T05:05:53.000Z" itemprop="datePublished">2008-11-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+          <a class="icon" target="_blank" rel="noopener" href="https://twitter.com/timstrazz">
+            <i class="fab fa-twitter"></i><!--
+      ---></a><!--
+    ---><!--
+    --->, 
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2008/11/virus-protection-for-the-g1/">Virus protection for the G1?!</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://173.230.150.16/blog/wp-content/uploads/2008/11/g1-virus-300x251.jpg" alt="No... Not yet - and probably not for a while..." title="G1-Virus?"><br>Wait, what? There hasn’t even been a virus or malicious file (publicly) released yet, and someone has already started selling anti-virus for the Android OS?! I had to see this one for myself…</p>
-<p><em>…SMobile’s of security engineers immediately went to work to create security solution designed specifically for the platform. SMobile Systems has announced its standard security offering, called SecurityShield(tm) – an integrated application that includes anti-virus, anti-spam and firewall protection– is up and running on the Android operating system.</em></p>
-<p><em>“We believe that the launch of Android powered phones will usher in a period when the use of smartphones will skyrocket,” said Rick Roscitt, chairman and chief executive officer, SMobile Systems. “As more consumers in the U.S. begin using their mobile devices as mini-computers for surfing the web and downloading third-party applications, mobile security becomes of paramount importance. Without security, millions of people could be at risk for hackers, spammers and others intent on stealing crucial personal, financial and even health information from their new Google-powered phones.”</em></p>
-<p><em>The company plans on adapting the remainder of their applications to the Android platform in the coming weeks and months. Additionally, SMobile plans on creating new security products specifically tailored to Android, including an advanced application level firewall and system monitor. Currently, the Android platform does not allow the user to decide whether an application can make phones calls, send text or multi-media messages or make connections to the Internet during normal device use. This means that a virus can pose as an application and do things like dial phone numbers, send text messages and other functions that can cost the user money and leave their highly personal information vulnerable. The new technologies under development at SMobile will protect users against these new threats.</em></p>
-<p><em>“SMobile believes that the Linux-based operating system will quickly enable hackers to explore and eventually exploit any security holes in the core Google software as well as third party software, allowing phishers, spammers, and others to look for ways to target user’s information for ill intent,” said George Tuvell, chief technology officer, SMobile Systems. “We have years of experience porting our applications into new mobile operating systems and developing the best mobile security products on the market. As leaders in this industry it is our responsibility to rapidly meet new market demands and respond to new market threats.”</em></p>
-<p>Wow, sound great doesn’t it? Yea with a virus definition file like the following - why <em>wouldn’t</em> you want to buy it?</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cabir.A(drs)&#x3D;886f1f10123a001019040010e5f79547e6ad0100bd00\*6f0064007500630074004900440054003200200052005300330041005300789c Cabir.D(sis)&#x3D;9F883401F018A82D21F55309A96095D59069D3E4E76B51190E877B08F1852686 Cabir.H(Velasco)&#x3D;49FF281C6946221C00F0DEFE00980001000903B030BC02BC0847000010B583B0 Cabir.I&#x3D;30B581B0041C012100F0C8FD6D46201C00F09CFC011C281C00F0ECF9FFF7D4FD Cabir.dropper(sis)&#x3D;D0B63D5C8FB25E6F9332EE07691FF25685355E3F950BEC03377ADBC291BA5AD1 Cabir.gen(app)&#x3D;440400EB0600A0E10410A0E10D20A0E1200500EB70009FE5420400EB0500A0E1 Cabire.E(drs)&#x3D;006a020000886f1f1000\*5c00760065006c006100730063006f005c006d006100720063006f0073002e00\*789ce3616067606160606074d890c5c2c00384000ca2018f Caribe.C(drs)&#x3D;33645d2e444c4c0041564b4f4e5b31303030353663365d2e444c4c004241464c5b31303030336130665d2e44\*336433665d2e444c4c0045555345525b31303030333965355d2e444c4c0049524f4245585b31303030336435 Caribe.gen.app(fb4)&#x3D;081394e5042084e2da0500eb0b0000ea0330a0e3fc3284e5fc3294e5020053e3 Caribe.gen.sis(fb4)&#x3D;0930a0e30230cce730319fe50410a0e30310cce728219fe50130a0e30230cce7 Caribe.sis(drs)&#x3D;72006900620065002e0072007300630021003a005c00730079007300740065006d005c0061007000700073005c006300610072006900620065005c006300610072006900620065002e0072007300630053006500720069006500730036003000500072006f0064007500630074004900440063006100720069006200650079 CommWarrior(sis)&#x3D;886F1F10000000000000000022000000B601000016000000D801000063006F00 CommWarrior.A&#x3D;04308DE2AC0E00EB04109DE594209FE50030D2E50120D2E5023483E1030051E1 CommWarrior.B&#x3D;04308DE5043080E50410A0E110209FE5490D00EB000050E30200000A0200A0E3 Dampig.A&#x3D;360031003000789CED5B0D7854C5B99EFD49B2C6054E20C00A51168834B511F7 Drever.A(sis)&#x3D;4FA6591A61856662B3CD35BDDC2696771400FBED702CEFFBCC3B21D8616AC161 Drever.A(mdl)&#x3D;08408DE50130A0E30C308DE50500A0E130109FE530209FE5023AA0E37E0000EB Drever.A(mdl)&#x3D;68D08DE21040BDE81EFF2FE130402DE912DD4DE204D04DE218008DE274109FE5 Drever.A(sis)&#x3D;BC27A009EBA91DE17655E8B921F30B2DB7603F07849177ACA983EA39E45C445D Drever.B(mdl)&#x3D;1EFF2FE130402DE910D04DE20400A0E3930000EB005050E254309F1500308515 Drever.B(sis)&#x3D;DB845142CF886EEE3EDFFB314361F0EF1A0543977F512A1E79AD98D7572AD612 Drever.C(mdl)&#x3D;1040BDE81EFF2FE130402DE950D04DE20040A0E1D40300EB0030A0E300308DE5 Drever.C(sis)&#x3D;F582DA17F15822A382A8537426C13BE4B3DBF7A1F39F44935A6CD9398A1BE930 Eicar-Test-Signature&#x3D;4f2150254041505b345c505a58353428505e2937434329377d2445494341522d5354414e4441 dummy\_voip\_drs&#x3D;4dda1f10123a001019040010d40a38ff1d890100040001000000000021000000c8000000010000000100000000000000</span><br></pre></td></tr></table></figure>
-<p>Looks great doesn’t it? Twenty-five viruses, wait no, twenty-three viruses and two dummy files can be detected. That’s a great service I’d love to pay money for. Now - I’m <em>sure</em> they are going to expand they’re database to include more files but serious, they are charging for this already?! Not only do they have a weak definition file, but if you bother to google any of the names, they are all Symbian viruses. So unless your using your Android phone to download and store files for you Symbian phone, why would you <em>need</em> this application?</p>
-<p>I took a deep look into their files… The code looks pretty solid, it does what it should and what it is allowed too. The problem is, that even <em>if</em> a virus came onto the AndroidOS system - this scanner will most likely <em>never</em> find it. This program is not given above average access to the system, meaning it can only see what other applications see. So mostly files that do not matter this program can scan, if a virus where to use an exploit and gain high privileges then this program would be useless even if it did have good heuristics or definitions. It’s a nice try guys, and you look like you have one of the best registration schemes yet, but I really don’t think $9.99 for a license is worth it. Also note that the sales pitch claims to protect you from over “400 instances and varients of mobile malware” - what a crock of lies that is… Sounds to me like SMobile has been looking to produce some scare-ware and took notes from FSecure or McAfee.</p>
-<p><em>SMobile VirusGuard for Android is the first antivirus application available to protect Google’s revolutionary new mobile device operating system. VirusGuard provides users with protection against over 400 instances and variants of mobile malware. These viruses, worms and trojans can infect and cross-over between mobile devices via the memory card, web-browser and by the installation of open source applications.</em><br><em>VirusGuard provides users with the ability to scan memory cards and mobile devices to ensure files are not infected with malware. The on-demand scanning ability allows the user to scan selected files and folders to ensure the device and memory card are clean and protected. The update capability ensures that Android devices possesses the latest antivirus signatures and as Android malware grows, VirusGuard for Android users can rely on SMobile to detect new viruses, trojans and worms and to provide users with timely virus signature updates.</em><br><em>To easily install SMobile VirusGuard for Android, it is recommended that the installation file be downloaded from <a href="https://hosted.smobilesystems.com/smobile/downloads/SMobileAV.apk" target="_blank" rel="noopener">https://hosted.smobilesystems.com/smobile/downloads/SMobileAV.apk</a> .</em><br><em>To purchase the license key to activate the product, simply purchase the product via the shopping cart feature of this website and the key will be sent to you via e-mail. Complete installation and usage instructions can be found at:</em></p>
-<p><em><a href="https://hosted.smobilesystems.com/main/docs/cons/SMobileAV\_G1\_UserGuide.pdf" target="_blank" rel="noopener">https://hosted.smobilesystems.com/main/docs/cons/SMobileAV\_G1\_UserGuide.pdf</a></em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2008/11/virus-protection-for-the-g1/" data-id="ck8dqrf4e00tpojgjgg1zhjql" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/anti-virus/" rel="tag">anti-virus</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/g1/" rel="tag">g1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/hot-air/" rel="tag">hot air</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/scare-ware/" rel="tag">scare-ware</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/smobile/" rel="tag">smobile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/useless/" rel="tag">useless</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/viruses/" rel="tag">viruses</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-current-protection-schemes-for-g1-applications" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2008/11/current-protection-schemes-for-g1-applications/" class="article-date">
-  <time datetime="2008-11-08T01:07:41.000Z" itemprop="datePublished">2008-11-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>►<a class="article-category-link" href="/blog/categories/android/reverse-engineering/">reverse engineering</a>►<a class="article-category-link" href="/blog/categories/android/reverse-engineering/secure-code/">secure code</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2008/11/current-protection-schemes-for-g1-applications/">Current protection schemes for G1 applications</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://173.230.150.16/blog/wp-content/uploads/2008/11/broken-lock.jpg" alt="" title="broken-lock"> A quick round up of protection schemes I’ve seen thus far in Android (G1 specifically) applications;</p>
-<ul>
-<li>Name/Serial combination - FireWallet, Googhelper etc.</li>
-<li>Expiration Dates - Texas Hold Em Beta, Mileage Ledger, etc.</li>
-<li>Registration Codes - Golf Tracks, etc.</li>
-<li>Online Activation Code - IMPlus</li>
-<li>“Lite” Version - AndSudoku, etc.</li>
-</ul>
-<p>I’ve been looking into each and every one, trying to see how each was implemented and used. All but the bottom two, online activation and “lite” versions seem to have been broken thus far. My guess is that the online activation will be broken also, though it will take more time than the rest.</p>
-<p>So, your a developer and you want to secure your product? I’d say the <em>best</em> way to protect your program and maintain a cost efficient method would be a <em>good</em> name and serial protection. As a malicious user cannot currently debug you program with normal tools like one might use IDA for the Windows Mobile platform, so this is an advantage for you. Deadlistings are pure dumps of the op codes, though thanks to the dexdump tool provided by google they have some hints as to what the op codes mean. This doesn’t resolve to a very easy method of tracing a program and can be extremely difficult to decode an algorithm. Judging by the releases of the cracks and keygens for current Android programs, a good algorithm is hard to break. Googhelper is a good example of this, thus it has a crack released for this. The good thing for these developers is that a new release or update will make the crack useless since a key generator was not created. Firewallet does not seem to be so lucky as it has been keygenned successfully due to a weak algorithm. This still earns my vote as the <em>best</em> solution to the problem, it isn’t very intrusive to the user and can offer a relatively high form of security for the developer. The developer <em>must</em> put the time into making a <em>good</em> method of checking keys and write their code securely… You <em>should not</em> depend the “security” of people being disallowed to access your dex files, as we’ve seen this isn’t 100% with the G1 root work around.<br>On a quick side note - above I’ve listed “registration codes” which are often the same as the above, though are not tied to any specific name. I’m not going to go in depth about them as no developer has seemed to make one yet. Yes, I have a application listed next to it - that isn’t a mistake. Maybe I’m just informing you that it isn’t checking codes, and possibly just a static variable. This <em>obviously</em> would not be a secure method if they are doing that…<br>The next type of protection scheme I would like to talk about is expiration dates. This seems to be popular right now see that all applications must be listed as free. So developers have been assigning “expiration dates” on their beta products or their fully featured products so that people will have to buy them once the ability to do some comes out. This <em>seems</em> like a rather good idea, however it has easily been cracked and will remain to be that way. Essentially local variables are stored in most of the programs with dates that are being checked to the calenders current dates. Or a database is written to with the data of first execution and then checked. These are simple and minor patches to work around. The method could be fairly useful, however it must be implemented in the correct way. This is again where I restate my mantra, write secure code! Don’t rely on assuming people won’t look for weak links - they <em>will</em> always find them. Hopefully this doesn’t affect many of the products already released, though unless they are release with many new features they seem to have released a full-functional product with a minor hindrance of an expiration date.<br>One of the last schemes and probably the best used one thus far, proven by having yet to be cracked, is online activation codes. This is being used currently by IMPlus by shape-services. Essentially they tie a registration key to a person and/or device and allow them to enter it to register. This sends a signal to their website asking them if it’s valid or not, and will return a response. This allows them to keep track of who is using their product and most likely provides them with analytics for themselves too. They seem to have interweave this process very well into the program so it would be seemingly hard to patch. It would be impossible to create a key generator for this program since it’s being check server side. So one <em>could</em> theoretically generate a correct serial, however the serial will check it to their database and realize that it doesn’t exist or belongs to someone else. This is similar to cd-key checking of games, and it works rather well. This method is <em>not</em> bulletproof though. As you see their products on other platforms have been broken, so I’m sure it is only a matter of time before this one is. A downside to this type of protection scheme is that your burdened with running the server all the time. If it goes down? Well sorry purchasing customers, you can’t use your product right now! So you will forever need to run the service and be paying expenses for running it also. Though, bravo for withstanding the attacks I’m sure your getting from the scene teams in trying to crack your application. Shape-services undoubtedly has very knowledgeable and skill coders who practice good methods of writing secure code.<br>The very last type of protection scheme is by far the most bulletproof, however it comes with many downsides. By providing “lite” versions of your software you essentially cripple your software and often literally rip-out the functionality of some parts. This is often used in games which are listed as demos which only include level one of the game, etc. While this does work, in a sense, it is essentially uncrackable and unkeygennable… Though customers just do not like this, take a look at reviews and people essentially just don’t like it. <em>“Why do I only have one level!?”, “Why would I pay for this garbage?!”</em> To me at least, is just does not seem like a good model for selling a program. I understand the idea of it, but it doesn’t seem to normally work out well. Either people get sick of the game on the first level or don’t get enough of the game to get hooked. This leaves this with either a bad taste in their mouth or a sense of “I could live without that”. Honestly, how many games have to played that are captivating and challenging in the first level?<br>To summarize, nothing takes the cake like writing secure code, no matter which method of protection you choose. Name and serials to me, always seem like the most cost efficient and effective method to protecting applications, as long as they are done correctly and securely.<br>Also, later today I should be finished with the PatchTest application I posted exactly a week ago, so hopefully some other people have gotten a chance to take a look at it. So, until then… Write more secure code!</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2008/11/current-protection-schemes-for-g1-applications/" data-id="ck8dqreya001hojgj2e8ug4ub" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android-market/" rel="tag">android market</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/cracks/" rel="tag">cracks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/expiration-dates/" rel="tag">expiration dates</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/keygen/" rel="tag">keygen</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/protection-schemes/" rel="tag">protection schemes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/registration/" rel="tag">registration</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/secure-code/" rel="tag">secure code</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-more-backdoors-for-root-on-the-g1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2008/11/more-backdoors-for-root-on-the-g1/" class="article-date">
-  <time datetime="2008-11-06T22:15:42.000Z" itemprop="datePublished">2008-11-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>►<a class="article-category-link" href="/blog/categories/android/reverse-engineering/">reverse engineering</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+          <a class="icon" target="_blank" rel="noopener" href="https://www.linkedin.com/in/timstrazzere">
+            <i class="fab fa-linkedin"></i><!--
+      ---></a><!--
+    ---><!--
+    ---> and 
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2008/11/more-backdoors-for-root-on-the-g1/">More backdoors for root on the G1?</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <p>After a bit of thinking yesterday and playing around with the recent root access (thanks SplasPood for the idea!) - I got to thinking. This allows us to have access to the /data directory, so applications downloaded from the Android Market are NOT fully safe. Applications that developers release, I’d warn them to <em>assume</em> people can get at your dalvik-executable file (dex); this means you can’t hide behind the hardware and assume it will protect you, you <em>should</em> be attempting to write secure code… Though you should have been trying to do that before also!</p>
-<p>As of this moment it would appear that either TEAM RESURRECTiON has their own method of dumping files, or they recreated the same method as SplasPood without releasing it. I’m not 100% sure as I have not been able to contact them for comment on this. The only reason I both mentioning this is judging by their release dates for some of their cracks and keygen. A few of them appear to be PRIOR to the release of the “how to root the G1” posts. It currently appears that they have cracked and keygenned all applications available on the market with the exception of IM+. Though, IM+ seems to be a big package in comparison to the other programs released as shareware or trials thus far. So maybe there are more unreleased ways to gain root, which RES might be using to dump the programs? Only they know I’m sure, though I’m not sure they would tell us what it is for fear of it being patched…</p>
-<p>The recent gaining of root access, which gives you the ability to dump whole packages of files is kind of scary. When the Android Market matures some more, and people sell their programs, is Google going to provide some method of locking the program to the phone? Or will we be able to dump the program of the phone and install it on another if another root (assuming this one gets fixed, which is should) is found at that time. Or will developers have to rely on their own writing of registration methods for the purchasing of the program… Hmm… This should should be interesting!</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2008/11/more-backdoors-for-root-on-the-g1/" data-id="ck8dqrf3200pyojgj2w8vdjjj" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/TEAM-RESURRECTiON/" rel="tag">TEAM RESURRECTiON</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android-market/" rel="tag">android market</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/apk/" rel="tag">apk</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/cracks/" rel="tag">cracks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/developers/" rel="tag">developers</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/dex/" rel="tag">dex</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/keygen/" rel="tag">keygen</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/security/" rel="tag">security</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-root-on-g1-uh-oh" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2008/11/root-on-g1-uh-oh/" class="article-date">
-  <time datetime="2008-11-06T00:30:01.000Z" itemprop="datePublished">2008-11-05</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>►<a class="article-category-link" href="/blog/categories/android/reverse-engineering/">reverse engineering</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2008/11/root-on-g1-uh-oh/">root on G1? uh oh...</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Well it didn’t take long - but root has been gained on the G1 hardware! It’s actually a suprisingly simple solution, though it will most likely be fixed on the next update release. For archiving purposes I’ll post the method below;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">First, a warning. Root is hidden from you for a reason. Do not attempt this if you a: are not a linux guru already or b: value your G1</span><br><span class="line">Obtaining root gives you power to do stuff you probably shouldnt do without the safety of your phone telling you NO!!</span><br><span class="line"></span><br><span class="line">That said, lets get started!</span><br><span class="line">1: download pterminal http:&#x2F;&#x2F;android-dls.com&#x2F;files&#x2F;src.com.poidio.terminal.apk and run it</span><br><span class="line">2: start the telnetd service (“cd &#x2F;system&#x2F;bin” then “telnetd”</span><br><span class="line">3: telnet into the device (if you don’t know, do not try this)</span><br><span class="line"></span><br><span class="line">Your job, to find out how to make this permanent (well, how to get it on the device itself, or how to get it from the adb shell) and find out how this helps us flash custom (edited, unsigned) updates.</span><br><span class="line"></span><br><span class="line">Also keep in mind, your next OTA update might disable this, so if you are testing, might want to deny the update.</span><br><span class="line"></span><br><span class="line">Original idea from (we think): SplasPood</span><br><span class="line">Original thread: http:&#x2F;&#x2F;forum.xda-developers.com&#x2F;showthread.php?t&#x3D;441081</span><br><span class="line"></span><br><span class="line">Digg this story!!: http:&#x2F;&#x2F;digg.com&#x2F;gadgets&#x2F;Tmo_G1_rooted</span><br></pre></td></tr></table></figure>
-
-<p>Source: <a href="http://android-dls.com.nyud.net/forum/index.php?f=15&t=151&rb_v=viewtopic" target="_blank" rel="noopener">http://android-dls.com.nyud.net/forum/index.php?f=15&amp;t=151&amp;rb_v=viewtopic</a></p>
-<p>And a little extra tid-bit on how to keep this ability through-out boots. Essentially making a ‘sudo’ command:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">It’s so stupid easy to root Android (TC4-RC19 and TC4-RC-29), it’s almost depressing that it took anyone more than ten minutes to find this local root.</span><br><span class="line"></span><br><span class="line">You’ll note that &#x2F;system is read only if you read the output of mount:</span><br><span class="line"></span><br><span class="line">&#x2F;dev&#x2F;block&#x2F;mtdblock3 &#x2F;system yaffs2 ro 0 0</span><br><span class="line"></span><br><span class="line">You can launch telnetd on the phone (use a local terminal *on* the phone):</span><br><span class="line"></span><br><span class="line">$ &#x2F;system&#x2F;bin&#x2F;telnetd</span><br><span class="line"></span><br><span class="line">This is curious as according to ‘ls’, telnetd isn’t setuid:</span><br><span class="line"></span><br><span class="line">$ ls -l &#x2F;system&#x2F;bin&#x2F;telnetd</span><br><span class="line">-rwxr-xr-x root shell 9752 2008-09-13 01:13 telnetd</span><br><span class="line"></span><br><span class="line">Two other programs in &#x2F;system&#x2F;bin have a setgid bit by default:</span><br><span class="line"></span><br><span class="line">-rwxr-sr-x root inet 5616 2008-09-13 01:13 netcfg</span><br><span class="line">-rwxr-sr-x root net_raw 26628 2008-09-13 01:13 ping</span><br><span class="line"></span><br><span class="line">And yet, despite the lack of any setuid or setgid bit on telnetd… We can now telnet into the Android handset and setuid the shell (what? toolbox doesn’t drop privs if it sees this? ha!):</span><br><span class="line"></span><br><span class="line">rorreoi@bridge:~&#x2F;Desktop$ telnet 192.168.1.69</span><br><span class="line">Trying 192.168.1.69…</span><br><span class="line">Connected to 192.168.1.69.</span><br><span class="line">Escape character is ‘^]’.</span><br><span class="line"># id</span><br><span class="line">uid&#x3D;0(root) gid&#x3D;0(root)</span><br><span class="line"># chmod 4777 &#x2F;system&#x2F;bin&#x2F;sh</span><br><span class="line">Unable to chmod &#x2F;system&#x2F;bin&#x2F;sh: Read-only file system</span><br><span class="line"># mount -o remount,rw -t yaffs2 &#x2F;dev&#x2F;block&#x2F;mtdblock3 &#x2F;system</span><br><span class="line"># chmod 4777 &#x2F;system&#x2F;bin&#x2F;sh</span><br><span class="line"></span><br><span class="line">Now when you execute ‘&#x2F;system&#x2F;bin&#x2F;sh’, you should have root:</span><br><span class="line"></span><br><span class="line">$ &#x2F;system&#x2F;bin&#x2F;sh</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">This survives (as it should) a reboot. You should have local root until an OTA update removes the setuid bit from all of the programs you setuid.</span><br><span class="line"></span><br><span class="line">Alternatively, you may want to setup a different program to give you root. It’s unlikely that you’d like your shell to always be running as uid&#x2F;gid 0.</span><br><span class="line"></span><br><span class="line">Fire up that setuid shell and then simply create a copy of your shell:</span><br><span class="line"></span><br><span class="line">cd &#x2F;system&#x2F;bin&#x2F;</span><br><span class="line">cat sh &gt; spawn-root-shell</span><br><span class="line">chmod 4755 spawn-root-shell</span><br><span class="line"></span><br><span class="line">You may also want to remove the setuid bit from &#x2F;system&#x2F;bin&#x2F;sh if you care.</span><br></pre></td></tr></table></figure>
-
-<p>Source: <a href="http://ioerror.livejournal.com/495953.html" target="_blank" rel="noopener">http://ioerror.livejournal.com/495953.html</a></p>
-<p>Hmmm, this is great information. Now we should be able to access <em>any</em> and <em>all</em> files. I’m not on my developement machine right now, but you can bet yourself as soon as I get home I’ll be checking access to the /data directory and seeing if we can dump any files from it!</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2008/11/root-on-g1-uh-oh/" data-id="ck8dqrf3o00rkojgjh5rlhyia" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/root/" rel="tag">root</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/sudo/" rel="tag">sudo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/telnetd/" rel="tag">telnetd</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-higher-shell-access-on-the-g1-and-android-emulator" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2008/11/higher-shell-access-on-the-g1-and-android-emulator/" class="article-date">
-  <time datetime="2008-11-04T09:38:21.000Z" itemprop="datePublished">2008-11-04</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+          <a class="icon" target="_blank" rel="noopener" href="mailto:diff@protonmail.com">
+            <i class="fas fa-envelope"></i><!--
+      ---></a><!--
+      ---><!--
+    --->.
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2008/11/higher-shell-access-on-the-g1-and-android-emulator/">Higher shell access on the G1 and Android Emulator?</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <p>Well maybe we’ve hit some good news, and frankly I’ve been swamped digging into code looking for ways to access the folders and files that we’ve been locked out of. The patching example will have to take the back seat for now, but it will be posted! I promise… Mostly tomorrow if I have the chance to finish throwing it together.<br>Anyway after some digging in the files located on both the emulator and the G1 hardware device I’ve found some interesting things. One that will take the forefront right now is the “permissions.xml” file, located in “/system/etc”<br>The file has some comments in it, comments that make it very helful to us!</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- This file is used to define the mappings between lower-level system</span><br><span class="line">     user and group IDs and the higher-level permission names managed</span><br><span class="line">     by the platform.</span><br><span class="line"></span><br><span class="line">     Be VERY careful when editing this file!  Mistakes made here can open</span><br><span class="line">     big security holes.</span><br><span class="line">--&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- The following tags are assigning high-level permissions to specific</span><br><span class="line">         user IDs.  These are used to allow specific core system users to</span><br><span class="line">         perform the given operations with the higher-level framework.  For</span><br><span class="line">         example, we give a wide variety of permissions to the shell user</span><br><span class="line">         since that is the user the adb shell runs under and developers and</span><br><span class="line">         others should have a fairly open environment in which to</span><br><span class="line">         interact with the system. --&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- RW permissions to any system resources owned by group &#39;diag&#39;.</span><br><span class="line">         This is for carrier and manufacture diagnostics tools that must be</span><br><span class="line">         installable from the framework. Be careful. --&gt;</span><br></pre></td></tr></table></figure>
-<p>Hmmm.. This could be good news for us, saddly the file is read-only! We can pull it, using <code>./adb -e</code> (or <code>-d</code> depending on the device) <code>/system/etc/permissions.xml</code> but we can’t push it back. After scouring the internet for some relevant information, it seems that someone has been able to snag the upcoming update for the android os, and found out how to install it. This information I found at the <a href="http://forum.xda-developers.com/forumdisplay.php?f=448" target="_blank" rel="noopener">xda-developers forum</a> and as in mid-writing of this post their forum seems to be bogged down another good link is located at <a href="http://androidcommunity.com/forums/f28/learn-how-to-update-using-your-microsd-card-5784/" target="_blank" rel="noopener">Android Community</a>.</p>
-<p>Though as of right now I’m going to get cracking on trying to find some type of hole we can poke and give ourselves extra permissions and possibly resign the update package and get it to run. Hopefully I’ll be back soon with good news!</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2008/11/higher-shell-access-on-the-g1-and-android-emulator/" data-id="ck8dqrf3400q5ojgjfmaccihw" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/g1/" rel="tag">g1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/root/" rel="tag">root</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/shell/" rel="tag">shell</a></li></ul>
-
-    </footer>
-  </div>
+    </p>
   
-</article>
-
-
-  
-    <article id="post-dalvik-vm-internals-presentation" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2008/11/dalvik-vm-internals-presentation/" class="article-date">
-  <time datetime="2008-11-03T12:31:06.000Z" itemprop="datePublished">2008-11-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>►<a class="article-category-link" href="/blog/categories/android/dex-bytecode/">dex bytecode</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2008/11/dalvik-vm-internals-presentation/">Dalvik VM Internals presentation</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>A great wealth of information I just stumbled upon given by Dan Bornstein, one of the creators of the Dalvik VM. It’s a long watch - but it definitely helps explain some things that are better than anything I could do;<br><a href="https://youtu.be/ptjedOZEXPM" target="_blank" rel="noopener" title="Dalvik Virtual Machine"><img src="http://img.youtube.com/vi/ptjedOZEXPM/0.jpg" alt="Dalvik Virtual Machine"></a><br>The slides for further review and handouts can also be found here; <a href="http://sites.google.com/site/io/dalvik-vm-internals" target="_blank" rel="noopener">http://sites.google.com/site/io/dalvik-vm-internals</a></p>
-<p>Coming up soon I will have the patched dex file and the tutorial to go along with it!</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2008/11/dalvik-vm-internals-presentation/" data-id="ck8dqrey70017ojgj7rnu6v00" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/dalvik-vm/" rel="tag">dalvik vm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/internals/" rel="tag">internals</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/blog/page/8/">« Prev</a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/7/">7</a><a class="page-number" href="/blog/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/blog/page/10/">10</a><a class="extend next" rel="next" href="/blog/page/10/">Next »</a>
-  </nav>
-
 </section>
-        
-          <aside id="sidebar">
+
+<section id="writing">
+  <span class="h1"><a href="/blog/archives">Writing</a></span>
   
+  <ul class="post-list">
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
+    
+      
+    
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2020-05-08T07:00:00.000Z" itemprop="datePublished">2020-05-08</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2020/05/making-up-frida-functions/">&#34;Making up&#34; functions in Frida</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2020-03-29T22:30:06.000Z" itemprop="datePublished">2020-03-29</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2020/03/housekeeping-blog-converted/">Housekeeping: blog converted!</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2014-07-25T04:30:35.000Z" itemprop="datePublished">2014-07-24</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2014/07/follow-up-on-android-lkms/">Follow up on Android LKMs</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2014-07-21T03:47:39.000Z" itemprop="datePublished">2014-07-20</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2014/07/compiling-an-emulator-kernel-for-loadable-modules/">Compiling an Android Emulator Kernel for Loadable Kernel Modules</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2013-02-16T02:23:41.000Z" itemprop="datePublished">2013-02-15</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/">Loose Documentation Leads to Easy Disassembler Breakages</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2013-02-07T04:33:49.000Z" itemprop="datePublished">2013-02-06</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2013/02/javascript-malware-cross-contamination-in-android-apks/">Javascript Malware Cross-Contamination in Android apks</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2012-08-14T05:46:09.000Z" itemprop="datePublished">2012-08-13</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2012/08/android-zitmo-analysis-now-you-see-my-now-you-dont/">Android Zitmo Analysis: Now you see me, now you don&#39;t</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2012-08-03T21:09:53.000Z" itemprop="datePublished">2012-08-03</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2012/08/dexploration-what-a-default-dex-looks-like/">Dexploration: What a default Dex looks like</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2012-08-02T22:29:02.000Z" itemprop="datePublished">2012-08-02</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2012/08/a-lesson-in-safe-dex/">A Lesson in Safe Dex</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2012-07-12T05:03:42.000Z" itemprop="datePublished">2012-07-11</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2012/07/mobile-security-meetup-dextemplate-and-smali-mode/">Mobile Security Meetup, DexTemplate and smali-mode!</a>
+    
+
+
+</span>
+      </li>
+    
+  </ul>
+  
+</section>
+
+
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2020
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
       <ul>
-        
-          <li>
-            <a href="/blog/2020/05/making-up-frida-functions/">&#34;Making up&#34; functions in Frida</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/03/housekeeping-blog-converted/">Housekeeping: blog converted!</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2014/07/follow-up-on-android-lkms/">Follow up on Android LKMs</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2014/07/compiling-an-emulator-kernel-for-loadable-modules/">Compiling an Android Emulator Kernel for Loadable Kernel Modules</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/">Loose Documentation Leads to Easy Disassembler Breakages</a>
-          </li>
+         
+          <li><a href="/blog/">Home</a></li>
+         
+          <li><a href="/blog/about/">About</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="/blog/projects_url">Projects</a></li>
         
       </ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/">android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/archos/">archos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/archos/coding/">coding</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/archos/coding/reverse-engineering/">reverse engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/archos/coding/reverse-engineering/updating/">updating</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/archos/updating/">updating</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/">coding</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/dex-bytecode/">dex bytecode</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/dex-bytecode/reverse-engineering/">reverse engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/dex-bytecode/reverse-engineering/secure-code/">secure code</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/other/">other</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/other/reverse-engineering/">reverse engineering</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/random/">random</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/reverse-engineering/">reverse engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/updating/">updating</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/dex-bytecode/">dex bytecode</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/dex-bytecode/reverse-engineering/">reverse engineering</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/life/">life</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/life/other/">other</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/life/other/random/">random</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/other/">other</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/other/random/">random</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/other/random/secure-code/">secure code</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/other/reverse-engineering/">reverse engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/other/reverse-engineering/updating/">updating</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/reverse-engineering/">reverse engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/reverse-engineering/secure-code/">secure code</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/reverse-engineering/updating/">updating</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/archos/">archos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/archos/coding/">coding</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/archos/coding/reverse-engineering/">reverse engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/archos/coding/reverse-engineering/secure-code/">secure code</a></li></ul></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/life/">life</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/life/random/">random</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/life/random/secure-code/">secure code</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/max-os-x/">max os x</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/max-os-x/reversing/">reversing</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/other/">other</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/other/secure-code/">secure code</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/random/">random</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/random/reversing/">reversing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/random/reversing/windows/">windows</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/reverse-engineering/">reverse engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/reverse-engineering/android/">android</a></li></ul></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/blog/tags/bak/" style="font-size: 10px;">.bak</a> <a href="/blog/tags/net-unpacking/" style="font-size: 10px;">.net unpacking</a> <a href="/blog/tags/data-app/" style="font-size: 10px;">/data/app</a> <a href="/blog/tags/data-app-private/" style="font-size: 10px;">/data/app-private</a> <a href="/blog/tags/data-data-com-android-PhotoVault/" style="font-size: 10px;">/data/data/com.android.PhotoVault</a> <a href="/blog/tags/data-data-com-android-providers-settings-databases-settings-db/" style="font-size: 10px;">/data/data/com.android.providers.settings/databases/settings.db</a> <a href="/blog/tags/data-system-packages-xml/" style="font-size: 10px;">/data/system/packages.xml</a> <a href="/blog/tags/etc-hosts/" style="font-size: 10px;">/etc/hosts/</a> <a href="/blog/tags/proc-pid-mem/" style="font-size: 10px;">/proc/pid/mem</a> <a href="/blog/tags/010-Editor/" style="font-size: 10px;">010 Editor</a> <a href="/blog/tags/ADC2/" style="font-size: 10px;">ADC2</a> <a href="/blog/tags/AOSP/" style="font-size: 12.31px;">AOSP</a> <a href="/blog/tags/Android-root/" style="font-size: 10px;">Android root</a> <a href="/blog/tags/AndroidDownloadManager/" style="font-size: 10px;">AndroidDownloadManager</a> <a href="/blog/tags/AndroidOS/" style="font-size: 10.77px;">AndroidOS</a> <a href="/blog/tags/Android-ID/" style="font-size: 12.31px;">Android_ID</a> <a href="/blog/tags/Archo-5-Android/" style="font-size: 10px;">Archo 5 Android</a> <a href="/blog/tags/Archos-5-Internet-Tablet/" style="font-size: 10px;">Archos 5 Internet Tablet</a> <a href="/blog/tags/Archos-root/" style="font-size: 10px;">Archos root</a> <a href="/blog/tags/Cain-amp-Abel/" style="font-size: 10px;">Cain &amp; Abel</a> <a href="/blog/tags/Crapapps/" style="font-size: 10px;">Crapapps</a> <a href="/blog/tags/DONT-KILL-APP/" style="font-size: 10px;">DONT_KILL_APP</a> <a href="/blog/tags/DRM/" style="font-size: 11.54px;">DRM</a> <a href="/blog/tags/Dedexer/" style="font-size: 11.54px;">Dedexer</a> <a href="/blog/tags/FilePicker-apk/" style="font-size: 10px;">FilePicker.apk</a> <a href="/blog/tags/G/" style="font-size: 10px;">G!</a> <a href="/blog/tags/GET-apk/" style="font-size: 10px;">GET apk</a> <a href="/blog/tags/GPL/" style="font-size: 10px;">GPL</a> <a href="/blog/tags/Gabor/" style="font-size: 10.77px;">Gabor</a> <a href="/blog/tags/GameCIH/" style="font-size: 10px;">GameCIH</a> <a href="/blog/tags/Host-is-unresolved/" style="font-size: 10px;">Host is unresolved</a> <a href="/blog/tags/IDA-Pro/" style="font-size: 11.54px;">IDA Pro</a> <a href="/blog/tags/IDC/" style="font-size: 10px;">IDC</a> <a href="/blog/tags/LKM/" style="font-size: 10px;">LKM</a> <a href="/blog/tags/LeNa/" style="font-size: 10px;">LeNa</a> <a href="/blog/tags/LicenseActivity-java-bak/" style="font-size: 10px;">LicenseActivity.java.bak</a> <a href="/blog/tags/LokPix/" style="font-size: 10px;">LokPix</a> <a href="/blog/tags/MTD-WRITEABLE/" style="font-size: 10px;">MTD_WRITEABLE</a> <a href="/blog/tags/Market-dex/" style="font-size: 10px;">Market.dex</a> <a href="/blog/tags/MyMarket/" style="font-size: 10px;">MyMarket</a> <a href="/blog/tags/Open-Source-Annoyed/" style="font-size: 10px;">Open Source Annoyed</a> <a href="/blog/tags/PDFViewer-apk/" style="font-size: 10px;">PDFViewer.apk</a> <a href="/blog/tags/Pacific-Software-Solutions/" style="font-size: 10px;">Pacific Software Solutions</a> <a href="/blog/tags/PhotoVault/" style="font-size: 10px;">PhotoVault</a> <a href="/blog/tags/PhotoVaultPassword-xml/" style="font-size: 10px;">PhotoVaultPassword.xml</a> <a href="/blog/tags/Protection-Scheme/" style="font-size: 10px;">Protection Scheme</a> <a href="/blog/tags/READ-PHONE-STATE/" style="font-size: 10px;">READ_PHONE_STATE</a> <a href="/blog/tags/ReDEX/" style="font-size: 10px;">ReDEX</a> <a href="/blog/tags/ReadProcessMemory/" style="font-size: 10px;">ReadProcessMemory</a> <a href="/blog/tags/SMS/" style="font-size: 10px;">SMS</a> <a href="/blog/tags/SlideLOCK/" style="font-size: 10.77px;">SlideLOCK</a> <a href="/blog/tags/SlideMe/" style="font-size: 10.77px;">SlideMe</a> <a href="/blog/tags/SoundMine/" style="font-size: 10px;">SoundMine</a> <a href="/blog/tags/State-of-the-Archos-Android/" style="font-size: 10px;">State of the Archos Android</a> <a href="/blog/tags/System-err/" style="font-size: 10px;">System.err</a> <a href="/blog/tags/TEAM-RES/" style="font-size: 10px;">TEAM RES</a> <a href="/blog/tags/TEAM-RESURRECTiON/" style="font-size: 10.77px;">TEAM RESURRECTiON</a> <a href="/blog/tags/ToneGenerator/" style="font-size: 10px;">ToneGenerator</a> <a href="/blog/tags/Uninstall-Protection-Add-On/" style="font-size: 10px;">Uninstall Protection Add-On</a> <a href="/blog/tags/UnknownHostException/" style="font-size: 10px;">UnknownHostException</a> <a href="/blog/tags/VENDING-REQUIRE-SIM-FOR-PURCHASE/" style="font-size: 10px;">VENDING_REQUIRE_SIM_FOR_PURCHASE</a> <a href="/blog/tags/VENDING-SYNC-FREQUENCY-MS/" style="font-size: 10px;">VENDING_SYNC_FREQUENCY_MS</a> <a href="/blog/tags/VENDING-TOS-VERSION/" style="font-size: 10px;">VENDING_TOS_VERSION</a> <a href="/blog/tags/Vending/" style="font-size: 13.85px;">Vending</a> <a href="/blog/tags/Vending-dex/" style="font-size: 10px;">Vending.dex</a> <a href="/blog/tags/Vending-odex/" style="font-size: 10.77px;">Vending.odex</a> <a href="/blog/tags/WaveSecure/" style="font-size: 10px;">WaveSecure</a> <a href="/blog/tags/WaveSecure-UPA/" style="font-size: 10px;">WaveSecure UPA</a> <a href="/blog/tags/Wireshark/" style="font-size: 10.77px;">Wireshark</a> <a href="/blog/tags/WriteProcessMemory/" style="font-size: 10px;">WriteProcessMemory</a> <a href="/blog/tags/XXX-PROTECT-FROM-VIKING-KILLER/" style="font-size: 10px;">XXX: PROTECT FROM VIKING KILLER</a> <a href="/blog/tags/a-cheesy-alternative/" style="font-size: 10px;">a cheesy alternative</a> <a href="/blog/tags/a5it/" style="font-size: 10px;">a5it</a> <a href="/blog/tags/access-paid-applications/" style="font-size: 10px;">access paid applications</a> <a href="/blog/tags/adb/" style="font-size: 10.77px;">adb</a> <a href="/blog/tags/adb-hell/" style="font-size: 10px;">adb hell</a> <a href="/blog/tags/adblock/" style="font-size: 10px;">adblock</a> <a href="/blog/tags/adjacking/" style="font-size: 10px;">adjacking</a> <a href="/blog/tags/admob/" style="font-size: 10.77px;">admob</a> <a href="/blog/tags/ads/" style="font-size: 10px;">ads</a> <a href="/blog/tags/adsense/" style="font-size: 10px;">adsense</a> <a href="/blog/tags/aes-key/" style="font-size: 10px;">aes key</a> <a href="/blog/tags/algorithms/" style="font-size: 10.77px;">algorithms</a> <a href="/blog/tags/alternatives/" style="font-size: 10px;">alternatives</a> <a href="/blog/tags/amadeus/" style="font-size: 10px;">amadeus</a> <a href="/blog/tags/andappstore/" style="font-size: 10px;">andappstore</a> <a href="/blog/tags/andrea/" style="font-size: 10px;">andrea</a> <a href="/blog/tags/android/" style="font-size: 20px;">android</a> <a href="/blog/tags/android-DRM/" style="font-size: 10px;">android DRM</a> <a href="/blog/tags/android-internet/" style="font-size: 10px;">android internet</a> <a href="/blog/tags/android-malware/" style="font-size: 10px;">android malware</a> <a href="/blog/tags/android-market/" style="font-size: 13.85px;">android market</a> <a href="/blog/tags/android-market-api/" style="font-size: 10px;">android market api</a> <a href="/blog/tags/android-markey/" style="font-size: 10px;">android markey</a> <a href="/blog/tags/android-money/" style="font-size: 10.77px;">android money</a> <a href="/blog/tags/android-os/" style="font-size: 13.08px;">android os</a> <a href="/blog/tags/android-spy/" style="font-size: 10.77px;">android spy</a> <a href="/blog/tags/android-stealth/" style="font-size: 11.54px;">android stealth</a> <a href="/blog/tags/android-turrent-defense/" style="font-size: 10px;">android turrent defense</a> <a href="/blog/tags/android-for-gods/" style="font-size: 10px;">android-for-gods</a> <a href="/blog/tags/android-os-Build/" style="font-size: 10px;">android.os.Build</a> <a href="/blog/tags/android-permission/" style="font-size: 10px;">android.permission</a> <a href="/blog/tags/android-provider-system-settings/" style="font-size: 10.77px;">android.provider.system.settings</a> <a href="/blog/tags/androidiani/" style="font-size: 10.77px;">androidiani</a> <a href="/blog/tags/androidiani-com/" style="font-size: 10px;">androidiani.com</a> <a href="/blog/tags/androidid/" style="font-size: 10px;">androidid</a> <a href="/blog/tags/androidroot-cramfs/" style="font-size: 10px;">androidroot.cramfs</a> <a href="/blog/tags/androidroot-cramfs-secure/" style="font-size: 10px;">androidroot.cramfs.secure</a> <a href="/blog/tags/androidsecure/" style="font-size: 10px;">androidsecure</a> <a href="/blog/tags/anti-piracy/" style="font-size: 10px;">anti-piracy</a> <a href="/blog/tags/anti-virus/" style="font-size: 10px;">anti-virus</a> <a href="/blog/tags/aos/" style="font-size: 10px;">aos</a> <a href="/blog/tags/aos-decrypt/" style="font-size: 10px;">aos decrypt</a> <a href="/blog/tags/aos-file/" style="font-size: 10px;">aos file</a> <a href="/blog/tags/apk/" style="font-size: 13.85px;">apk</a> <a href="/blog/tags/apk-download/" style="font-size: 10px;">apk download</a> <a href="/blog/tags/apkfuscator/" style="font-size: 10.77px;">apkfuscator</a> <a href="/blog/tags/app-repository/" style="font-size: 10px;">app repository</a> <a href="/blog/tags/app-private/" style="font-size: 10px;">app-private</a> <a href="/blog/tags/apps/" style="font-size: 10.77px;">apps</a> <a href="/blog/tags/appslib/" style="font-size: 11.54px;">appslib</a> <a href="/blog/tags/appslib-stats/" style="font-size: 10px;">appslib stats</a> <a href="/blog/tags/appslibrary/" style="font-size: 10.77px;">appslibrary</a> <a href="/blog/tags/archos/" style="font-size: 13.08px;">archos</a> <a href="/blog/tags/archos-5-android/" style="font-size: 10px;">archos 5 android</a> <a href="/blog/tags/archos-5-it/" style="font-size: 11.54px;">archos 5 it</a> <a href="/blog/tags/archos-5-it-root/" style="font-size: 10px;">archos 5 it root</a> <a href="/blog/tags/archos-android/" style="font-size: 10.77px;">archos android</a> <a href="/blog/tags/archos-init/" style="font-size: 10px;">archos init</a> <a href="/blog/tags/archos-market/" style="font-size: 10px;">archos market</a> <a href="/blog/tags/archos-recovery/" style="font-size: 10px;">archos recovery</a> <a href="/blog/tags/archutil/" style="font-size: 10px;">archutil</a> <a href="/blog/tags/archutil-a5it/" style="font-size: 10px;">archutil-a5it</a> <a href="/blog/tags/arp-spoof/" style="font-size: 10px;">arp spoof</a> <a href="/blog/tags/assetId/" style="font-size: 10.77px;">assetId</a> <a href="/blog/tags/atd/" style="font-size: 10px;">atd</a> <a href="/blog/tags/authToken/" style="font-size: 10px;">authToken</a> <a href="/blog/tags/backdoor/" style="font-size: 10px;">backdoor</a> <a href="/blog/tags/badge/" style="font-size: 10px;">badge</a> <a href="/blog/tags/badge-system/" style="font-size: 10px;">badge system</a> <a href="/blog/tags/baksmali/" style="font-size: 10px;">baksmali</a> <a href="/blog/tags/beat-to-the-punch/" style="font-size: 10px;">beat to the punch</a> <a href="/blog/tags/blackhat/" style="font-size: 10px;">blackhat</a> <a href="/blog/tags/blackhat-2012/" style="font-size: 10.77px;">blackhat 2012</a> <a href="/blog/tags/bloat-ware/" style="font-size: 10px;">bloat-ware</a> <a href="/blog/tags/board/" style="font-size: 10px;">board</a> <a href="/blog/tags/bootloader/" style="font-size: 10.77px;">bootloader</a> <a href="/blog/tags/brand/" style="font-size: 10px;">brand</a> <a href="/blog/tags/bug/" style="font-size: 10px;">bug</a> <a href="/blog/tags/buildPostParameters/" style="font-size: 10px;">buildPostParameters</a> <a href="/blog/tags/busybox/" style="font-size: 10px;">busybox</a> <a href="/blog/tags/buyer-beware/" style="font-size: 10px;">buyer beware</a> <a href="/blog/tags/byte-code/" style="font-size: 10px;">byte code</a> <a href="/blog/tags/bytecode/" style="font-size: 15.38px;">bytecode</a> <a href="/blog/tags/bytecode-obfuscation/" style="font-size: 10px;">bytecode obfuscation</a> <a href="/blog/tags/certification-check/" style="font-size: 10px;">certification check</a> <a href="/blog/tags/ch/" style="font-size: 10px;">ch</a> <a href="/blog/tags/challange/" style="font-size: 10px;">challange</a> <a href="/blog/tags/cheesy-alternative/" style="font-size: 10px;">cheesy alternative</a> <a href="/blog/tags/clock-speed/" style="font-size: 10px;">clock speed</a> <a href="/blog/tags/code/" style="font-size: 12.31px;">code</a> <a href="/blog/tags/coding/" style="font-size: 10px;">coding</a> <a href="/blog/tags/coding-hell/" style="font-size: 10px;">coding hell</a> <a href="/blog/tags/codvirtualizer/" style="font-size: 10px;">codvirtualizer</a> <a href="/blog/tags/color-scheme/" style="font-size: 10px;">color scheme</a> <a href="/blog/tags/com-android-settings/" style="font-size: 10px;">com.android.settings</a> <a href="/blog/tags/com-google-android-feedback/" style="font-size: 10px;">com.google.android.feedback</a> <a href="/blog/tags/com-google-android-googleapps/" style="font-size: 10.77px;">com.google.android.googleapps</a> <a href="/blog/tags/com-retinax-android/" style="font-size: 10.77px;">com.retinax.android</a> <a href="/blog/tags/comment-humor/" style="font-size: 10.77px;">comment humor</a> <a href="/blog/tags/comments/" style="font-size: 10px;">comments</a> <a href="/blog/tags/compile/" style="font-size: 10.77px;">compile</a> <a href="/blog/tags/conference/" style="font-size: 10px;">conference</a> <a href="/blog/tags/connect/" style="font-size: 10px;">connect</a> <a href="/blog/tags/cpu/" style="font-size: 10px;">cpu</a> <a href="/blog/tags/crackme/" style="font-size: 11.54px;">crackme</a> <a href="/blog/tags/cracks/" style="font-size: 10.77px;">cracks</a> <a href="/blog/tags/cramfs/" style="font-size: 10px;">cramfs</a> <a href="/blog/tags/cramfs-secure/" style="font-size: 10px;">cramfs.secure</a> <a href="/blog/tags/crap-ware/" style="font-size: 10px;">crap-ware</a> <a href="/blog/tags/cross-contamination/" style="font-size: 10px;">cross-contamination</a> <a href="/blog/tags/cryptax/" style="font-size: 10px;">cryptax</a> <a href="/blog/tags/cupcake/" style="font-size: 10px;">cupcake</a> <a href="/blog/tags/dalvik/" style="font-size: 12.31px;">dalvik</a> <a href="/blog/tags/dalvik-vm/" style="font-size: 11.54px;">dalvik vm</a> <a href="/blog/tags/data/" style="font-size: 10.77px;">data</a> <a href="/blog/tags/data-harvesting/" style="font-size: 10px;">data harvesting</a> <a href="/blog/tags/ddx/" style="font-size: 11.54px;">ddx</a> <a href="/blog/tags/de/" style="font-size: 10px;">de</a> <a href="/blog/tags/dead00beef/" style="font-size: 10px;">dead00beef</a> <a href="/blog/tags/decompiling/" style="font-size: 10px;">decompiling</a> <a href="/blog/tags/decryption/" style="font-size: 10px;">decryption</a> <a href="/blog/tags/defcon/" style="font-size: 10px;">defcon</a> <a href="/blog/tags/detection/" style="font-size: 10px;">detection</a> <a href="/blog/tags/developers/" style="font-size: 10px;">developers</a> <a href="/blog/tags/deviceId/" style="font-size: 10px;">deviceId</a> <a href="/blog/tags/devmpk/" style="font-size: 10px;">devmpk</a> <a href="/blog/tags/devs/" style="font-size: 10px;">devs</a> <a href="/blog/tags/dex/" style="font-size: 16.92px;">dex</a> <a href="/blog/tags/dex-035/" style="font-size: 10px;">dex 035</a> <a href="/blog/tags/dex-bytcode/" style="font-size: 10px;">dex bytcode</a> <a href="/blog/tags/dex-bytecode/" style="font-size: 13.85px;">dex bytecode</a> <a href="/blog/tags/dex-code/" style="font-size: 11.54px;">dex code</a> <a href="/blog/tags/dex-education/" style="font-size: 10px;">dex education</a> <a href="/blog/tags/dex-file/" style="font-size: 10.77px;">dex file</a> <a href="/blog/tags/dex-file-format/" style="font-size: 10px;">dex file format</a> <a href="/blog/tags/dex-header/" style="font-size: 12.31px;">dex header</a> <a href="/blog/tags/dex-layout/" style="font-size: 10px;">dex layout</a> <a href="/blog/tags/dex-verification/" style="font-size: 10px;">dex verification</a> <a href="/blog/tags/dexdump/" style="font-size: 10px;">dexdump</a> <a href="/blog/tags/dextemplate/" style="font-size: 10px;">dextemplate</a> <a href="/blog/tags/disable-ssl/" style="font-size: 10px;">disable ssl</a> <a href="/blog/tags/disable-ssl-cert-check/" style="font-size: 10px;">disable_ssl_cert_check</a> <a href="/blog/tags/dlp-mobile/" style="font-size: 10px;">dlp mobile</a> <a href="/blog/tags/documentation/" style="font-size: 10px;">documentation</a> <a href="/blog/tags/doh/" style="font-size: 10px;">doh</a> <a href="/blog/tags/donut/" style="font-size: 10px;">donut</a> <a href="/blog/tags/double-check/" style="font-size: 10px;">double-check</a> <a href="/blog/tags/download/" style="font-size: 10px;">download</a> <a href="/blog/tags/downloading-apk/" style="font-size: 10px;">downloading apk</a> <a href="/blog/tags/downloading-apks/" style="font-size: 10px;">downloading apks</a> <a href="/blog/tags/downloading-apps/" style="font-size: 10px;">downloading apps</a> <a href="/blog/tags/dream/" style="font-size: 10.77px;">dream</a> <a href="/blog/tags/drm-broken/" style="font-size: 10px;">drm broken</a> <a href="/blog/tags/droiddreamcleaner/" style="font-size: 10px;">droiddreamcleaner</a> <a href="/blog/tags/dumb-devs/" style="font-size: 10px;">dumb devs</a> <a href="/blog/tags/dumb-programmers/" style="font-size: 10px;">dumb programmers</a> <a href="/blog/tags/dump/" style="font-size: 10px;">dump</a> <a href="/blog/tags/dumpdex/" style="font-size: 10px;">dumpdex</a> <a href="/blog/tags/easter-egg/" style="font-size: 10px;">easter egg</a> <a href="/blog/tags/emacs/" style="font-size: 10.77px;">emacs</a> <a href="/blog/tags/emulator/" style="font-size: 11.54px;">emulator</a> <a href="/blog/tags/emulator-detection/" style="font-size: 10px;">emulator detection</a> <a href="/blog/tags/execryptor/" style="font-size: 10px;">execryptor</a> <a href="/blog/tags/experimental/" style="font-size: 10px;">experimental</a> <a href="/blog/tags/expiration-dates/" style="font-size: 10px;">expiration dates</a> <a href="/blog/tags/extract-files-sh/" style="font-size: 10px;">extract-files.sh</a> <a href="/blog/tags/file-format/" style="font-size: 10px;">file format</a> <a href="/blog/tags/fingerprint/" style="font-size: 10px;">fingerprint</a> <a href="/blog/tags/fortiguard/" style="font-size: 10px;">fortiguard</a> <a href="/blog/tags/forward-locking/" style="font-size: 10px;">forward locking</a> <a href="/blog/tags/frida/" style="font-size: 10px;">frida</a> <a href="/blog/tags/funny/" style="font-size: 10px;">funny</a> <a href="/blog/tags/fuzzing/" style="font-size: 10px;">fuzzing</a> <a href="/blog/tags/g1/" style="font-size: 18.46px;">g1</a> <a href="/blog/tags/games/" style="font-size: 10.77px;">games</a> <a href="/blog/tags/gamesmpk/" style="font-size: 10px;">gamesmpk</a> <a href="/blog/tags/geinimi/" style="font-size: 10px;">geinimi</a> <a href="/blog/tags/germany/" style="font-size: 10px;">germany</a> <a href="/blog/tags/getInstallerPackageName/" style="font-size: 10px;">getInstallerPackageName</a> <a href="/blog/tags/getOutputStream/" style="font-size: 10px;">getOutputStream</a> <a href="/blog/tags/getjar/" style="font-size: 10px;">getjar</a> <a href="/blog/tags/google/" style="font-size: 17.69px;">google</a> <a href="/blog/tags/google-humor/" style="font-size: 10px;">google humor</a> <a href="/blog/tags/gsm-operator-alpha/" style="font-size: 10px;">gsm.operator.alpha</a> <a href="/blog/tags/gsm-operator-iso-country/" style="font-size: 10px;">gsm.operator.iso-country</a> <a href="/blog/tags/gsm-operator-numeric/" style="font-size: 10px;">gsm.operator.numeric</a> <a href="/blog/tags/gsm-sim-operator-alpha/" style="font-size: 10px;">gsm.sim.operator.alpha</a> <a href="/blog/tags/gsm-sim-operator-iso-country/" style="font-size: 10px;">gsm.sim.operator.iso-country</a> <a href="/blog/tags/gsm-sim-operator-numeric/" style="font-size: 10px;">gsm.sim.operator.numeric</a> <a href="/blog/tags/hacking/" style="font-size: 10px;">hacking</a> <a href="/blog/tags/hardward-id/" style="font-size: 10px;">hardward id</a> <a href="/blog/tags/hddmpk/" style="font-size: 10px;">hddmpk</a> <a href="/blog/tags/header/" style="font-size: 10px;">header</a> <a href="/blog/tags/high-score/" style="font-size: 10px;">high score</a> <a href="/blog/tags/host/" style="font-size: 10px;">host</a> <a href="/blog/tags/hosts-file/" style="font-size: 10px;">hosts file</a> <a href="/blog/tags/hot-air/" style="font-size: 10px;">hot air</a> <a href="/blog/tags/htc/" style="font-size: 10.77px;">htc</a> <a href="/blog/tags/humor/" style="font-size: 12.31px;">humor</a> <a href="/blog/tags/identifiers/" style="font-size: 10px;">identifiers</a> <a href="/blog/tags/imsi/" style="font-size: 10px;">imsi</a> <a href="/blog/tags/inject/" style="font-size: 10px;">inject</a> <a href="/blog/tags/inject-code/" style="font-size: 10px;">inject code</a> <a href="/blog/tags/injection/" style="font-size: 10.77px;">injection</a> <a href="/blog/tags/inline/" style="font-size: 10.77px;">inline</a> <a href="/blog/tags/insomnidroid/" style="font-size: 10.77px;">insomnidroid</a> <a href="/blog/tags/insomnihack/" style="font-size: 10px;">insomnihack</a> <a href="/blog/tags/insomnihack-ctf/" style="font-size: 10px;">insomnihack ctf</a> <a href="/blog/tags/internals/" style="font-size: 10px;">internals</a> <a href="/blog/tags/is-forward-locked/" style="font-size: 10px;">is_forward_locked</a> <a href="/blog/tags/italy/" style="font-size: 10px;">italy</a> <a href="/blog/tags/jasmin/" style="font-size: 10px;">jasmin</a> <a href="/blog/tags/java/" style="font-size: 14.62px;">java</a> <a href="/blog/tags/javadoc/" style="font-size: 10.77px;">javadoc</a> <a href="/blog/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/blog/tags/just-continue/" style="font-size: 10px;">just continue</a> <a href="/blog/tags/kernel/" style="font-size: 10.77px;">kernel</a> <a href="/blog/tags/keygen/" style="font-size: 10.77px;">keygen</a> <a href="/blog/tags/legacy-native/" style="font-size: 10px;">legacy native</a> <a href="/blog/tags/let-ida-continue/" style="font-size: 10px;">let ida continue</a> <a href="/blog/tags/libpdfreader-so/" style="font-size: 10px;">libpdfreader.so</a> <a href="/blog/tags/licensing/" style="font-size: 10px;">licensing</a> <a href="/blog/tags/life/" style="font-size: 11.54px;">life</a> <a href="/blog/tags/live/" style="font-size: 10px;">live</a> <a href="/blog/tags/live-android-market/" style="font-size: 10px;">live android market</a> <a href="/blog/tags/locked/" style="font-size: 10px;">locked</a> <a href="/blog/tags/locking-phone/" style="font-size: 10px;">locking phone</a> <a href="/blog/tags/lookout/" style="font-size: 10.77px;">lookout</a> <a href="/blog/tags/lvl-drm/" style="font-size: 10px;">lvl drm</a> <a href="/blog/tags/mac-os-x/" style="font-size: 10px;">mac os x</a> <a href="/blog/tags/make/" style="font-size: 10px;">make</a> <a href="/blog/tags/malware/" style="font-size: 12.31px;">malware</a> <a href="/blog/tags/market/" style="font-size: 16.15px;">market</a> <a href="/blog/tags/market-DRM/" style="font-size: 10px;">market DRM</a> <a href="/blog/tags/market-alternative/" style="font-size: 10px;">market alternative</a> <a href="/blog/tags/market-data/" style="font-size: 10.77px;">market data</a> <a href="/blog/tags/market-enabler/" style="font-size: 11.54px;">market enabler</a> <a href="/blog/tags/market-place/" style="font-size: 12.31px;">market place</a> <a href="/blog/tags/market-spoof/" style="font-size: 10px;">market spoof</a> <a href="/blog/tags/market-apk/" style="font-size: 11.54px;">market.apk</a> <a href="/blog/tags/master/" style="font-size: 10px;">master</a> <a href="/blog/tags/memory-hacking/" style="font-size: 10px;">memory hacking</a> <a href="/blog/tags/memory-manipulation/" style="font-size: 10px;">memory manipulation</a> <a href="/blog/tags/message/" style="font-size: 10px;">message</a> <a href="/blog/tags/mistake/" style="font-size: 10px;">mistake</a> <a href="/blog/tags/mobile/" style="font-size: 10px;">mobile</a> <a href="/blog/tags/mobile-spy/" style="font-size: 10px;">mobile spy</a> <a href="/blog/tags/mobile-spy-android/" style="font-size: 10px;">mobile spy android</a> <a href="/blog/tags/mobistealth/" style="font-size: 10px;">mobistealth</a> <a href="/blog/tags/model/" style="font-size: 10px;">model</a> <a href="/blog/tags/monetizing/" style="font-size: 10px;">monetizing</a> <a href="/blog/tags/money/" style="font-size: 10px;">money</a> <a href="/blog/tags/mtd-partition/" style="font-size: 10px;">mtd_partition</a> <a href="/blog/tags/mytouch/" style="font-size: 11.54px;">mytouch</a> <a href="/blog/tags/netbook/" style="font-size: 10px;">netbook</a> <a href="/blog/tags/netz/" style="font-size: 10px;">netz</a> <a href="/blog/tags/new-job/" style="font-size: 10px;">new job</a> <a href="/blog/tags/nmap/" style="font-size: 10px;">nmap</a> <a href="/blog/tags/no-dex/" style="font-size: 10px;">no dex?</a> <a href="/blog/tags/number-of-apps/" style="font-size: 10px;">number of apps</a> <a href="/blog/tags/odex/" style="font-size: 10px;">odex</a> <a href="/blog/tags/offset/" style="font-size: 10px;">offset</a> <a href="/blog/tags/overclock/" style="font-size: 10px;">overclock</a> <a href="/blog/tags/packagemanager/" style="font-size: 10px;">packagemanager</a> <a href="/blog/tags/packet/" style="font-size: 10px;">packet</a> <a href="/blog/tags/paid-apps/" style="font-size: 10.77px;">paid apps</a> <a href="/blog/tags/papicheat/" style="font-size: 10px;">papicheat</a> <a href="/blog/tags/papihack/" style="font-size: 10px;">papihack</a> <a href="/blog/tags/papihack-java/" style="font-size: 10px;">papihack.java</a> <a href="/blog/tags/papijump/" style="font-size: 10px;">papijump</a> <a href="/blog/tags/papipwn/" style="font-size: 10px;">papipwn</a> <a href="/blog/tags/papiriver/" style="font-size: 10px;">papiriver</a> <a href="/blog/tags/password/" style="font-size: 10px;">password</a> <a href="/blog/tags/patch/" style="font-size: 10px;">patch</a> <a href="/blog/tags/patching/" style="font-size: 10px;">patching</a> <a href="/blog/tags/patchme/" style="font-size: 10px;">patchme</a> <a href="/blog/tags/pdf-android/" style="font-size: 10px;">pdf android</a> <a href="/blog/tags/pdf-viewer/" style="font-size: 10px;">pdf viewer</a> <a href="/blog/tags/phoload/" style="font-size: 10px;">phoload</a> <a href="/blog/tags/phone-number/" style="font-size: 10px;">phone number</a> <a href="/blog/tags/phone-spoof/" style="font-size: 10px;">phone spoof</a> <a href="/blog/tags/plugmpk/" style="font-size: 10px;">plugmpk</a> <a href="/blog/tags/pm-disable/" style="font-size: 10px;">pm disable</a> <a href="/blog/tags/presentation/" style="font-size: 10px;">presentation</a> <a href="/blog/tags/privacy-concerns/" style="font-size: 10px;">privacy concerns</a> <a href="/blog/tags/program-protections/" style="font-size: 10px;">program protections</a> <a href="/blog/tags/protected-applications/" style="font-size: 10px;">protected applications</a> <a href="/blog/tags/protection-schemes/" style="font-size: 10px;">protection schemes</a> <a href="/blog/tags/purchasing-apps/" style="font-size: 11.54px;">purchasing apps</a> <a href="/blog/tags/purebasic/" style="font-size: 10px;">purebasic</a> <a href="/blog/tags/qemu/" style="font-size: 10px;">qemu</a> <a href="/blog/tags/radare/" style="font-size: 10px;">radare</a> <a href="/blog/tags/random/" style="font-size: 10px;">random</a> <a href="/blog/tags/refund-timeout/" style="font-size: 10px;">refund_timeout</a> <a href="/blog/tags/registration/" style="font-size: 10px;">registration</a> <a href="/blog/tags/relmpk/" style="font-size: 10px;">relmpk</a> <a href="/blog/tags/restrict/" style="font-size: 10px;">restrict</a> <a href="/blog/tags/restricted-buying/" style="font-size: 10.77px;">restricted buying</a> <a href="/blog/tags/restricted-market/" style="font-size: 10px;">restricted market</a> <a href="/blog/tags/retinax/" style="font-size: 10.77px;">retinax</a> <a href="/blog/tags/reveal-anti-sms-spy/" style="font-size: 10px;">reveal anti sms spy</a> <a href="/blog/tags/reverse-engineer/" style="font-size: 10px;">reverse engineer</a> <a href="/blog/tags/reverse-engineering/" style="font-size: 19.23px;">reverse engineering</a> <a href="/blog/tags/reverseengineering/" style="font-size: 10px;">reverseengineering</a> <a href="/blog/tags/reversing/" style="font-size: 10.77px;">reversing</a> <a href="/blog/tags/ro-secure/" style="font-size: 10px;">ro.secure</a> <a href="/blog/tags/root/" style="font-size: 14.62px;">root</a> <a href="/blog/tags/safe-mode/" style="font-size: 10px;">safe mode</a> <a href="/blog/tags/sapphire/" style="font-size: 10px;">sapphire</a> <a href="/blog/tags/sapphire-pdf/" style="font-size: 10px;">sapphire pdf</a> <a href="/blog/tags/sarcasm/" style="font-size: 10px;">sarcasm</a> <a href="/blog/tags/saving-adc2-apps/" style="font-size: 10px;">saving adc2 apps</a> <a href="/blog/tags/sc2/" style="font-size: 10px;">sc2</a> <a href="/blog/tags/scare-ware/" style="font-size: 10px;">scare-ware</a> <a href="/blog/tags/secure-code/" style="font-size: 12.31px;">secure code</a> <a href="/blog/tags/secure-android-id/" style="font-size: 10px;">secure.android_id</a> <a href="/blog/tags/security/" style="font-size: 12.31px;">security</a> <a href="/blog/tags/service/" style="font-size: 10px;">service</a> <a href="/blog/tags/setComponentEnabledSetting/" style="font-size: 10px;">setComponentEnabledSetting</a> <a href="/blog/tags/shell/" style="font-size: 10px;">shell</a> <a href="/blog/tags/sierra/" style="font-size: 10px;">sierra</a> <a href="/blog/tags/signature/" style="font-size: 10px;">signature</a> <a href="/blog/tags/skype/" style="font-size: 10px;">skype</a> <a href="/blog/tags/slow-news/" style="font-size: 10px;">slow-news</a> <a href="/blog/tags/smali/" style="font-size: 10px;">smali</a> <a href="/blog/tags/smali-mode/" style="font-size: 10.77px;">smali-mode</a> <a href="/blog/tags/smobile/" style="font-size: 10px;">smobile</a> <a href="/blog/tags/sms-backup/" style="font-size: 10px;">sms backup</a> <a href="/blog/tags/sms-replicator/" style="font-size: 10px;">sms replicator</a> <a href="/blog/tags/snippet/" style="font-size: 10px;">snippet</a> <a href="/blog/tags/solution/" style="font-size: 10px;">solution</a> <a href="/blog/tags/source/" style="font-size: 10px;">source</a> <a href="/blog/tags/source-android-com/" style="font-size: 10px;">source.android.com</a> <a href="/blog/tags/spoof/" style="font-size: 11.54px;">spoof</a> <a href="/blog/tags/spoof-android-id/" style="font-size: 10px;">spoof android_id</a> <a href="/blog/tags/spoof-id/" style="font-size: 10.77px;">spoof id</a> <a href="/blog/tags/spoofing-android-id/" style="font-size: 10.77px;">spoofing android_id</a> <a href="/blog/tags/spy/" style="font-size: 10.77px;">spy</a> <a href="/blog/tags/spyaware/" style="font-size: 10px;">spyaware</a> <a href="/blog/tags/spyware/" style="font-size: 10.77px;">spyware</a> <a href="/blog/tags/sqlite/" style="font-size: 10px;">sqlite</a> <a href="/blog/tags/ssl-cert/" style="font-size: 10px;">ssl cert</a> <a href="/blog/tags/ssl-certificate/" style="font-size: 10px;">ssl certificate</a> <a href="/blog/tags/stage0/" style="font-size: 10px;">stage0</a> <a href="/blog/tags/stage1/" style="font-size: 10px;">stage1</a> <a href="/blog/tags/starcraft-2/" style="font-size: 10px;">starcraft 2</a> <a href="/blog/tags/stealth/" style="font-size: 11.54px;">stealth</a> <a href="/blog/tags/su/" style="font-size: 10px;">su</a> <a href="/blog/tags/success/" style="font-size: 10px;">success</a> <a href="/blog/tags/sudo/" style="font-size: 10px;">sudo</a> <a href="/blog/tags/switzerland/" style="font-size: 10px;">switzerland</a> <a href="/blog/tags/system-settings/" style="font-size: 10px;">system settings</a> <a href="/blog/tags/t-mobile/" style="font-size: 14.62px;">t-mobile</a> <a href="/blog/tags/tcpdump/" style="font-size: 10px;">tcpdump</a> <a href="/blog/tags/teardown/" style="font-size: 10px;">teardown</a> <a href="/blog/tags/telnetd/" style="font-size: 10px;">telnetd</a> <a href="/blog/tags/test-keys/" style="font-size: 10px;">test-keys</a> <a href="/blog/tags/tmobile/" style="font-size: 13.08px;">tmobile</a> <a href="/blog/tags/tools/" style="font-size: 10px;">tools</a> <a href="/blog/tags/trojan/" style="font-size: 10px;">trojan</a> <a href="/blog/tags/uncrackable/" style="font-size: 10px;">uncrackable?</a> <a href="/blog/tags/underclock/" style="font-size: 10px;">underclock</a> <a href="/blog/tags/unique/" style="font-size: 10px;">unique</a> <a href="/blog/tags/unique-id/" style="font-size: 11.54px;">unique id</a> <a href="/blog/tags/unlocking-phone/" style="font-size: 10px;">unlocking phone</a> <a href="/blog/tags/unpacker/" style="font-size: 10px;">unpacker</a> <a href="/blog/tags/unpacking/" style="font-size: 10px;">unpacking</a> <a href="/blog/tags/updated-davlik-format/" style="font-size: 10px;">updated davlik format</a> <a href="/blog/tags/useless/" style="font-size: 10px;">useless</a> <a href="/blog/tags/userId/" style="font-size: 10.77px;">userId</a> <a href="/blog/tags/vaporware/" style="font-size: 10px;">vaporware</a> <a href="/blog/tags/vending-apk/" style="font-size: 16.15px;">vending.apk</a> <a href="/blog/tags/vending-disable-ssl-cert-check/" style="font-size: 10px;">vending.disable_ssl_cert_check</a> <a href="/blog/tags/verizon/" style="font-size: 10px;">verizon</a> <a href="/blog/tags/verizon-spoof/" style="font-size: 10px;">verizon spoof</a> <a href="/blog/tags/viking/" style="font-size: 10px;">viking</a> <a href="/blog/tags/viking-killer/" style="font-size: 10px;">viking killer</a> <a href="/blog/tags/virus/" style="font-size: 10px;">virus</a> <a href="/blog/tags/viruses/" style="font-size: 10px;">viruses</a> <a href="/blog/tags/virustotal/" style="font-size: 10px;">virustotal</a> <a href="/blog/tags/vm-read/" style="font-size: 10px;">vm_read()</a> <a href="/blog/tags/vm-read-overwrite/" style="font-size: 10px;">vm_read_overwrite</a> <a href="/blog/tags/vm-write/" style="font-size: 10px;">vm_write</a> <a href="/blog/tags/vodafone/" style="font-size: 10px;">vodafone</a> <a href="/blog/tags/web-activation/" style="font-size: 10px;">web activation</a> <a href="/blog/tags/web-appslib/" style="font-size: 10px;">web appslib</a> <a href="/blog/tags/without-adc2/" style="font-size: 10px;">without adc2</a> <a href="/blog/tags/without-vending/" style="font-size: 10px;">without vending</a> <a href="/blog/tags/xda/" style="font-size: 10px;">xda</a> <a href="/blog/tags/zeus/" style="font-size: 10px;">zeus</a> <a href="/blog/tags/zitmo/" style="font-size: 10px;">zitmo</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2013/02/">February 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2012/08/">August 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2012/07/">July 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2012/04/">April 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2012/03/">March 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2012/02/">February 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2012/01/">January 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2011/06/">June 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2011/03/">March 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2011/01/">January 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2010/11/">November 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2010/10/">October 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2010/09/">September 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2010/08/">August 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2010/05/">May 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2010/03/">March 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/11/">November 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/10/">October 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/09/">September 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/08/">August 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/07/">July 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/05/">May 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/04/">April 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/03/">March 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/02/">February 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/01/">January 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2008/12/">December 2008</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2008/11/">November 2008</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2008/10/">October 2008</a></li></ul>
-    </div>
-  </div>
-
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2020 Tim Strazzere<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
+    </nav>
   </div>
 </footer>
+
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/blog/" class="mobile-nav-link">Home</a>
-  
-    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
+    <!-- styles -->
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
 
 
-  
-<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
-
-  
-<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
 
 
+    <!-- jquery -->
+
+<script src="/blog/lib/jquery/jquery.min.js"></script>
 
 
-<script src="/blog/js/script.js"></script>
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
 
 
+<script src="/blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
 
 
-  </div>
 </body>
 </html>

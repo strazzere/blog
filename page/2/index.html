@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=en>
 <head>
-  <meta charset="utf-8">
-  
-
-  
-  <title>Strazzere</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta property="og:type" content="website">
 <meta property="og:title" content="Strazzere">
 <meta property="og:url" content="https://strazzere.com/blog/page/2/index.html">
 <meta property="og:site_name" content="Strazzere">
@@ -25,670 +24,391 @@
 <meta property="article:tag" content=" vulnerabilities">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@timstrazz">
-  
-    <link rel="alternate" href="/blog/atom.xml" title="Strazzere" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  
+    
+    
+        
+          
+              <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=16">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+    
+    <!-- title -->
+    <title>Strazzere</title>
+    <!-- styles -->
+    
 <link rel="stylesheet" href="/blog/css/style.css">
 
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/blog/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/blog/true" title="Strazzere" type="application/atom+xml" />
+    
 <meta name="generator" content="Hexo 4.2.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/blog/" id="logo">Strazzere</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/blog/" id="subtitle">... it all can be reversed</a>
-        </h2>
-      
+<body class="max-width mx-auto px3 ltr">
+    
+    <div class="content index py4">
+        
+          <header id="header">
+  <a href="/blog/">
+  
+    
+      <div id="logo" style="background-image: url(https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93);"></div>
+    
+  
+    <div id="title">
+      <h1>Strazzere</h1>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/blog/">Home</a>
-        
-          <a class="main-nav-link" href="/blog/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://strazzere.com/blog"></form>
-      </div>
-    </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/blog/">Home</a></li>
+       
+        <li><a href="/blog/about/">About</a></li>
+       
+        <li><a href="/blog/archives/">Writing</a></li>
+       
+        <li><a href="/blog/projects_url">Projects</a></li>
+      
+    </ul>
   </div>
 </header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-static-decryption-for-android-lena-bc" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2012/04/static-decryption-for-android-lena-bc/" class="article-date">
-  <time datetime="2012-04-08T21:25:24.000Z" itemprop="datePublished">2012-04-08</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>►<a class="article-category-link" href="/blog/categories/android/reverse-engineering/">reverse engineering</a>
-  </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
         
+        <section id="about">
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2012/04/static-decryption-for-android-lena-bc/">Static decryption for Android LeNa.[b/c] using IDA Pro</a>
-    </h1>
   
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Recently at Lookout we blogged about a newer flavor of <a href="http://blog.lookout.com/blog/2012/04/03/security-alert-new-variants-of-legacy-native-lena-identified/" target="_blank" rel="noopener">Legacy Native (LeNa)</a>. This variant is extremely similar to the other ones we’ve found in the past and <a href="http://blog.lookout.com/blog/2011/10/20/security-alert-legacy-makes-a-another-appearance-on-android-market-meet-legacy-native-lena/" target="_blank" rel="noopener">blogged about in October of 2011</a>, the full tear down I wrote can be found in <a href="http://blog.lookout.com/wp-content/uploads/2011/10/LeNa-Legacy-Native-Teardown_Lookout-Mobile-Security1.pdf" target="_blank" rel="noopener">pdf form here</a>. The samples for both LeNa.b and LeNa.c have been added to the <a href="http://contagiominidump.blogspot.com/2012/03/android-dkfbootkit-aka-lenab.html" target="_blank" rel="noopener">Contagio Mini Dump</a></p>
-<p>While going through some samples I decided to throw together a quick IDC script for IDA Pro to help decrypt the commands and variables without executing the code. The decryption isn’t hard, in fact it actually ends up just being an XOR with 0xFF. Though if anyone hasn’t ever dealt with IDA Pro or ARM, it might look a bit confusing at first. Below is the decryption function commented from one of specific samples of LeNa;<br><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/04/decryption-function.png" alt="Simple XOR" title="LeNa Decryption Function"><br>The IDC script is really simple, the current version can be found <a href="https://github.com/strazzere/LeNa-Decryption-Script" target="_blank" rel="noopener">on github</a> with the current version featured below;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* LeNa-Decryption.idc</span><br><span class="line"> </span><br><span class="line">   Simple decryption script for the LeNa.b&#x2F;.c variants.</span><br><span class="line"> </span><br><span class="line">   Designed for use on the elf binary that LeNa drops, it works by decrypting the</span><br><span class="line">   encrypted string and dropping the decrypted bytes as a comment where ever the</span><br><span class="line">   string&#39;s pointer is used.</span><br><span class="line"> </span><br><span class="line">   The decryption is really easy (a MVNS), basically a xor to 0xFF</span><br><span class="line"> </span><br><span class="line">   Timothy Strazzere &lt;Tim.Strazzere@lookout.com&gt;</span><br><span class="line">   March 2012</span><br><span class="line">*&#x2F;</span><br><span class="line"> </span><br><span class="line">#include &lt;idc.idc&gt;</span><br><span class="line"> </span><br><span class="line">static decrypt_string(void)</span><br><span class="line">&#123;</span><br><span class="line">    auto original_address, ptr, comment;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; This is normally a pointer to a pointer, follow it</span><br><span class="line">    original_address &#x3D; ptr &#x3D; Dword(ScreenEA());</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; Make sure we retrieved a good address</span><br><span class="line">    if (ptr &#x3D;&#x3D; BADADDR) &#123;</span><br><span class="line">       Message(&quot;Unable to find a actual encrypted string&#39;s address!\n&quot;);</span><br><span class="line">       return;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; XOR until we hit the null byte of the string</span><br><span class="line">    comment &#x3D; &quot;&quot;;</span><br><span class="line">    while(Byte(ptr) !&#x3D; 0x00) &#123;</span><br><span class="line">        comment &#x3D; comment + sprintf(&quot;%s&quot;, Byte(ptr) ^ 0xFF);</span><br><span class="line">        ptr++;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; Drop a comment at the address we originally where pointing too</span><br><span class="line">    MakeRptCmt(original_address, &quot;Decrypted value:  &quot; + comment);</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; Drop a comment on all xrefs to this</span><br><span class="line">    auto xref &#x3D; Dfirst(original_address);</span><br><span class="line">    while(xref !&#x3D; BADADDR) &#123;</span><br><span class="line">        MakeRptCmt(xref, &quot;Decrypted value: &quot; + comment);</span><br><span class="line"> xref &#x3D; Dnext(original_address, xref);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; Drop a message in the output window</span><br><span class="line">    Message(&quot;Decrypted string: %s\n&quot;, comment);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">static main(void) &#123;</span><br><span class="line">    &#x2F;&#x2F; Set hotkey for decryption routine</span><br><span class="line">    if(AddHotkey(&#39;&#x2F;&#39;, &quot;decrypt_string&quot;) !&#x3D; IDCHK_OK) &#123;</span><br><span class="line">        Message(&quot;Something went wrong with adding a hotkey for the decryption routine&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    Message(&quot;Hotkey added!\n&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>The script should be really easy to follow, I tried to comment it well enough. Essentially when you load the script it will bind the function for decrypting to the “/“ key. Find the pointer to the encrypted data like below;<br><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/04/encrypted_pointer.png" alt="Highlighted pointer to the encrypted data" title="Highlighted pointer to the encrypted data"><br>Next just follow the pointer to it’s selection in the text section. Once the encrypted pointer is highlighted, simply hit the assigned hot-key “/“ and let the script do it’s job. The script will dump the decrypted message to the output window and also add a comment next to the pointer as seen below;<br><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/04/decrypted-1.png" alt=""><br>The script also traverses back to all the cross references (xrefs) and will add a comment to all those spots where this variable is used.<br><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/04/decrypted-2.png" alt="The original usage in the decryption function" title="The original usage in the decryption function"><br><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/04/decrypted-3.png" alt="The main use of the decrypted data in another function" title="The main use of the decrypted data in another function"><br>Nothing too fancy or complicated, though it was a nice way to get into IDC scripts for IDA Pro. Also it’s a good way to start segwaying people who may only have used baksmali or dex2jar into using IDA Pro for ARM reversing.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2012/04/static-decryption-for-android-lena-bc/" data-id="ck8dqrf3x00sbojgj61t93ere" class="article-share-link">Share</a>
+    <p>
+      Find me on
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/IDA-Pro/" rel="tag">IDA Pro</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/IDC/" rel="tag">IDC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/LeNa/" rel="tag">LeNa</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/decryption/" rel="tag">decryption</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/legacy-native/" rel="tag">legacy native</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/malware/" rel="tag">malware</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reversing/" rel="tag">reversing</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ops-did-i-publish-that-in-the-aosp" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2012/03/ops-did-i-publish-that-in-the-aosp/" class="article-date">
-  <time datetime="2012-03-22T21:55:27.000Z" itemprop="datePublished">2012-03-22</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>►<a class="article-category-link" href="/blog/categories/android/coding/">coding</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2012/03/ops-did-i-publish-that-in-the-aosp/">Ops, did I publish that in the AOSP?</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>A while back when grep’ing through the AOSP for package manager references, I noticed something weird;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tstrazzere@spinach:~&#x2F;repo&#x2F;android$ grep -ir &quot;&#x2F;system&#x2F;bin&#x2F;pm&quot; *</span><br><span class="line">...</span><br><span class="line">packages&#x2F;experimental&#x2F;droiddreamclean&#x2F;droiddreamclean.c:  fp &#x3D; popen(&quot;&#x2F;system&#x2F;bin&#x2F;pm list packages&quot;, &quot;r&quot;);</span><br><span class="line">packages&#x2F;experimental&#x2F;droiddreamclean&#x2F;droiddreamclean.c:    printf(&quot;failed to run &#x2F;system&#x2F;bin&#x2F;pm list packages. not removing apps.\n&quot;);</span><br><span class="line">packages&#x2F;experimental&#x2F;droiddreamclean&#x2F;droiddreamclean.c:    system(&quot;&#x2F;system&#x2F;bin&#x2F;pm uninstall com.android.providers.downloadsmanager&quot;);</span><br><span class="line">packages&#x2F;experimental&#x2F;droiddreamclean&#x2F;droiddreamclean.c:    system(&quot;&#x2F;system&#x2F;bin&#x2F;pm uninstall com.android.providers.ammanage&quot;);</span><br><span class="line">Binary file packages&#x2F;experimental&#x2F;AndroidVendorSecurityTool&#x2F;assets&#x2F;droiddreamcleanall matches</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>What’s this directory? What is contained in it? Let’s look at the readme;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">tstrazzere@spinach:~&#x2F;repo&#x2F;android&#x2F;packages&#x2F;experimental$ ls -lhGg</span><br><span class="line">total 60K</span><br><span class="line">-rw-rw-r-- 1  143 2011-12-13 15:23 Android.mk</span><br><span class="line">drwxrwxr-x 5 4.0K 2011-12-13 15:23 AndroidVendorSecurityTool</span><br><span class="line">drwxrwxr-x 4 4.0K 2011-12-13 15:23 BugReportSender</span><br><span class="line">drwxrwxr-x 4 4.0K 2011-12-13 15:23 CameraPreviewTest</span><br><span class="line">-rw-rw-r-- 1 2.2K 2011-12-13 15:23 CleanSpec.mk</span><br><span class="line">drwxrwxr-x 5 4.0K 2011-12-13 15:23 DreamTheater</span><br><span class="line">drwxrwxr-x 2 4.0K 2011-12-13 15:23 droiddreamclean</span><br><span class="line">drwxrwxr-x 4 4.0K 2011-12-13 15:23 ExampleImsFramework</span><br><span class="line">drwxrwxr-x 4 4.0K 2011-12-13 15:23 LoaderApp</span><br><span class="line">drwxrwxr-x 2 4.0K 2011-12-13 15:23 procstatlog</span><br><span class="line">-rw-rw-r-- 1  844 2011-12-13 15:23 README</span><br><span class="line">drwxrwxr-x 4 4.0K 2011-12-13 15:23 RpcPerformance</span><br><span class="line">drwxrwxr-x 4 4.0K 2011-12-13 15:23 StrictModeTest</span><br><span class="line">drwxrwxr-x 4 4.0K 2011-12-13 15:23 UiAutomation</span><br><span class="line">drwxrwxr-x 3 4.0K 2011-12-13 15:23 UiAutomationDemo</span><br><span class="line"> </span><br><span class="line">tstrazzere@spinach:~&#x2F;repo&#x2F;android&#x2F;packages&#x2F;experimental$ cat README</span><br><span class="line">The packages&#x2F;experimental&#x2F; directory is for NON-SHIPPING code that is</span><br><span class="line">not included with any flavor of the device, the SDK, or any other kind</span><br><span class="line">of public release, but which might be useful for someone as a test</span><br><span class="line">harness, development tool, or general fun times.</span><br><span class="line"> </span><br><span class="line">&gt;&gt; Every package under this directory must have a README file &lt;&lt;</span><br><span class="line"> </span><br><span class="line">Official SDK development samples should NOT go here, they should go in</span><br><span class="line">development&#x2F;samples&#x2F; instead.</span><br><span class="line"> </span><br><span class="line">Unlike the rest of the tree, code in experimental&#x2F; is NOT built by</span><br><span class="line">default, and may be arbitrarily broken.  Caveat user!  Individual</span><br><span class="line">packages must be built directly with &quot;mmm&quot; or equivalent:</span><br><span class="line"> </span><br><span class="line">   mmm packages&#x2F;experimental&#x2F;BugReportSender</span><br><span class="line"> </span><br><span class="line">Like a communal fridge, this directory will be cleaned periodically.</span><br><span class="line">Every major release, we intend to remove and archive any package that</span><br><span class="line">does not have an active owner and users.</span><br></pre></td></tr></table></figure>
-
-<p>Ops! Did someone mean to publish this repo? It’s all a bunch of experimental and interesting code. Granted it’s a bit old now, but still very interesting to look at. Specifically there are what looks to be the precursor to fragments and ui testing automation, done and committed before the final work was committed to AOSP. There is also the DroidDreamCleaner utility which is interesting. While it was an fix for an old issue, it’s just interesting to see how Google coders handled the issue without having to reverse it. We can even see a “DreamThreater” application which looks like some work done to make an Android screen saver. Sadly not all this code can compile since it relies on some code which isn’t accessible to us and the released branches of AOSP. It seems this code may have been mistakenly committed to the public branch after the kernel.org mishaps, as it appears to have been made public after AOSP became available on Google’s own servers.</p>
-<p>If you don’t have all of AOSP pulled, you can get it by just cloning the following repository;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;android.googlesource.com&#x2F;platform&#x2F;packages&#x2F;experimental</span><br></pre></td></tr></table></figure>
-<p>Again, nothing ground breaking - but definitely an interest repository of code to take a look at, if not to see how Google coders work on “internal” code which isn’t released but to see their comments and documentation that is sometimes stripped from AOSP :)</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2012/03/ops-did-i-publish-that-in-the-aosp/" data-id="ck8dqrf3c00qrojgja3yegop1" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AOSP/" rel="tag">AOSP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/droiddreamcleaner/" rel="tag">droiddreamcleaner</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/experimental/" rel="tag">experimental</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/security/" rel="tag">security</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-insomnidroid-crackme-solution" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2012/03/insomnidroid-crackme-solution/" class="article-date">
-  <time datetime="2012-03-07T13:00:39.000Z" itemprop="datePublished">2012-03-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>►<a class="article-category-link" href="/blog/categories/android/reverse-engineering/">reverse engineering</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+          <a class="icon" target="_blank" rel="noopener" href="https://github.com/strazzere">
+            <i class="fab fa-github"></i><!--
+      ---></a><!--
+    ---><!--
+    --->, 
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2012/03/insomnidroid-crackme-solution/">InsomniDroid - crackme solution</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/03/not-done.png" alt="not-done" title="not done"><br>It’s a bit amusing that this solution for the <em>InsomniHack</em> CTF challenge named <em>“InsomniDroid”</em> was written up past midnight because I couldn’t sleep. Regardless, this was typed up as a play-by-play analysis taken from my crib notes when I actually was solving the crackme, so try to bare with me as this may read a bit odd. While some of the steps might seem odd - I find it is often just easier to tackle each APK in the same manner. This sets up a nice way to quickly find the call-stack and how things get executed and where. When tackling this challenge, I attempted to only use <em>baksmali</em>, opposed to any other tools for simplicity and since not everyone has IDA Pro. Anyway, if you haven’t downloaded the challenge yet you can get it from <a href="http://www.root-me.org/en/Challenges-148/Realist/Insomni-Droid.html" target="_blank" rel="noopener">root-me.org</a> or from this <a href="http://www.strazzere.com/crackmes/insomnidroid.apk" target="_blank" rel="noopener">local mirror</a> (MD5: c2f94fd52c8f270e66d8b16e07fe93e4). If you haven’t solved the challenge yet, I’d recommend to stop reading here and give it a good try. Starting off, we shoudl take a quick look at the AndroidManifest.xml through AXMLPrinter shows which is the main activity;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity android:label&#x3D;&quot;@7F040001&quot; android:name&#x3D;&quot;.InsomniActivity&quot;&gt;</span><br><span class="line">	&lt;intent-filter&gt;</span><br><span class="line">		&lt;action android:name&#x3D;&quot;android.intent.action.MAIN&quot;&gt;&lt;&#x2F;action&gt;</span><br><span class="line">		&lt;category android:name&#x3D;&quot;android.intent.category.LAUNCHER&quot;&gt;</span><br><span class="line">		&lt;&#x2F;category&gt;</span><br><span class="line">	&lt;&#x2F;intent&#x3D;filter&gt;</span><br><span class="line">&lt;&#x2F;activity&gt;</span><br></pre></td></tr></table></figure>
-<p>Now we see what where to start our search without opening the app yet, toss that crackme into baksmali and get ready for the output. No baksmali tricks in place, so we can just take a look right at the main activity, <em>InsomniActivity</em>. The only interesting bits for us is the call to <em>compute</em> method on <em>keyBytes</em> and setting an <em>onClick</em> listener for the validate button;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.line 24</span><br><span class="line">sget-object v0, Lcom&#x2F;fortiguard&#x2F;insomnihack2012&#x2F;challenge&#x2F;Compute;-&gt;keyBytes:[B</span><br><span class="line">invoke-static &#123;v0&#125;, Lcom&#x2F;fortiguard&#x2F;insomnihack2012&#x2F;challenge&#x2F;Compute;-&gt;compute([B)V</span><br><span class="line"></span><br><span class="line">.line 26</span><br><span class="line">iget-object v0, p0, Lcom&#x2F;fortiguard&#x2F;insomnihack2012&#x2F;challenge&#x2F;InsomniActivity;-&gt;validateBtn:Landroid&#x2F;widget&#x2F;Button;</span><br><span class="line">new-instance v1, Lcom&#x2F;fortiguard&#x2F;insomnihack2012&#x2F;challenge&#x2F;InsomniActivity$1;</span><br><span class="line">invoke-direct &#123;v1, p0&#125;, Lcom&#x2F;fortiguard&#x2F;insomnihack2012&#x2F;challenge&#x2F;InsomniActivity$1;-&gt;&lt;init&gt;(Lcom&#x2F;fortiguard&#x2F;insomnihack2012&#x2F;challenge&#x2F;InsomniActivity;)V</span><br><span class="line">invoke-virtual &#123;v0, v1&#125;, Landroid&#x2F;widget&#x2F;Button;-&gt;setOnClickListener(Landroid&#x2F;view&#x2F;View$OnClickListener;)V</span><br></pre></td></tr></table></figure>
-<p>Seems weird that we’re computing something, though never doing anything with the returned result. Let’s just take note of that and come back later. If we look into the <em>onClick</em> listener (<em>InsomniActivity$1</em>) we can see what is going on deeper in the app;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; boolean b &#x3D; checkSecret(editTxt.getText.toString());</span><br><span class="line">.line 30</span><br><span class="line">iget-object v1, p0, Lcom&#x2F;fortiguard&#x2F;insomnihack2012&#x2F;challenge&#x2F;InsomniActivity$1;-&gt;this$0:Lcom&#x2F;fortiguard&#x2F;insomnihack2012&#x2F;challenge&#x2F;InsomniActivity;</span><br><span class="line">iget-object v1, v1, Lcom&#x2F;fortiguard&#x2F;insomnihack2012&#x2F;challenge&#x2F;InsomniActivity;-&gt;editTxt:Landroid&#x2F;widget&#x2F;EditText;</span><br><span class="line">invoke-virtual &#123;v1&#125;, Landroid&#x2F;widget&#x2F;EditText;-&gt;getText()Landroid&#x2F;text&#x2F;Editable;</span><br><span class="line">move-result-object v1</span><br><span class="line">invoke-interface &#123;v1&#125;, Landroid&#x2F;text&#x2F;Editable;-&gt;toString()Ljava&#x2F;lang&#x2F;String;</span><br><span class="line">move-result-object v1</span><br><span class="line">invoke-static &#123;v1&#125;, Lcom&#x2F;fortiguard&#x2F;insomnihack2012&#x2F;challenge&#x2F;Compute;-&gt;checkSecret(Ljava&#x2F;lang&#x2F;String;)Z</span><br><span class="line">move-result v0</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; if(b &#x3D;&#x3D; true) good_boy else bad_boy</span><br><span class="line">.line 31</span><br><span class="line">.local v0, b:Z</span><br><span class="line">if-eqz v0, :cond_24</span><br></pre></td></tr></table></figure>
-<p>Here we can see the bulk of this <em>onClick</em> listener just grabs the text from the <em>EditText</em> widget and uses it as a parameter for the <em>checkSecret</em> function. Now onward to the <em>checkSecret</em> function;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">.method public static checkSecret(Ljava&#x2F;lang&#x2F;String;)Z</span><br><span class="line">    .registers 7</span><br><span class="line">    .parameter &quot;input&quot;</span><br><span class="line"></span><br><span class="line">    .prologue</span><br><span class="line">    .line 63</span><br><span class="line">    :try_start_0</span><br><span class="line">    &#x2F;&#x2F; Get a sha-256 messagedisgest</span><br><span class="line">    const-string v3, &quot;SHA-256&quot;</span><br><span class="line">    invoke-static &#123;v3&#125;, Ljava&#x2F;security&#x2F;MessageDigest;-&gt;getInstance(Ljava&#x2F;lang&#x2F;String;)Ljava&#x2F;security&#x2F;MessageDigest;</span><br><span class="line">    move-result-object v1</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; reset</span><br><span class="line">    .line 64</span><br><span class="line">    .local v1, digest:Ljava&#x2F;security&#x2F;MessageDigest;</span><br><span class="line">    invoke-virtual &#123;v1&#125;, Ljava&#x2F;security&#x2F;MessageDigest;-&gt;reset()V</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; get bytes of passed in string</span><br><span class="line">    .line 65</span><br><span class="line">    invoke-virtual &#123;p0&#125;, Ljava&#x2F;lang&#x2F;String;-&gt;getBytes()[B</span><br><span class="line">    move-result-object v3</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; create new digest</span><br><span class="line">    invoke-virtual &#123;v1, v3&#125;, Ljava&#x2F;security&#x2F;MessageDigest;-&gt;digest([B)[B</span><br><span class="line">    move-result-object v0</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; get secret hash that appears to be precomputed</span><br><span class="line">    .local v0, computedHash:[B</span><br><span class="line">    sget-object v3, Lcom&#x2F;fortiguard&#x2F;insomnihack2012&#x2F;challenge&#x2F;Compute;-&gt;secretHash:[B</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; compare digest&#39;s hash to the precomputed one</span><br><span class="line">    invoke-static &#123;v3, v0&#125;, Ljava&#x2F;util&#x2F;Arrays;-&gt;equals([B[B)Z</span><br><span class="line">    :try_end_16</span><br><span class="line">    .catch Ljava&#x2F;lang&#x2F;Exception; &#123;:try_start_0 .. :try_end_16&#125; :catch_1b</span><br><span class="line"></span><br><span class="line">    move-result v3</span><br><span class="line"></span><br><span class="line">    if-eqz v3, :cond_35</span><br><span class="line"></span><br><span class="line">    .line 67</span><br><span class="line">    const&#x2F;4 v3, 0x1</span><br><span class="line"></span><br><span class="line">    .line 73</span><br><span class="line">    .end local v0           #computedHash:[B</span><br><span class="line">    .end local v1           #digest:Ljava&#x2F;security&#x2F;MessageDigest;</span><br><span class="line">    :goto_1a</span><br><span class="line">    return v3</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; catch hashing exception</span><br><span class="line">    .line 70</span><br><span class="line">    :catch_1b</span><br><span class="line">    move-exception v3</span><br><span class="line">    move-object v2, v3</span><br><span class="line">    .line 71</span><br><span class="line">    .local v2, exp:Ljava&#x2F;lang&#x2F;Exception;</span><br><span class="line">    const-string v3, &quot;InsomniDroid&quot;</span><br><span class="line">    new-instance v4, Ljava&#x2F;lang&#x2F;StringBuilder;</span><br><span class="line">    const-string v5, &quot;checkSecret: &quot;</span><br><span class="line">    invoke-direct &#123;v4, v5&#125;, Ljava&#x2F;lang&#x2F;StringBuilder;-&gt;&lt;init&gt;(Ljava&#x2F;lang&#x2F;String;)V</span><br><span class="line">    invoke-virtual &#123;v2&#125;, Ljava&#x2F;lang&#x2F;Exception;-&gt;toString()Ljava&#x2F;lang&#x2F;String;</span><br><span class="line">    move-result-object v5</span><br><span class="line">    invoke-virtual &#123;v4, v5&#125;, Ljava&#x2F;lang&#x2F;StringBuilder;-&gt;append(Ljava&#x2F;lang&#x2F;String;)Ljava&#x2F;lang&#x2F;StringBuilder;</span><br><span class="line">    move-result-object v4</span><br><span class="line">    invoke-virtual &#123;v4&#125;, Ljava&#x2F;lang&#x2F;StringBuilder;-&gt;toString()Ljava&#x2F;lang&#x2F;String;</span><br><span class="line">    move-result-object v4</span><br><span class="line">    invoke-static &#123;v3, v4&#125;, Landroid&#x2F;util&#x2F;Log;-&gt;w(Ljava&#x2F;lang&#x2F;String;Ljava&#x2F;lang&#x2F;String;)I</span><br><span class="line">    .line 73</span><br><span class="line">    .end local v2           #exp:Ljava&#x2F;lang&#x2F;Exception;</span><br><span class="line">    :cond_35</span><br><span class="line">    const&#x2F;4 v3, 0x0</span><br><span class="line">    goto :goto_1a</span><br><span class="line">.end method</span><br></pre></td></tr></table></figure>
-<p>Ok, this doesn’t help us much. As we can see from the inlined comments I put above, all it’s doing is a SHA-256 hash for our input and comparing it to <em>secretHash</em> - which obviously must also be a SHA-256 digest. Let’s see if we can find this being set anywhere;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">different:insomnidroid tstrazzere$ grep -r &quot;secretHash&quot; * | grep &quot;sput-object&quot; com&#x2F;fortiguard&#x2F;insomnihack2012&#x2F;challenge&#x2F;Compute.smali: sput-object \ v0, Lcom&#x2F;fortiguard&#x2F;insomnihack2012&#x2F;challenge&#x2F;Compute;-&gt;secretHash:[B</span><br></pre></td></tr></table></figure>
-<p>Only one hit - this is good. Let’s go back into <em>Compute.smali</em> and check out whats actually going on. Once we get in here we can see what appears to be, some left over code, along with an array-fill for the <em>secretHash</em> which is trigger the <em>sput-object</em> search we just performed. Let’s get the hash;<br><code>6152587ede8a26f53fd391b055d4de501ee8b2497fe74f8fd69f2c72e2f3e37a</code> And toss that into a hashcat… Maybe it’s an easy one to get and I won’t have to do any other work… Probably not - that would seem like a brute force challenge and not a crackme one, definitely not something simple like that for someone named “crypto girl”. So lets keep looking! Looking back at <em>Compute.smali</em> lets looks back into that function, <em>compute([B)</em> we noticed being called earlier in the APK - but never had the return value used. This one looks interesting because (1) it’s seems left over, is called once but not using the return value and (2) it’s the only place certain left over variables are being touched like <em>c1_null</em>, <em>c2</em> and is also expecting the parameter <em>keyBytes</em> which we also have a variable for. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">.method public static checkSecret(Ljava&#x2F;lang&#x2F;String;)Z</span><br><span class="line">    .registers 7</span><br><span class="line">    .parameter &quot;input&quot;</span><br><span class="line"></span><br><span class="line">    .prologue</span><br><span class="line">    .line 63</span><br><span class="line">    :try_start_0</span><br><span class="line">    &#x2F;&#x2F; Get a sha-256 messagedisgest</span><br><span class="line">    const-string v3, &quot;SHA-256&quot;</span><br><span class="line">    invoke-static &#123;v3&#125;, Ljava&#x2F;security&#x2F;MessageDigest;-&gt;getInstance(Ljava&#x2F;lang&#x2F;String;)Ljava&#x2F;security&#x2F;MessageDigest;</span><br><span class="line">    move-result-object v1</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; reset</span><br><span class="line">    .line 64</span><br><span class="line">    .local v1, digest:Ljava&#x2F;security&#x2F;MessageDigest;</span><br><span class="line">    invoke-virtual &#123;v1&#125;, Ljava&#x2F;security&#x2F;MessageDigest;-&gt;reset()V</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; get bytes of passed in string</span><br><span class="line">    .line 65</span><br><span class="line">    invoke-virtual &#123;p0&#125;, Ljava&#x2F;lang&#x2F;String;-&gt;getBytes()[B</span><br><span class="line">    move-result-object v3</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; create new digest</span><br><span class="line">    invoke-virtual &#123;v1, v3&#125;, Ljava&#x2F;security&#x2F;MessageDigest;-&gt;digest([B)[B</span><br><span class="line">    move-result-object v0</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; get secret hash that appears to be precomputed</span><br><span class="line">    .local v0, computedHash:[B</span><br><span class="line">    sget-object v3, Lcom&#x2F;fortiguard&#x2F;insomnihack2012&#x2F;challenge&#x2F;Compute;-&gt;secretHash:[B</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; compare digest&#39;s hash to the precomputed one</span><br><span class="line">    invoke-static &#123;v3, v0&#125;, Ljava&#x2F;util&#x2F;Arrays;-&gt;equals([B[B)Z</span><br><span class="line">    :try_end_16</span><br><span class="line">    .catch Ljava&#x2F;lang&#x2F;Exception; &#123;:try_start_0 .. :try_end_16&#125; :catch_1b</span><br><span class="line"></span><br><span class="line">    move-result v3</span><br><span class="line"></span><br><span class="line">    if-eqz v3, :cond_35</span><br><span class="line"></span><br><span class="line">    .line 67</span><br><span class="line">    const&#x2F;4 v3, 0x1</span><br><span class="line"></span><br><span class="line">    .line 73</span><br><span class="line">    .end local v0           #computedHash:[B</span><br><span class="line">    .end local v1           #digest:Ljava&#x2F;security&#x2F;MessageDigest;</span><br><span class="line">    :goto_1a</span><br><span class="line">    return v3</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; catch hashing exception</span><br><span class="line">    .line 70</span><br><span class="line">    :catch_1b</span><br><span class="line">    move-exception v3</span><br><span class="line">    move-object v2, v3</span><br><span class="line">    .line 71</span><br><span class="line">    .local v2, exp:Ljava&#x2F;lang&#x2F;Exception;</span><br><span class="line">    const-string v3, &quot;InsomniDroid&quot;</span><br><span class="line">    new-instance v4, Ljava&#x2F;lang&#x2F;StringBuilder;</span><br><span class="line">    const-string v5, &quot;checkSecret: &quot;</span><br><span class="line">    invoke-direct &#123;v4, v5&#125;, Ljava&#x2F;lang&#x2F;StringBuilder;-&gt;&lt;init&gt;(Ljava&#x2F;lang&#x2F;String;)V</span><br><span class="line">    invoke-virtual &#123;v2&#125;, Ljava&#x2F;lang&#x2F;Exception;-&gt;toString()Ljava&#x2F;lang&#x2F;String;</span><br><span class="line">    move-result-object v5</span><br><span class="line">    invoke-virtual &#123;v4, v5&#125;, Ljava&#x2F;lang&#x2F;StringBuilder;-&gt;append(Ljava&#x2F;lang&#x2F;String;)Ljava&#x2F;lang&#x2F;StringBuilder;</span><br><span class="line">    move-result-object v4</span><br><span class="line">    invoke-virtual &#123;v4&#125;, Ljava&#x2F;lang&#x2F;StringBuilder;-&gt;toString()Ljava&#x2F;lang&#x2F;String;</span><br><span class="line">    move-result-object v4</span><br><span class="line">    invoke-static &#123;v3, v4&#125;, Landroid&#x2F;util&#x2F;Log;-&gt;w(Ljava&#x2F;lang&#x2F;String;Ljava&#x2F;lang&#x2F;String;)I</span><br><span class="line">    .line 73</span><br><span class="line">    .end local v2           #exp:Ljava&#x2F;lang&#x2F;Exception;</span><br><span class="line">    :cond_35</span><br><span class="line">    const&#x2F;4 v3, 0x0</span><br><span class="line">    goto :goto_1a</span><br><span class="line">.end method</span><br></pre></td></tr></table></figure>
-<p>This seems interesting… It’s taking in the <em>keyBytes</em> as a parameter, using them to create a <em>SecretKeySpec</em> then using the <em>ivBytes</em> to initialize an <em>IvParameterSpec</em>. Then it attempts to decrypt the <em>c1_null</em> variable, though it does nothing with this return value. After that, we decrypt something that is much larger and again, don’t do anything with the value. Essentially this maps out to the following java code;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">byte[] key_bytes &#x3D; new byte[] &#123;</span><br><span class="line">  0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3</span><br><span class="line">&#125;;</span><br><span class="line">byte[] iv_bytes &#x3D; new byte[] &#123;</span><br><span class="line">  0, 1, 2, 3, 0, 1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 1</span><br><span class="line">&#125;;</span><br><span class="line">byte[] c1_null &#x3D; new byte[] &#123;</span><br><span class="line">  (byte) 0xec, (byte) 0x34, (byte) 0x27, (byte) 0x1d, (byte) 0x0f, (byte) 0x97, (byte) 0x40, (byte) 0x4e,</span><br><span class="line">  (byte) 0xf5, (byte) 0xe9, (byte) 0x5c, (byte) 0xa2, (byte) 0xfe, (byte) 0x0d, (byte) 0x84, (byte) 0x21</span><br><span class="line">&#125;;</span><br><span class="line">byte[] c2 &#x3D; new byte[] &#123;</span><br><span class="line">  (byte) 0xaf, (byte) 0x5b, (byte) 0x49, (byte) 0x7a, (byte) 0x7d, (byte) 0xf6, (byte) 0x34, (byte) 0x3d,</span><br><span class="line">  (byte) 0xd4, (byte) 0xc9, (byte) 0x18, (byte) 0xcd, (byte) 0x90, (byte) 0x79, (byte) 0xa4, (byte) 0x53,</span><br><span class="line">  (byte) 0x89, (byte) 0x19, (byte) 0x52, (byte) 0x6e, (byte) 0x6a, (byte) 0xb7, (byte) 0x01, (byte) 0x0b,</span><br><span class="line">  (byte) 0xa6, (byte) 0xc9, (byte) 0x1f, (byte) 0xf6, (byte) 0xac, (byte) 0x2d, (byte) 0xe7, (byte) 0x4e,</span><br><span class="line">  (byte) 0x99, (byte) 0x5a, (byte) 0x53, (byte) 0x78, (byte) 0x7d, (byte) 0xe4, (byte) 0x60, (byte) 0x75,</span><br><span class="line">  (byte) 0xdc, (byte) 0xc9, (byte) 0x0f, (byte) 0xc7, (byte) 0x9d, (byte) 0x7f, (byte) 0xe1, (byte) 0x55,</span><br><span class="line">  (byte) 0xcc, (byte) 0x77, (byte) 0x48, (byte) 0x79, (byte) 0x6a, (byte) 0xb7, (byte) 0x29, (byte) 0x3d,</span><br><span class="line">  (byte) 0xcf, (byte) 0xc9, (byte) 0x6e, (byte) 0xcf, (byte) 0x95, (byte) 0x6b, (byte) 0xe9, (byte) 0x49,</span><br><span class="line">  (byte) 0xde, (byte) 0x46, (byte) 0x17, (byte) 0x75, (byte) 0x64, (byte) 0xf6, (byte) 0x2b, (byte) 0x2b,</span><br><span class="line">  (byte) 0xaa, (byte) 0x84, (byte) 0x6d, (byte) 0x90, (byte) 0xcd, (byte) 0x39, (byte) 0xb1, (byte) 0x17</span><br><span class="line">&#125;;</span><br><span class="line">SecretKeySpec key_spec &#x3D; new SecretKeySpec(key_bytes, &quot;AES&quot;);</span><br><span class="line">IvParameterSpec iv_parameter &#x3D; new IvParameterSpec(iv_bytes);</span><br><span class="line">try &#123;</span><br><span class="line">  Cipher cipher &#x3D; Cipher.getInstance(&quot;AES&#x2F;CTR&#x2F;NoPadding&quot;);</span><br><span class="line">  cipher.init(Cipher.DECRYPT_MODE, key_spec, iv_parameter);</span><br><span class="line">  byte[] result &#x3D; cipher.doFinal(c1_null);</span><br><span class="line">  byte[] p2 &#x3D; new byte[c2.length];</span><br><span class="line">  for(int i &#x3D; 0; i &lt; c2.length; i +&#x3D; 0x10) &#123;</span><br><span class="line">    cipher.init(Cipher.DECRYPT_MODE, key_spec, iv_parameter);</span><br><span class="line">    cipher.doFinal(c2, i, 0x10, p2, i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125; catch(Exception e) &#123;</span><br><span class="line">  System.out.println(&quot;ops: &quot; + e.toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>At this point I’m assuming I just solved this – run the app, look at the output… Garbage – it’s just not UTF-8 (or UTF-16) characters. That can’t be it – I don’t think the challenge would be to include non-ascii characters! After staring at this a bit longer I decided to look at the lengths of what is being output. <em>result</em> has a length that will always going to be 16. <em>p2</em> will end up having a length that is always being divisible by 16… Well - lets try some operations between the two resulting arrays that aren’t being used. First one I tried was XOR’ing them together (everyone loves XOR, malware writers, crackme writers, etc, etc) – and this ended up being exactly what needed to be done. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">byte[] key_bytes &#x3D; new byte[] &#123;</span><br><span class="line">  0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3</span><br><span class="line">&#125;;</span><br><span class="line">byte[] iv_bytes &#x3D; new byte[] &#123;</span><br><span class="line">  0, 1, 2, 3, 0, 1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 1</span><br><span class="line">&#125;;</span><br><span class="line">byte[] c1_null &#x3D; new byte[] &#123;</span><br><span class="line">  (byte) 0xec, (byte) 0x34, (byte) 0x27, (byte) 0x1d, (byte) 0x0f, (byte) 0x97, (byte) 0x40, (byte) 0x4e,</span><br><span class="line">  (byte) 0xf5, (byte) 0xe9, (byte) 0x5c, (byte) 0xa2, (byte) 0xfe, (byte) 0x0d, (byte) 0x84, (byte) 0x21</span><br><span class="line">&#125;;</span><br><span class="line">byte[] c2 &#x3D; new byte[] &#123;</span><br><span class="line">  (byte) 0xaf, (byte) 0x5b, (byte) 0x49, (byte) 0x7a, (byte) 0x7d, (byte) 0xf6, (byte) 0x34, (byte) 0x3d,</span><br><span class="line">  (byte) 0xd4, (byte) 0xc9, (byte) 0x18, (byte) 0xcd, (byte) 0x90, (byte) 0x79, (byte) 0xa4, (byte) 0x53,</span><br><span class="line">  (byte) 0x89, (byte) 0x19, (byte) 0x52, (byte) 0x6e, (byte) 0x6a, (byte) 0xb7, (byte) 0x01, (byte) 0x0b,</span><br><span class="line">  (byte) 0xa6, (byte) 0xc9, (byte) 0x1f, (byte) 0xf6, (byte) 0xac, (byte) 0x2d, (byte) 0xe7, (byte) 0x4e,</span><br><span class="line">  (byte) 0x99, (byte) 0x5a, (byte) 0x53, (byte) 0x78, (byte) 0x7d, (byte) 0xe4, (byte) 0x60, (byte) 0x75,</span><br><span class="line">  (byte) 0xdc, (byte) 0xc9, (byte) 0x0f, (byte) 0xc7, (byte) 0x9d, (byte) 0x7f, (byte) 0xe1, (byte) 0x55,</span><br><span class="line">  (byte) 0xcc, (byte) 0x77, (byte) 0x48, (byte) 0x79, (byte) 0x6a, (byte) 0xb7, (byte) 0x29, (byte) 0x3d,</span><br><span class="line">  (byte) 0xcf, (byte) 0xc9, (byte) 0x6e, (byte) 0xcf, (byte) 0x95, (byte) 0x6b, (byte) 0xe9, (byte) 0x49,</span><br><span class="line">  (byte) 0xde, (byte) 0x46, (byte) 0x17, (byte) 0x75, (byte) 0x64, (byte) 0xf6, (byte) 0x2b, (byte) 0x2b,</span><br><span class="line">  (byte) 0xaa, (byte) 0x84, (byte) 0x6d, (byte) 0x90, (byte) 0xcd, (byte) 0x39, (byte) 0xb1, (byte) 0x17</span><br><span class="line">&#125;;</span><br><span class="line">SecretKeySpec key_spec &#x3D; new SecretKeySpec(key_bytes, &quot;AES&quot;);</span><br><span class="line">IvParameterSpec iv_parameter &#x3D; new IvParameterSpec(iv_bytes);</span><br><span class="line">try &#123;</span><br><span class="line">  Cipher cipher &#x3D; Cipher.getInstance(&quot;AES&#x2F;CTR&#x2F;NoPadding&quot;);</span><br><span class="line">  cipher.init(Cipher.DECRYPT_MODE, key_spec, iv_parameter);</span><br><span class="line">  byte[] result &#x3D; cipher.doFinal(c1_null);</span><br><span class="line">  byte[] p2 &#x3D; new byte[c2.length];</span><br><span class="line">  for(int i &#x3D; 0; i &lt; c2.length; i +&#x3D; 0x10) &#123;</span><br><span class="line">    cipher.init(Cipher.DECRYPT_MODE, key_spec, iv_parameter);</span><br><span class="line">    cipher.doFinal(c2, i, 0x10, p2, i);</span><br><span class="line">  &#125;</span><br><span class="line">  byte[] solution &#x3D; new byte[p2.length];</span><br><span class="line">  for(int x &#x3D; 0; x &lt; p2.length &#x2F; result.length; x++)&#123;</span><br><span class="line">    for(int i &#x3D; 0; i &lt; result.length; i++) &#123;</span><br><span class="line">      solution[i + x * result.length ] &#x3D; (byte) (result[i] ^ p2[i + (x * result.length)]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  System.out.println(new String(solution));</span><br><span class="line">&#125;</span><br><span class="line">catch(Exception e) &#123;</span><br><span class="line">  System.out.println(&quot;ops: &quot; + e.toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>After running this we get the output;</p>
-<pre><code>Congrats! Dont re-use AES CTR counters ;) Secret Code is: 2mkfmh2r0hkake_m123456</code></pre><p><a href="http://www.strazzere.com/blog/wp-content/uploads/2012/03/insomnidroid-congrats.png" target="_blank" rel="noopener"><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/03/insomnidroid-congrats.png" alt="" title="insomnidroid-congrats"></a> Ah - Crypto girl left us a nice crypto related message. Essentially explaining what went on here. Fun stuff and definitely glad I didn’t wait for hashcat to try and spit out that password.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2012/03/insomnidroid-crackme-solution/" data-id="ck8dqrf2v00ppojgje8i8ck4h" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/crackme/" rel="tag">crackme</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/insomnidroid/" rel="tag">insomnidroid</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/insomnihack-ctf/" rel="tag">insomnihack ctf</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/solution/" rel="tag">solution</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-insomnidroid-great-presentation-on-android-reversing-tools" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/" class="article-date">
-  <time datetime="2012-03-06T21:55:11.000Z" itemprop="datePublished">2012-03-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>►<a class="article-category-link" href="/blog/categories/android/reverse-engineering/">reverse engineering</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/">InsomniDroid - great presentation on Android Reversing Tools</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Recently, Axelle from Fortinet aka Crypto Girl, presented a well done paper at <a href="http://www.scrt.ch/en/insomnihack/2012/presentation" target="_blank" rel="noopener">InsomniHack 2012</a> - which she just posted on her <a href="http://www.twitter.com/cryptax" target="_blank" rel="noopener">twitter</a> account. It does a <em>very</em> good job at outlining the basics of how to get into Android reversing and the Android reverse engineer tools. Since she works in the AV industry, it’s based on that view - a defensive analyst looking at malware. She does a great job describing the contents of an APK, how to read specific files (AndroidManifest.xml, etc) - giving multiple ways too. It’s nice to see how different people tackle these types of issues.</p>
-<p>It’s also a nice thing to see someone outline all the different applicable tools. I haven’t seen anyone outside of a few Google people mention dexdump in a long time - definitely an underrated tool! It was interesting to see the list of tools she listed for decompiling the apk, specifically <em>ded</em>. I mention <em>ded</em> specifically since I’ve never actually seen anyone use it or mention it outside of the academic work done around it. <em>Dex2jar</em> was obviously mentioned, it’s quiet possibly the most (over)used tool out there. Personally I’m not that big of a fan of the project, though it definitely has some great use cases and people seem to love it.</p>
-<p>Axelle did a great job providing a tutorial with a clean step by step of what to look for when tackling malware. Great steps provided about which tool to use, how to identify interesting points and then a nice little “ops! the tool broke, lets switch to the next one!” which can often happen due to the early stages of development for most of these tools. She also provides a slide on how synthetic access is created when inner classes access private members of their enclosing classes. It’s an interesting concept that seems to be lost on many beginner reversers in the Android world.</p>
-<p>There are even a few slides on anti-emulator code, which has always been an interesting thing to me. She mentions how the Honeynet challenge implemented a few tricks and how one could either (1) modify the application or (2) modify the emulator. I’ve seen a few other people mention “hiding the emulator”, which has sent me into an interesting little tangent of research. Hopefully I’ll have time to add that into an expect Blackhat/Defcon presentation I’m working on. Personally I’m not a fan of the simplistic approach of just changing the application or the emulator imei - there have to be a ton of easier ways for an attacker to find the emulator and the defender to hide it.</p>
-<p>Another awesome aspect of this presentation is how Axelle really did try to provide information about <em>every</em> tool. I’ve seen many people mention the use of Androguard, but not what features they use. I’ve personally messed around with it a bit, but haven’t found the urge to use it more often in my day to day work. I keep coming back to thinking, awesome features and implementation, though it’s just so much information I haven’t found it useful. One of Axelle’s slides I think sums it up pretty well;<br><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/03/androguard.png" alt="Uhmm -- maybe?" title="Worth the trouble?"><br>Enough about the presentation - you should read it yourself. The PDF is available from <a href="http://www.fortiguard.com/sites/default/files/insomnidroid.pdf" target="_blank" rel="noopener">Fortinets’s site</a> (<a href="http://www.strazzere.com/papers/insomnidroid.pdf" target="_blank" rel="noopener">local mirror</a>)</p>
-<p>As a last side note – it’s extremely refreshing to see an Android presentation that does <em>not</em> include this “presentation filler” known as the “Android Architecture” picture :) <img src="http://www.strazzere.com/blog/wp-content/uploads/2012/03/android-architecture.jpg" alt="" title="I HATE THIS PICTURE"></p>
-<p><strong>Edit:</strong> I forgot to link the crackme challenge which Axelle also provided at InsomniHack - which is also called InsomniDroid. It’s published over at root-me.org if anyway wants to take the challenge. It was a fun quick little challenge, available <a href="http://www.root-me.org/en/Challenges-148/Realist/Insomni-Droid.html?lang=en" target="_blank" rel="noopener">here</a>.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/" data-id="ck8dqrf2n00pjojgjd4xo4nep" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android-malware/" rel="tag">android malware</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/crackme/" rel="tag">crackme</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/cryptax/" rel="tag">cryptax</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/fortiguard/" rel="tag">fortiguard</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/insomnidroid/" rel="tag">insomnidroid</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/insomnihack/" rel="tag">insomnihack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/tools/" rel="tag">tools</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-making-smali-a-bit-easier-to-read-in-emacs" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2012/02/making-smali-a-bit-easier-to-read-in-emacs/" class="article-date">
-  <time datetime="2012-02-06T00:06:22.000Z" itemprop="datePublished">2012-02-05</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>►<a class="article-category-link" href="/blog/categories/android/reverse-engineering/">reverse engineering</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+          <a class="icon" target="_blank" rel="noopener" href="https://twitter.com/timstrazz">
+            <i class="fab fa-twitter"></i><!--
+      ---></a><!--
+    ---><!--
+    --->, 
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2012/02/making-smali-a-bit-easier-to-read-in-emacs/">Making smali a bit easier to read in Emacs</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://173.230.150.16/blog/wp-content/uploads/2012/02/smali_coloring.png" alt="Oh that? Just some pretty colors while reversing..." title="Oh that? Just some pretty colors for smali..."><br>Spending a large amount of time using baksmali and reading through small files can be rather dull without the right tools. A while back I noticed a few people making color scheme files for vim, Notepad+ and other tools I didn’t use. So after reading up on a quick few tutorials I created a smali-mode for Emacs.</p>
-<p>The code is up on my <a href="https://github.com/strazzere/Emacs-Smali" target="_blank" rel="noopener">github</a>, I haven’t actually touched it in a while until last night. I noticed a few other people actually pulled clones of it and made a few minor fixes! Some good fixes too, making the loading much faster and fixing some things I wasn’t too sure about myself for making an Emacs mode.</p>
-<p>Anyway - hopefully other people find this useful and maybe more people will contribute to the project. For people looking for the other color schemes here are some of those resources;</p>
-<p>Jon Larimer’s vim scheme;<br> <a href="http://codetastrophe.com/smali.vim" target="_blank" rel="noopener">http://codetastrophe.com/smali.vim</a><br>Lohan+’s Notepad+ color scheme;<br> <a href="https://sites.google.com/site/lohanplus/files/smali_npp.xml" target="_blank" rel="noopener">https://sites.google.com/site/lohanplus/files/smali_npp.xml</a> (<a href="http://androidcracking.blogspot.com/2011/02/smali-syntax-highlighting-for-notepad.html" target="_blank" rel="noopener">Directions here</a>)</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2012/02/making-smali-a-bit-easier-to-read-in-emacs/" data-id="ck8dqrf2z00pvojgjewueg3m0" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/baksmali/" rel="tag">baksmali</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/color-scheme/" rel="tag">color scheme</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/emacs/" rel="tag">emacs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/smali/" rel="tag">smali</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/smali-mode/" rel="tag">smali-mode</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-conquering-the-mysterious-userid-fixing-android-market-downloading" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/" class="article-date">
-  <time datetime="2012-02-05T01:07:41.000Z" itemprop="datePublished">2012-02-04</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>►<a class="article-category-link" href="/blog/categories/android/reverse-engineering/">reverse engineering</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/">Conquering the mysterious userId (Fixing Android Market downloading)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Originally I found the easiest way to download applications was just <a href="http://strazzere.com/blog/?p=293">spoofing the final request</a>. This worked - and worked well for the entire time I had been using it. Though it bugged me that I couldn’t find out <em>where</em> the actual <code>userId</code> was coming from. So I keep digging and digging and finally came up with the solution which is posted below. I never really shared this though, since as I said - other people just used the hack and didn’t seem to care much. The main concern people had was “how do I get it faster” - which to that I always replied “learn whats going on”. Plenty of people figured it out, though now, according to the the emails I’ve been getting recently and the ones on the Android-Market-Api Google Group, this stopped old hack has working. So, I guess it’s about time to spill the rest of the mysery.</p>
-<p>The requests originally looked like this when being sniffed over the wire;</p>
-<p><code>http://android.clients.google.com/market/download/Download?userId=###&amp;deviceId=###&amp;assetId=###</code></p>
-<p>Though recently they started looking like this;</p>
-<p><code>http://android.clients.google.com/market/download/Download?packageName=com.package.name&amp;versionCode=##&amp;token=###</code></p>
-<p>Well - this didn’t matter much to me since I don’t use that project, but I’ve helped enough people through side channels that I figured the information is as good as public. So I’ve decided to write up a little “what is actually going on”.</p>
-<p>Just a little while ago I committed an updated <em><a href="https://code.google.com/p/android-market-api/source/diff?spec=svn47&r=47&format=side&path=/trunk/AndroidMarketApi/proto/market.proto" target="_blank" rel="noopener">market.proto</a></em> with the necessary fields to request downloads from the Android Market. Essentially I’ve added the <code>GetAssetRequest</code> and the <code>GetAssetRequest</code> which was previously missing. I also fixed the <code>unknown</code> field which is known as the <code>isSecure</code> field. This boolean field lets the market know what type of request is coming in and which token will be used.</p>
-<p>In the order versions of the vending apk, not everything was send over HTTPS. When most normal requests (get application info, queries, etc) where over unsecured HTTP, the GetAssetsRequest was considered “secure” and only went over HTTPS. This meant the <code>isSecure</code> field had to be set and a new authtoken would be used. Instead of the <code>android</code> service authtoken being sent, the <code>androidsecure</code> token would be sent. This is probably done so that if someone was sniffing requests, they couldn’t just reuse your <em>android</em> token and get away with it, though it may have been done for other reasons.</p>
-<p>So what was the mystery of the <code>userId</code>? Well - it was never found on the device, because it was never actually stored on the device. It was only stored sometimes inside of URLS which had been cached or saved to databases. If properly using the protobuf, this relieves the person from needing to find these values, since the market themselves provide them! It was a bit annoying to figure this out finally, but also a huge relief since I wasn’t going crazy not finding the <code>userId</code> anymore. So let’s sum this all up;</p>
-<ol>
-<li>Get the <code>android secure</code> token for your account, use this as the <code>authtoken</code> for your next request</li>
-<li>Build proper request protobuf; Use <code>authtoken</code> from above, set <code>isSecure</code> to true and add the <code>assetId</code> to a <code>GetAssetRequest</code></li>
-<li>Receive the <code>GetAssetResponse</code> and build an HTTP request from it using the; <code>blobUrl</code> as the URL and set a cookie using the <code>downloadAuthCookieName</code>/<code>downloadAuthCookieValue</code> pair.</li>
-</ol>
-<p>Lastly, I’d like the apologize for the delay in this information. I feel a bit bad since I’ve known this for a while, but most people who ask me questions where just using the hack, which – until very recently worked fine. Also, it has always been possible to just reverse the apk yourself and figure out what was going on ;)</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/" data-id="ck8dqrey9001cojgjb50d1c5a" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android-market/" rel="tag">android market</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android-market-api/" rel="tag">android market api</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/apk/" rel="tag">apk</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/downloading-apks/" rel="tag">downloading apks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/userId/" rel="tag">userId</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/vending-apk/" rel="tag">vending.apk</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-quickly-setting-up-an-android-emulator-for-fuzzinghacking" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2012/01/quickly-setting-up-an-android-emulator-for-fuzzinghacking/" class="article-date">
-  <time datetime="2012-01-15T06:15:43.000Z" itemprop="datePublished">2012-01-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>►<a class="article-category-link" href="/blog/categories/android/coding/">coding</a>►<a class="article-category-link" href="/blog/categories/android/coding/reverse-engineering/">reverse engineering</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+          <a class="icon" target="_blank" rel="noopener" href="https://www.linkedin.com/in/timstrazzere">
+            <i class="fab fa-linkedin"></i><!--
+      ---></a><!--
+    ---><!--
+    ---> and 
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2012/01/quickly-setting-up-an-android-emulator-for-fuzzinghacking/">Quickly setting up an Android emulator for fuzzing/hacking</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <p>Normally I like spending time fuzzing/causing segfaults with real devices, not sure why - maybe it’s just because it just feels more gratifying. Though recently for a small project at work, I need to be able to do multiple devices for longer periods of time and swap out different modules relatively fast. This would be a huge problem - but I wanted to automate it and do the least amount of work possible. A challenge that comes up sometimes with the somewhat stock phones I use for testing, is that some compiled modules/elf binaries never worked that well. Sometimes due to carrier modifications, sometimes due to Cyanogen modifications other times just due to me being stupid and compiling things horribly wrong. Since I just got my desktop machine all set up, it seemed like the perfect time to try and automate this on a box I could just SSH into and let run all the time!</p>
-<p>After a quick bit of Googling, I didn’t see many instructions on how to modify emulator images fast. Lots of people said, generate an emulator, then change the <code>system.img</code> by mounting it, then restart the emulator and make sure it doesn’t overwrite changes. That’s a pain though, I don’t want to mount anything! Though this did remind me of building the AOSP which can product the <code>system.img</code> – perfect!</p>
-<p>After making all my changes, some Dalvik changes and some Webkit changes, kicked off a full build via the normal commands; </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">tstrazzere@spinach:~&#x2F;repo&#x2F;android$ . build&#x2F;envsetup.sh</span><br><span class="line">including device&#x2F;samsung&#x2F;maguro&#x2F;vendorsetup.sh</span><br><span class="line">including device&#x2F;samsung&#x2F;tuna&#x2F;vendorsetup.sh</span><br><span class="line">including device&#x2F;ti&#x2F;panda&#x2F;vendorsetup.sh</span><br><span class="line">including sdk&#x2F;bash_completion&#x2F;adb.bash</span><br><span class="line">tstrazzere@spinach:~&#x2F;repo&#x2F;android$ lunch full-eng</span><br><span class="line"></span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">PLATFORM_VERSION_CODENAME&#x3D;AOSP</span><br><span class="line">PLATFORM_VERSION&#x3D;4.0.1.2.3.4.5.6.7.8.9</span><br><span class="line">TARGET_PRODUCT&#x3D;full</span><br><span class="line">TARGET_BUILD_VARIANT&#x3D;eng</span><br><span class="line">TARGET_BUILD_TYPE&#x3D;release</span><br><span class="line">TARGET_BUILD_APPS&#x3D;</span><br><span class="line">TARGET_ARCH&#x3D;arm</span><br><span class="line">TARGET_ARCH_VARIANT&#x3D;armv7-a</span><br><span class="line">HOST_ARCH&#x3D;x86</span><br><span class="line">HOST_OS&#x3D;linux</span><br><span class="line">HOST_BUILD_TYPE&#x3D;release</span><br><span class="line">BUILD_ID&#x3D;OPENMASTER</span><br><span class="line">OUT_DIR&#x3D;out</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">tstrazzere@spinach:~&#x2F;repo&#x2F;android$ make -j4</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">PLATFORM_VERSION_CODENAME&#x3D;AOSP</span><br><span class="line">PLATFORM_VERSION&#x3D;4.0.1.2.3.4.5.6.7.8.9</span><br><span class="line">TARGET_PRODUCT&#x3D;full</span><br><span class="line">TARGET_BUILD_VARIANT&#x3D;eng</span><br><span class="line">TARGET_BUILD_TYPE&#x3D;release</span><br><span class="line">TARGET_BUILD_APPS&#x3D;</span><br><span class="line">TARGET_ARCH&#x3D;arm</span><br><span class="line">TARGET_ARCH_VARIANT&#x3D;armv7-a</span><br><span class="line">HOST_ARCH&#x3D;x86</span><br><span class="line">HOST_OS&#x3D;linux</span><br><span class="line">HOST_BUILD_TYPE&#x3D;release</span><br><span class="line">BUILD_ID&#x3D;OPENMASTER</span><br><span class="line">OUT_DIR&#x3D;out</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">...</span><br><span class="line">target Symbolic: libwebcore (out&#x2F;target&#x2F;product&#x2F;generic&#x2F;symbols&#x2F;system&#x2F;lib&#x2F;libwebcore.so)</span><br><span class="line">target Strip: libwebcore (out&#x2F;target&#x2F;product&#x2F;generic&#x2F;obj&#x2F;lib&#x2F;libwebcore.so)</span><br><span class="line">Install: out&#x2F;target&#x2F;product&#x2F;generic&#x2F;system&#x2F;lib&#x2F;libwebcore.so</span><br><span class="line">target Executable: webcore_test (out&#x2F;target&#x2F;product&#x2F;generic&#x2F;obj&#x2F;EXECUTABLES&#x2F;webcore_test_intermediates&#x2F;LINKED&#x2F;webcore_test)</span><br><span class="line">Finding NOTICE files: out&#x2F;target&#x2F;product&#x2F;generic&#x2F;obj&#x2F;NOTICE_FILES&#x2F;hash-timestamp</span><br><span class="line">target Symbolic: webcore_test (out&#x2F;target&#x2F;product&#x2F;generic&#x2F;symbols&#x2F;system&#x2F;bin&#x2F;webcore_test)</span><br><span class="line">target Strip: webcore_test (out&#x2F;target&#x2F;product&#x2F;generic&#x2F;obj&#x2F;EXECUTABLES&#x2F;webcore_test_intermediates&#x2F;webcore_test)</span><br><span class="line">Combining NOTICE files: out&#x2F;target&#x2F;product&#x2F;generic&#x2F;obj&#x2F;NOTICE.html</span><br><span class="line">Installed file list: out&#x2F;target&#x2F;product&#x2F;generic&#x2F;installed-files.txt</span><br><span class="line">Target system fs image: out&#x2F;target&#x2F;product&#x2F;generic&#x2F;obj&#x2F;PACKAGING&#x2F;systemimage_intermediates&#x2F;system.img</span><br><span class="line">Install system fs image: out&#x2F;target&#x2F;product&#x2F;generic&#x2F;system.img</span><br></pre></td></tr></table></figure>
-
-<p>While waiting for the compilation to finish - I prepped a “target platform” to build an emulator image for. To quickly do this I just copied the <code>android-15</code> directory under the <code>platforms</code> directory of the sdk. This will give us the proper structure and files required while keeping the normal platform for android-15 intact. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">tstrazzere@spinach:~&#x2F;android&#x2F;android-sdk-linux&#x2F;platforms$ cp -r android-15 custom</span><br><span class="line">tstrazzere@spinach:~&#x2F;android&#x2F;android-sdk-linux&#x2F;platforms$ cd custom&#x2F;</span><br><span class="line">tstrazzere@spinach:~&#x2F;android&#x2F;android-sdk-linux&#x2F;platforms&#x2F;custom$ ls -l</span><br><span class="line">tstrazzere@spinach:~&#x2F;android&#x2F;android-sdk-linux&#x2F;platforms&#x2F;custom$ ls -l</span><br><span class="line">total 13124</span><br><span class="line">-rw-rw-r-- 1 tstrazzere tstrazzere 13402051 2012-01-14 18:46 android.jar</span><br><span class="line">-rw-rw-r-- 1 tstrazzere tstrazzere 1371 2012-01-14 18:46 build.prop</span><br><span class="line">drwxrwxr-x 4 tstrazzere tstrazzere 4096 2012-01-14 18:46 data</span><br><span class="line">-rw-rw-r-- 1 tstrazzere tstrazzere 1796 2012-01-14 18:46 framework.aidl</span><br><span class="line">drwxrwxr-x 2 tstrazzere tstrazzere 4096 2012-01-14 18:46 images</span><br><span class="line">drwxrwxr-x 4 tstrazzere tstrazzere 4096 2012-01-14 18:46 renderscript</span><br><span class="line">-rw-rw-r-- 1 tstrazzere tstrazzere 206 2012-01-14 18:46 sdk.properties</span><br><span class="line">drwxrwxr-x 3 tstrazzere tstrazzere 4096 2012-01-14 18:46 skins</span><br><span class="line">-rw-rw-r-- 1 tstrazzere tstrazzere 398 2012-01-14 18:46 source.properties</span><br><span class="line">drwxrwxr-x 2 tstrazzere tstrazzere 4096 2012-01-14 18:46 templates</span><br><span class="line">tstrazzere@spinach:~&#x2F;android&#x2F;android-sdk-linux&#x2F;platforms&#x2F;custom$ cd images&#x2F;</span><br><span class="line">tstrazzere@spinach:~&#x2F;android&#x2F;android-sdk-linux&#x2F;platforms&#x2F;custom&#x2F;images$ ls -l</span><br><span class="line">total 121400</span><br><span class="line">-rwxrwxr-x 1 tstrazzere tstrazzere 1445004 2012-01-14 18:46 kernel-qemu</span><br><span class="line">-rw-rw-r-- 1 tstrazzere tstrazzere 359448 2012-01-14 18:46 NOTICE.txt</span><br><span class="line">-rw-rw-r-- 1 tstrazzere tstrazzere 149875 2012-01-14 18:46 ramdisk.img</span><br><span class="line">-rw-rw-r-- 1 tstrazzere tstrazzere 119406144 2012-01-14 18:46 system.img</span><br><span class="line">-rw-rw-r-- 1 tstrazzere tstrazzere 2948352 2012-01-14 18:46 userdata.img</span><br><span class="line">tstrazzere@spinach:~&#x2F;android&#x2F;android-sdk-linux&#x2F;platforms&#x2F;custom&#x2F;images$ rm system.img</span><br><span class="line">rm: remove regular file &#96;system.img&#39;? y</span><br><span class="line">tstrazzere@spinach:~&#x2F;android&#x2F;android-sdk-linux&#x2F;platforms&#x2F;custom&#x2F;images$ cp ~&#x2F;repo&#x2F;android&#x2F;out&#x2F;target&#x2F;product&#x2F;generic&#x2F;system.img $PWD</span><br><span class="line">tstrazzere@spinach:~&#x2F;android&#x2F;android-sdk-linux&#x2F;platforms&#x2F;custom&#x2F;images$ ls -l</span><br><span class="line">total 170976</span><br><span class="line">-rwxrwxr-x 1 tstrazzere tstrazzere 1445004 2012-01-14 18:46 kernel-qemu</span><br><span class="line">-rw-rw-r-- 1 tstrazzere tstrazzere 359448 2012-01-14 18:46 NOTICE.txt</span><br><span class="line">-rw-rw-r-- 1 tstrazzere tstrazzere 149875 2012-01-14 18:46 ramdisk.img</span><br><span class="line">-rw------- 1 tstrazzere tstrazzere 170172288 2012-01-14 18:48 system.img</span><br><span class="line">-rw-rw-r-- 1 tstrazzere tstrazzere 2948352 2012-01-14 18:46 userdata.img</span><br></pre></td></tr></table></figure>
-<p>Awesome, we copied over the <code>system.img</code> too the nessicary directory, lets just edit a few files so I don’t forget what this when I build my emulators. Open up the <code>source.properties</code> file and edit the version number to something you can remember, I just changed mine to say <code>4.0.3-hacked</code>;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">tstrazzere@spinach:~&#x2F;android&#x2F;android-sdk-linux&#x2F;platforms&#x2F;custom$ android list targets</span><br><span class="line">Available Android targets:</span><br><span class="line">...</span><br><span class="line">----------</span><br><span class="line">id: 22 or &quot;android-15&quot;</span><br><span class="line">Name: Android 4.0.3-hacked</span><br><span class="line">Type: Platform</span><br><span class="line">API level: 15</span><br><span class="line">Revision: 1</span><br><span class="line">Skins: WXGA (default)</span><br><span class="line">ABIs : armeabi</span><br><span class="line">----------</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p>Now I can just create an emulator like normal and fire it up;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tstrazzere@spinach:~&#x2F;android&#x2F;android-sdk-linux&#x2F;platforms&#x2F;custom$ android create avd -t 27 -n dalvik_webcore_fuzz</span><br><span class="line">Auto-selecting single ABI armeabi-v7a</span><br><span class="line">Android 4.0.3-hacked is a basic Android platform.</span><br><span class="line">Do you wish to create a custom hardware profile [no]</span><br><span class="line">Created AVD &#39;dalvik_webcore_fuzz&#39; based on Android 4.0.3-hacked, ARM (armeabi-v7a) processor,</span><br><span class="line">with the following hardware config:</span><br><span class="line">hw.lcd.density&#x3D;240</span><br><span class="line">vm.heapSize&#x3D;48</span><br><span class="line">hw.ramSize&#x3D;512</span><br><span class="line">tstrazzere@spinach:~&#x2F;android&#x2F;android-sdk-linux&#x2F;platforms&#x2F;custom$ emulator -avd dalvik_webcore_fuzz</span><br></pre></td></tr></table></figure>
-
-<p>Now it just time to attach your fuzzing and other automated tools to the emulator.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2012/01/quickly-setting-up-an-android-emulator-for-fuzzinghacking/" data-id="ck8dqrf3m00rgojgj5ttgeflw" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AOSP/" rel="tag">AOSP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/emulator/" rel="tag">emulator</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/fuzzing/" rel="tag">fuzzing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/hacking/" rel="tag">hacking</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-awesome-crash-dialog-from-ida" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2011/06/awesome-crash-dialog-from-ida/" class="article-date">
-  <time datetime="2011-06-03T23:55:30.000Z" itemprop="datePublished">2011-06-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/max-os-x/">max os x</a>►<a class="article-category-link" href="/blog/categories/max-os-x/reversing/">reversing</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2011/06/awesome-crash-dialog-from-ida/">Awesome crash dialog from IDA :)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>To bad it didn’t give me an option to debug it with IDA or something, huh?<br><img src="http://173.230.150.16/blog/wp-content/uploads/2011/06/bestcrash-300x129.png" alt="Just let the thing crash..." title="O rly?!"><br>Oh well, I love you IDA - thanks for the nice message right before you bring my machine to a grinding halt :)</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2011/06/awesome-crash-dialog-from-ida/" data-id="ck8dqrexz000qojgj6i4f97z2" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/IDA-Pro/" rel="tag">IDA Pro</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/bug/" rel="tag">bug</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/just-continue/" rel="tag">just continue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/let-ida-continue/" rel="tag">let ida continue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/message/" rel="tag">message</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-welcome-to-adb-hell" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2011/03/welcome-to-adb-hell/" class="article-date">
-  <time datetime="2011-03-08T23:01:13.000Z" itemprop="datePublished">2011-03-08</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+          <a class="icon" target="_blank" rel="noopener" href="mailto:diff@protonmail.com">
+            <i class="fas fa-envelope"></i><!--
+      ---></a><!--
+      ---><!--
+    --->.
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2011/03/welcome-to-adb-hell/">Welcome to ADB HELL!</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <p>A coworker just pointed out something that really made my day. Apparently if you type “adb hell” opposed to “adb shell”, it will give you an adb shell with hellish colors:<br><img src="http://173.230.150.16/blog/wp-content/uploads/2011/03/adbhell.png" alt="Welcome to hell... ADB HELL!" title="We want your eyes to BLEED!"><br>Thanks Google, I always enjoy your humor :) For those interested, the code that does this can be found here:<br><a href="http://codesearch.google.com/codesearch/p?hl=en#2wSbThBwwIw/adb/commandline.c&l=848" target="_blank" rel="noopener">http://codesearch.google.com/codesearch/p?hl=en#2wSbThBwwIw/adb/commandline.c&amp;l=848</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">char h &#x3D; (argv[0][0] &#x3D;&#x3D; &#39;h&#39;);</span><br><span class="line"></span><br><span class="line">if (h) &#123;</span><br><span class="line">    printf(&quot;\x1b[41;33m&quot;);</span><br><span class="line">    fflush(stdout);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>Edit:</strong> Some people have been mentioning it didn’t work for them, so I found the commit so you know if you’ll have it or not. Thanks Daniel Sandler and Mike Lockwood for the Easter Egg!<br><a href="http://android.git.kernel.org/?p=platform/system/core.git;a=commitdiff;h=9c73d17e870e448ea1f036bda70736ae0ae6bf2e" target="_blank" rel="noopener">http://android.git.kernel.org/?p=platform/system/core.git;a=commitdiff;h=9c73d17e870e448ea1f036bda70736ae0ae6bf2e</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2011/03/welcome-to-adb-hell/" data-id="ck8dqrf4c00thojgj2ieu4ad9" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/adb/" rel="tag">adb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/adb-hell/" rel="tag">adb hell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/coding-hell/" rel="tag">coding hell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/easter-egg/" rel="tag">easter egg</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/google/" rel="tag">google</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/google-humor/" rel="tag">google humor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/humor/" rel="tag">humor</a></li></ul>
-
-    </footer>
-  </div>
+    </p>
   
-</article>
-
-
-  
-    <article id="post-detecting-android-devices-that-are-blocking-ads" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2011/03/detecting-android-devices-that-are-blocking-ads/" class="article-date">
-  <time datetime="2011-03-01T21:43:02.000Z" itemprop="datePublished">2011-03-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/android/">android</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2011/03/detecting-android-devices-that-are-blocking-ads/">Detecting Android devices that are blocking ads</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>A friend of mine pointed me in the direction of an interesting app a few days ago. They had been using it for a while and just installed an ad-blocker, the type that just modifies your host file with a bunch of known ad providers. Then they’re new favorite application stopped working, complaining that the ads where blocked. This may not have been the first attempt to detect ad removal, but it was the first one that I’ve looked at or even heard of. It’s nothing fancy of course, but it’s actually a nifty idea. The way it has been implemented there are plenty of ways to get around it, but it’s definitely was a nifty piece of code. Quiet trivial to patch if someone wanted to, though I see no reason to not support the devs.</p>
-<p>Anyway, I quickly just reversed the code, since most people don’t care for reading the output of dexdump;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public static boolean isAdmobDisabled()</span><br><span class="line">&#123;</span><br><span class="line">    if (admobDisabled &#x3D;&#x3D; null)</span><br><span class="line">      admobDisabled &#x3D; Boolean.FALSE;</span><br><span class="line">    try</span><br><span class="line">    &#123;</span><br><span class="line">      FileReader localFileReader &#x3D; new FileReader(&quot;&#x2F;etc&#x2F;hosts&quot;);</span><br><span class="line">      BufferedReader localBufferedReader &#x3D; new BufferedReader(localFileReader);</span><br><span class="line">      String line;</span><br><span class="line">      while (null !&#x3D; (line &#x3D; localBufferedReader.readLine()))</span><br><span class="line">      &#123;</span><br><span class="line">        if (!line.toLowerCase().contains(&quot;admob&quot;)) &#123;</span><br><span class="line">          admobDisabled &#x3D; Boolean.TRUE;</span><br><span class="line">          break;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    catch (Exception e)</span><br><span class="line">    &#123;</span><br><span class="line">      Log.d(&quot;Anti-adremoval&quot;, &quot;Something bad happened!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">  return admobDisabled;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> Maybe some other dev’s will find this useful.</p>
-<p> UPDATE: It would appear the code I reversed was posted on <a href="http://stackoverflow.com/questions/3452907/how-to-prevent-ad-blocker-from-blocking-ads-on-an-app/3453031#3453031" target="_blank" rel="noopener">StackOverFlow</a>. No sense in deleting this page though - next time I’ll just have to Google a little better! :)</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://strazzere.com/blog/2011/03/detecting-android-devices-that-are-blocking-ads/" data-id="ck8dqreya001eojgjhw099uok" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/etc-hosts/" rel="tag">/etc/hosts/</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/adblock/" rel="tag">adblock</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/admob/" rel="tag">admob</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/ads/" rel="tag">ads</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/google/" rel="tag">google</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/reverse-engineering/" rel="tag">reverse engineering</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/blog/">« Prev</a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/10/">10</a><a class="extend next" rel="next" href="/blog/page/3/">Next »</a>
-  </nav>
-
 </section>
-        
-          <aside id="sidebar">
+
+<section id="writing">
+  <span class="h1"><a href="/blog/archives">Writing</a></span>
   
+  <ul class="post-list">
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
+    
+      
+    
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2020-05-08T07:00:00.000Z" itemprop="datePublished">2020-05-08</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2020/05/making-up-frida-functions/">&#34;Making up&#34; functions in Frida</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2020-03-29T22:30:06.000Z" itemprop="datePublished">2020-03-29</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2020/03/housekeeping-blog-converted/">Housekeeping: blog converted!</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2014-07-25T04:30:35.000Z" itemprop="datePublished">2014-07-24</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2014/07/follow-up-on-android-lkms/">Follow up on Android LKMs</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2014-07-21T03:47:39.000Z" itemprop="datePublished">2014-07-20</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2014/07/compiling-an-emulator-kernel-for-loadable-modules/">Compiling an Android Emulator Kernel for Loadable Kernel Modules</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2013-02-16T02:23:41.000Z" itemprop="datePublished">2013-02-15</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/">Loose Documentation Leads to Easy Disassembler Breakages</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2013-02-07T04:33:49.000Z" itemprop="datePublished">2013-02-06</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2013/02/javascript-malware-cross-contamination-in-android-apks/">Javascript Malware Cross-Contamination in Android apks</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2012-08-14T05:46:09.000Z" itemprop="datePublished">2012-08-13</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2012/08/android-zitmo-analysis-now-you-see-my-now-you-dont/">Android Zitmo Analysis: Now you see me, now you don&#39;t</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2012-08-03T21:09:53.000Z" itemprop="datePublished">2012-08-03</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2012/08/dexploration-what-a-default-dex-looks-like/">Dexploration: What a default Dex looks like</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2012-08-02T22:29:02.000Z" itemprop="datePublished">2012-08-02</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2012/08/a-lesson-in-safe-dex/">A Lesson in Safe Dex</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2012-07-12T05:03:42.000Z" itemprop="datePublished">2012-07-11</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/blog/2012/07/mobile-security-meetup-dextemplate-and-smali-mode/">Mobile Security Meetup, DexTemplate and smali-mode!</a>
+    
+
+
+</span>
+      </li>
+    
+  </ul>
+  
+</section>
+
+
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2020
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
       <ul>
-        
-          <li>
-            <a href="/blog/2020/05/making-up-frida-functions/">&#34;Making up&#34; functions in Frida</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/03/housekeeping-blog-converted/">Housekeeping: blog converted!</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2014/07/follow-up-on-android-lkms/">Follow up on Android LKMs</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2014/07/compiling-an-emulator-kernel-for-loadable-modules/">Compiling an Android Emulator Kernel for Loadable Kernel Modules</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/">Loose Documentation Leads to Easy Disassembler Breakages</a>
-          </li>
+         
+          <li><a href="/blog/">Home</a></li>
+         
+          <li><a href="/blog/about/">About</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="/blog/projects_url">Projects</a></li>
         
       </ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/">android</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/archos/">archos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/archos/coding/">coding</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/archos/coding/reverse-engineering/">reverse engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/archos/coding/reverse-engineering/updating/">updating</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/archos/updating/">updating</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/">coding</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/dex-bytecode/">dex bytecode</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/dex-bytecode/reverse-engineering/">reverse engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/dex-bytecode/reverse-engineering/secure-code/">secure code</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/other/">other</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/other/reverse-engineering/">reverse engineering</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/random/">random</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/reverse-engineering/">reverse engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/coding/updating/">updating</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/dex-bytecode/">dex bytecode</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/dex-bytecode/reverse-engineering/">reverse engineering</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/life/">life</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/life/other/">other</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/life/other/random/">random</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/other/">other</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/other/random/">random</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/other/random/secure-code/">secure code</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/other/reverse-engineering/">reverse engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/other/reverse-engineering/updating/">updating</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/reverse-engineering/">reverse engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/reverse-engineering/secure-code/">secure code</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/android/reverse-engineering/updating/">updating</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/archos/">archos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/archos/coding/">coding</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/archos/coding/reverse-engineering/">reverse engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/archos/coding/reverse-engineering/secure-code/">secure code</a></li></ul></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/life/">life</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/life/random/">random</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/life/random/secure-code/">secure code</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/max-os-x/">max os x</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/max-os-x/reversing/">reversing</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/other/">other</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/other/secure-code/">secure code</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/random/">random</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/random/reversing/">reversing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/random/reversing/windows/">windows</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/reverse-engineering/">reverse engineering</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/reverse-engineering/android/">android</a></li></ul></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/blog/tags/bak/" style="font-size: 10px;">.bak</a> <a href="/blog/tags/net-unpacking/" style="font-size: 10px;">.net unpacking</a> <a href="/blog/tags/data-app/" style="font-size: 10px;">/data/app</a> <a href="/blog/tags/data-app-private/" style="font-size: 10px;">/data/app-private</a> <a href="/blog/tags/data-data-com-android-PhotoVault/" style="font-size: 10px;">/data/data/com.android.PhotoVault</a> <a href="/blog/tags/data-data-com-android-providers-settings-databases-settings-db/" style="font-size: 10px;">/data/data/com.android.providers.settings/databases/settings.db</a> <a href="/blog/tags/data-system-packages-xml/" style="font-size: 10px;">/data/system/packages.xml</a> <a href="/blog/tags/etc-hosts/" style="font-size: 10px;">/etc/hosts/</a> <a href="/blog/tags/proc-pid-mem/" style="font-size: 10px;">/proc/pid/mem</a> <a href="/blog/tags/010-Editor/" style="font-size: 10px;">010 Editor</a> <a href="/blog/tags/ADC2/" style="font-size: 10px;">ADC2</a> <a href="/blog/tags/AOSP/" style="font-size: 12.31px;">AOSP</a> <a href="/blog/tags/Android-root/" style="font-size: 10px;">Android root</a> <a href="/blog/tags/AndroidDownloadManager/" style="font-size: 10px;">AndroidDownloadManager</a> <a href="/blog/tags/AndroidOS/" style="font-size: 10.77px;">AndroidOS</a> <a href="/blog/tags/Android-ID/" style="font-size: 12.31px;">Android_ID</a> <a href="/blog/tags/Archo-5-Android/" style="font-size: 10px;">Archo 5 Android</a> <a href="/blog/tags/Archos-5-Internet-Tablet/" style="font-size: 10px;">Archos 5 Internet Tablet</a> <a href="/blog/tags/Archos-root/" style="font-size: 10px;">Archos root</a> <a href="/blog/tags/Cain-amp-Abel/" style="font-size: 10px;">Cain &amp; Abel</a> <a href="/blog/tags/Crapapps/" style="font-size: 10px;">Crapapps</a> <a href="/blog/tags/DONT-KILL-APP/" style="font-size: 10px;">DONT_KILL_APP</a> <a href="/blog/tags/DRM/" style="font-size: 11.54px;">DRM</a> <a href="/blog/tags/Dedexer/" style="font-size: 11.54px;">Dedexer</a> <a href="/blog/tags/FilePicker-apk/" style="font-size: 10px;">FilePicker.apk</a> <a href="/blog/tags/G/" style="font-size: 10px;">G!</a> <a href="/blog/tags/GET-apk/" style="font-size: 10px;">GET apk</a> <a href="/blog/tags/GPL/" style="font-size: 10px;">GPL</a> <a href="/blog/tags/Gabor/" style="font-size: 10.77px;">Gabor</a> <a href="/blog/tags/GameCIH/" style="font-size: 10px;">GameCIH</a> <a href="/blog/tags/Host-is-unresolved/" style="font-size: 10px;">Host is unresolved</a> <a href="/blog/tags/IDA-Pro/" style="font-size: 11.54px;">IDA Pro</a> <a href="/blog/tags/IDC/" style="font-size: 10px;">IDC</a> <a href="/blog/tags/LKM/" style="font-size: 10px;">LKM</a> <a href="/blog/tags/LeNa/" style="font-size: 10px;">LeNa</a> <a href="/blog/tags/LicenseActivity-java-bak/" style="font-size: 10px;">LicenseActivity.java.bak</a> <a href="/blog/tags/LokPix/" style="font-size: 10px;">LokPix</a> <a href="/blog/tags/MTD-WRITEABLE/" style="font-size: 10px;">MTD_WRITEABLE</a> <a href="/blog/tags/Market-dex/" style="font-size: 10px;">Market.dex</a> <a href="/blog/tags/MyMarket/" style="font-size: 10px;">MyMarket</a> <a href="/blog/tags/Open-Source-Annoyed/" style="font-size: 10px;">Open Source Annoyed</a> <a href="/blog/tags/PDFViewer-apk/" style="font-size: 10px;">PDFViewer.apk</a> <a href="/blog/tags/Pacific-Software-Solutions/" style="font-size: 10px;">Pacific Software Solutions</a> <a href="/blog/tags/PhotoVault/" style="font-size: 10px;">PhotoVault</a> <a href="/blog/tags/PhotoVaultPassword-xml/" style="font-size: 10px;">PhotoVaultPassword.xml</a> <a href="/blog/tags/Protection-Scheme/" style="font-size: 10px;">Protection Scheme</a> <a href="/blog/tags/READ-PHONE-STATE/" style="font-size: 10px;">READ_PHONE_STATE</a> <a href="/blog/tags/ReDEX/" style="font-size: 10px;">ReDEX</a> <a href="/blog/tags/ReadProcessMemory/" style="font-size: 10px;">ReadProcessMemory</a> <a href="/blog/tags/SMS/" style="font-size: 10px;">SMS</a> <a href="/blog/tags/SlideLOCK/" style="font-size: 10.77px;">SlideLOCK</a> <a href="/blog/tags/SlideMe/" style="font-size: 10.77px;">SlideMe</a> <a href="/blog/tags/SoundMine/" style="font-size: 10px;">SoundMine</a> <a href="/blog/tags/State-of-the-Archos-Android/" style="font-size: 10px;">State of the Archos Android</a> <a href="/blog/tags/System-err/" style="font-size: 10px;">System.err</a> <a href="/blog/tags/TEAM-RES/" style="font-size: 10px;">TEAM RES</a> <a href="/blog/tags/TEAM-RESURRECTiON/" style="font-size: 10.77px;">TEAM RESURRECTiON</a> <a href="/blog/tags/ToneGenerator/" style="font-size: 10px;">ToneGenerator</a> <a href="/blog/tags/Uninstall-Protection-Add-On/" style="font-size: 10px;">Uninstall Protection Add-On</a> <a href="/blog/tags/UnknownHostException/" style="font-size: 10px;">UnknownHostException</a> <a href="/blog/tags/VENDING-REQUIRE-SIM-FOR-PURCHASE/" style="font-size: 10px;">VENDING_REQUIRE_SIM_FOR_PURCHASE</a> <a href="/blog/tags/VENDING-SYNC-FREQUENCY-MS/" style="font-size: 10px;">VENDING_SYNC_FREQUENCY_MS</a> <a href="/blog/tags/VENDING-TOS-VERSION/" style="font-size: 10px;">VENDING_TOS_VERSION</a> <a href="/blog/tags/Vending/" style="font-size: 13.85px;">Vending</a> <a href="/blog/tags/Vending-dex/" style="font-size: 10px;">Vending.dex</a> <a href="/blog/tags/Vending-odex/" style="font-size: 10.77px;">Vending.odex</a> <a href="/blog/tags/WaveSecure/" style="font-size: 10px;">WaveSecure</a> <a href="/blog/tags/WaveSecure-UPA/" style="font-size: 10px;">WaveSecure UPA</a> <a href="/blog/tags/Wireshark/" style="font-size: 10.77px;">Wireshark</a> <a href="/blog/tags/WriteProcessMemory/" style="font-size: 10px;">WriteProcessMemory</a> <a href="/blog/tags/XXX-PROTECT-FROM-VIKING-KILLER/" style="font-size: 10px;">XXX: PROTECT FROM VIKING KILLER</a> <a href="/blog/tags/a-cheesy-alternative/" style="font-size: 10px;">a cheesy alternative</a> <a href="/blog/tags/a5it/" style="font-size: 10px;">a5it</a> <a href="/blog/tags/access-paid-applications/" style="font-size: 10px;">access paid applications</a> <a href="/blog/tags/adb/" style="font-size: 10.77px;">adb</a> <a href="/blog/tags/adb-hell/" style="font-size: 10px;">adb hell</a> <a href="/blog/tags/adblock/" style="font-size: 10px;">adblock</a> <a href="/blog/tags/adjacking/" style="font-size: 10px;">adjacking</a> <a href="/blog/tags/admob/" style="font-size: 10.77px;">admob</a> <a href="/blog/tags/ads/" style="font-size: 10px;">ads</a> <a href="/blog/tags/adsense/" style="font-size: 10px;">adsense</a> <a href="/blog/tags/aes-key/" style="font-size: 10px;">aes key</a> <a href="/blog/tags/algorithms/" style="font-size: 10.77px;">algorithms</a> <a href="/blog/tags/alternatives/" style="font-size: 10px;">alternatives</a> <a href="/blog/tags/amadeus/" style="font-size: 10px;">amadeus</a> <a href="/blog/tags/andappstore/" style="font-size: 10px;">andappstore</a> <a href="/blog/tags/andrea/" style="font-size: 10px;">andrea</a> <a href="/blog/tags/android/" style="font-size: 20px;">android</a> <a href="/blog/tags/android-DRM/" style="font-size: 10px;">android DRM</a> <a href="/blog/tags/android-internet/" style="font-size: 10px;">android internet</a> <a href="/blog/tags/android-malware/" style="font-size: 10px;">android malware</a> <a href="/blog/tags/android-market/" style="font-size: 13.85px;">android market</a> <a href="/blog/tags/android-market-api/" style="font-size: 10px;">android market api</a> <a href="/blog/tags/android-markey/" style="font-size: 10px;">android markey</a> <a href="/blog/tags/android-money/" style="font-size: 10.77px;">android money</a> <a href="/blog/tags/android-os/" style="font-size: 13.08px;">android os</a> <a href="/blog/tags/android-spy/" style="font-size: 10.77px;">android spy</a> <a href="/blog/tags/android-stealth/" style="font-size: 11.54px;">android stealth</a> <a href="/blog/tags/android-turrent-defense/" style="font-size: 10px;">android turrent defense</a> <a href="/blog/tags/android-for-gods/" style="font-size: 10px;">android-for-gods</a> <a href="/blog/tags/android-os-Build/" style="font-size: 10px;">android.os.Build</a> <a href="/blog/tags/android-permission/" style="font-size: 10px;">android.permission</a> <a href="/blog/tags/android-provider-system-settings/" style="font-size: 10.77px;">android.provider.system.settings</a> <a href="/blog/tags/androidiani/" style="font-size: 10.77px;">androidiani</a> <a href="/blog/tags/androidiani-com/" style="font-size: 10px;">androidiani.com</a> <a href="/blog/tags/androidid/" style="font-size: 10px;">androidid</a> <a href="/blog/tags/androidroot-cramfs/" style="font-size: 10px;">androidroot.cramfs</a> <a href="/blog/tags/androidroot-cramfs-secure/" style="font-size: 10px;">androidroot.cramfs.secure</a> <a href="/blog/tags/androidsecure/" style="font-size: 10px;">androidsecure</a> <a href="/blog/tags/anti-piracy/" style="font-size: 10px;">anti-piracy</a> <a href="/blog/tags/anti-virus/" style="font-size: 10px;">anti-virus</a> <a href="/blog/tags/aos/" style="font-size: 10px;">aos</a> <a href="/blog/tags/aos-decrypt/" style="font-size: 10px;">aos decrypt</a> <a href="/blog/tags/aos-file/" style="font-size: 10px;">aos file</a> <a href="/blog/tags/apk/" style="font-size: 13.85px;">apk</a> <a href="/blog/tags/apk-download/" style="font-size: 10px;">apk download</a> <a href="/blog/tags/apkfuscator/" style="font-size: 10.77px;">apkfuscator</a> <a href="/blog/tags/app-repository/" style="font-size: 10px;">app repository</a> <a href="/blog/tags/app-private/" style="font-size: 10px;">app-private</a> <a href="/blog/tags/apps/" style="font-size: 10.77px;">apps</a> <a href="/blog/tags/appslib/" style="font-size: 11.54px;">appslib</a> <a href="/blog/tags/appslib-stats/" style="font-size: 10px;">appslib stats</a> <a href="/blog/tags/appslibrary/" style="font-size: 10.77px;">appslibrary</a> <a href="/blog/tags/archos/" style="font-size: 13.08px;">archos</a> <a href="/blog/tags/archos-5-android/" style="font-size: 10px;">archos 5 android</a> <a href="/blog/tags/archos-5-it/" style="font-size: 11.54px;">archos 5 it</a> <a href="/blog/tags/archos-5-it-root/" style="font-size: 10px;">archos 5 it root</a> <a href="/blog/tags/archos-android/" style="font-size: 10.77px;">archos android</a> <a href="/blog/tags/archos-init/" style="font-size: 10px;">archos init</a> <a href="/blog/tags/archos-market/" style="font-size: 10px;">archos market</a> <a href="/blog/tags/archos-recovery/" style="font-size: 10px;">archos recovery</a> <a href="/blog/tags/archutil/" style="font-size: 10px;">archutil</a> <a href="/blog/tags/archutil-a5it/" style="font-size: 10px;">archutil-a5it</a> <a href="/blog/tags/arp-spoof/" style="font-size: 10px;">arp spoof</a> <a href="/blog/tags/assetId/" style="font-size: 10.77px;">assetId</a> <a href="/blog/tags/atd/" style="font-size: 10px;">atd</a> <a href="/blog/tags/authToken/" style="font-size: 10px;">authToken</a> <a href="/blog/tags/backdoor/" style="font-size: 10px;">backdoor</a> <a href="/blog/tags/badge/" style="font-size: 10px;">badge</a> <a href="/blog/tags/badge-system/" style="font-size: 10px;">badge system</a> <a href="/blog/tags/baksmali/" style="font-size: 10px;">baksmali</a> <a href="/blog/tags/beat-to-the-punch/" style="font-size: 10px;">beat to the punch</a> <a href="/blog/tags/blackhat/" style="font-size: 10px;">blackhat</a> <a href="/blog/tags/blackhat-2012/" style="font-size: 10.77px;">blackhat 2012</a> <a href="/blog/tags/bloat-ware/" style="font-size: 10px;">bloat-ware</a> <a href="/blog/tags/board/" style="font-size: 10px;">board</a> <a href="/blog/tags/bootloader/" style="font-size: 10.77px;">bootloader</a> <a href="/blog/tags/brand/" style="font-size: 10px;">brand</a> <a href="/blog/tags/bug/" style="font-size: 10px;">bug</a> <a href="/blog/tags/buildPostParameters/" style="font-size: 10px;">buildPostParameters</a> <a href="/blog/tags/busybox/" style="font-size: 10px;">busybox</a> <a href="/blog/tags/buyer-beware/" style="font-size: 10px;">buyer beware</a> <a href="/blog/tags/byte-code/" style="font-size: 10px;">byte code</a> <a href="/blog/tags/bytecode/" style="font-size: 15.38px;">bytecode</a> <a href="/blog/tags/bytecode-obfuscation/" style="font-size: 10px;">bytecode obfuscation</a> <a href="/blog/tags/certification-check/" style="font-size: 10px;">certification check</a> <a href="/blog/tags/ch/" style="font-size: 10px;">ch</a> <a href="/blog/tags/challange/" style="font-size: 10px;">challange</a> <a href="/blog/tags/cheesy-alternative/" style="font-size: 10px;">cheesy alternative</a> <a href="/blog/tags/clock-speed/" style="font-size: 10px;">clock speed</a> <a href="/blog/tags/code/" style="font-size: 12.31px;">code</a> <a href="/blog/tags/coding/" style="font-size: 10px;">coding</a> <a href="/blog/tags/coding-hell/" style="font-size: 10px;">coding hell</a> <a href="/blog/tags/codvirtualizer/" style="font-size: 10px;">codvirtualizer</a> <a href="/blog/tags/color-scheme/" style="font-size: 10px;">color scheme</a> <a href="/blog/tags/com-android-settings/" style="font-size: 10px;">com.android.settings</a> <a href="/blog/tags/com-google-android-feedback/" style="font-size: 10px;">com.google.android.feedback</a> <a href="/blog/tags/com-google-android-googleapps/" style="font-size: 10.77px;">com.google.android.googleapps</a> <a href="/blog/tags/com-retinax-android/" style="font-size: 10.77px;">com.retinax.android</a> <a href="/blog/tags/comment-humor/" style="font-size: 10.77px;">comment humor</a> <a href="/blog/tags/comments/" style="font-size: 10px;">comments</a> <a href="/blog/tags/compile/" style="font-size: 10.77px;">compile</a> <a href="/blog/tags/conference/" style="font-size: 10px;">conference</a> <a href="/blog/tags/connect/" style="font-size: 10px;">connect</a> <a href="/blog/tags/cpu/" style="font-size: 10px;">cpu</a> <a href="/blog/tags/crackme/" style="font-size: 11.54px;">crackme</a> <a href="/blog/tags/cracks/" style="font-size: 10.77px;">cracks</a> <a href="/blog/tags/cramfs/" style="font-size: 10px;">cramfs</a> <a href="/blog/tags/cramfs-secure/" style="font-size: 10px;">cramfs.secure</a> <a href="/blog/tags/crap-ware/" style="font-size: 10px;">crap-ware</a> <a href="/blog/tags/cross-contamination/" style="font-size: 10px;">cross-contamination</a> <a href="/blog/tags/cryptax/" style="font-size: 10px;">cryptax</a> <a href="/blog/tags/cupcake/" style="font-size: 10px;">cupcake</a> <a href="/blog/tags/dalvik/" style="font-size: 12.31px;">dalvik</a> <a href="/blog/tags/dalvik-vm/" style="font-size: 11.54px;">dalvik vm</a> <a href="/blog/tags/data/" style="font-size: 10.77px;">data</a> <a href="/blog/tags/data-harvesting/" style="font-size: 10px;">data harvesting</a> <a href="/blog/tags/ddx/" style="font-size: 11.54px;">ddx</a> <a href="/blog/tags/de/" style="font-size: 10px;">de</a> <a href="/blog/tags/dead00beef/" style="font-size: 10px;">dead00beef</a> <a href="/blog/tags/decompiling/" style="font-size: 10px;">decompiling</a> <a href="/blog/tags/decryption/" style="font-size: 10px;">decryption</a> <a href="/blog/tags/defcon/" style="font-size: 10px;">defcon</a> <a href="/blog/tags/detection/" style="font-size: 10px;">detection</a> <a href="/blog/tags/developers/" style="font-size: 10px;">developers</a> <a href="/blog/tags/deviceId/" style="font-size: 10px;">deviceId</a> <a href="/blog/tags/devmpk/" style="font-size: 10px;">devmpk</a> <a href="/blog/tags/devs/" style="font-size: 10px;">devs</a> <a href="/blog/tags/dex/" style="font-size: 16.92px;">dex</a> <a href="/blog/tags/dex-035/" style="font-size: 10px;">dex 035</a> <a href="/blog/tags/dex-bytcode/" style="font-size: 10px;">dex bytcode</a> <a href="/blog/tags/dex-bytecode/" style="font-size: 13.85px;">dex bytecode</a> <a href="/blog/tags/dex-code/" style="font-size: 11.54px;">dex code</a> <a href="/blog/tags/dex-education/" style="font-size: 10px;">dex education</a> <a href="/blog/tags/dex-file/" style="font-size: 10.77px;">dex file</a> <a href="/blog/tags/dex-file-format/" style="font-size: 10px;">dex file format</a> <a href="/blog/tags/dex-header/" style="font-size: 12.31px;">dex header</a> <a href="/blog/tags/dex-layout/" style="font-size: 10px;">dex layout</a> <a href="/blog/tags/dex-verification/" style="font-size: 10px;">dex verification</a> <a href="/blog/tags/dexdump/" style="font-size: 10px;">dexdump</a> <a href="/blog/tags/dextemplate/" style="font-size: 10px;">dextemplate</a> <a href="/blog/tags/disable-ssl/" style="font-size: 10px;">disable ssl</a> <a href="/blog/tags/disable-ssl-cert-check/" style="font-size: 10px;">disable_ssl_cert_check</a> <a href="/blog/tags/dlp-mobile/" style="font-size: 10px;">dlp mobile</a> <a href="/blog/tags/documentation/" style="font-size: 10px;">documentation</a> <a href="/blog/tags/doh/" style="font-size: 10px;">doh</a> <a href="/blog/tags/donut/" style="font-size: 10px;">donut</a> <a href="/blog/tags/double-check/" style="font-size: 10px;">double-check</a> <a href="/blog/tags/download/" style="font-size: 10px;">download</a> <a href="/blog/tags/downloading-apk/" style="font-size: 10px;">downloading apk</a> <a href="/blog/tags/downloading-apks/" style="font-size: 10px;">downloading apks</a> <a href="/blog/tags/downloading-apps/" style="font-size: 10px;">downloading apps</a> <a href="/blog/tags/dream/" style="font-size: 10.77px;">dream</a> <a href="/blog/tags/drm-broken/" style="font-size: 10px;">drm broken</a> <a href="/blog/tags/droiddreamcleaner/" style="font-size: 10px;">droiddreamcleaner</a> <a href="/blog/tags/dumb-devs/" style="font-size: 10px;">dumb devs</a> <a href="/blog/tags/dumb-programmers/" style="font-size: 10px;">dumb programmers</a> <a href="/blog/tags/dump/" style="font-size: 10px;">dump</a> <a href="/blog/tags/dumpdex/" style="font-size: 10px;">dumpdex</a> <a href="/blog/tags/easter-egg/" style="font-size: 10px;">easter egg</a> <a href="/blog/tags/emacs/" style="font-size: 10.77px;">emacs</a> <a href="/blog/tags/emulator/" style="font-size: 11.54px;">emulator</a> <a href="/blog/tags/emulator-detection/" style="font-size: 10px;">emulator detection</a> <a href="/blog/tags/execryptor/" style="font-size: 10px;">execryptor</a> <a href="/blog/tags/experimental/" style="font-size: 10px;">experimental</a> <a href="/blog/tags/expiration-dates/" style="font-size: 10px;">expiration dates</a> <a href="/blog/tags/extract-files-sh/" style="font-size: 10px;">extract-files.sh</a> <a href="/blog/tags/file-format/" style="font-size: 10px;">file format</a> <a href="/blog/tags/fingerprint/" style="font-size: 10px;">fingerprint</a> <a href="/blog/tags/fortiguard/" style="font-size: 10px;">fortiguard</a> <a href="/blog/tags/forward-locking/" style="font-size: 10px;">forward locking</a> <a href="/blog/tags/frida/" style="font-size: 10px;">frida</a> <a href="/blog/tags/funny/" style="font-size: 10px;">funny</a> <a href="/blog/tags/fuzzing/" style="font-size: 10px;">fuzzing</a> <a href="/blog/tags/g1/" style="font-size: 18.46px;">g1</a> <a href="/blog/tags/games/" style="font-size: 10.77px;">games</a> <a href="/blog/tags/gamesmpk/" style="font-size: 10px;">gamesmpk</a> <a href="/blog/tags/geinimi/" style="font-size: 10px;">geinimi</a> <a href="/blog/tags/germany/" style="font-size: 10px;">germany</a> <a href="/blog/tags/getInstallerPackageName/" style="font-size: 10px;">getInstallerPackageName</a> <a href="/blog/tags/getOutputStream/" style="font-size: 10px;">getOutputStream</a> <a href="/blog/tags/getjar/" style="font-size: 10px;">getjar</a> <a href="/blog/tags/google/" style="font-size: 17.69px;">google</a> <a href="/blog/tags/google-humor/" style="font-size: 10px;">google humor</a> <a href="/blog/tags/gsm-operator-alpha/" style="font-size: 10px;">gsm.operator.alpha</a> <a href="/blog/tags/gsm-operator-iso-country/" style="font-size: 10px;">gsm.operator.iso-country</a> <a href="/blog/tags/gsm-operator-numeric/" style="font-size: 10px;">gsm.operator.numeric</a> <a href="/blog/tags/gsm-sim-operator-alpha/" style="font-size: 10px;">gsm.sim.operator.alpha</a> <a href="/blog/tags/gsm-sim-operator-iso-country/" style="font-size: 10px;">gsm.sim.operator.iso-country</a> <a href="/blog/tags/gsm-sim-operator-numeric/" style="font-size: 10px;">gsm.sim.operator.numeric</a> <a href="/blog/tags/hacking/" style="font-size: 10px;">hacking</a> <a href="/blog/tags/hardward-id/" style="font-size: 10px;">hardward id</a> <a href="/blog/tags/hddmpk/" style="font-size: 10px;">hddmpk</a> <a href="/blog/tags/header/" style="font-size: 10px;">header</a> <a href="/blog/tags/high-score/" style="font-size: 10px;">high score</a> <a href="/blog/tags/host/" style="font-size: 10px;">host</a> <a href="/blog/tags/hosts-file/" style="font-size: 10px;">hosts file</a> <a href="/blog/tags/hot-air/" style="font-size: 10px;">hot air</a> <a href="/blog/tags/htc/" style="font-size: 10.77px;">htc</a> <a href="/blog/tags/humor/" style="font-size: 12.31px;">humor</a> <a href="/blog/tags/identifiers/" style="font-size: 10px;">identifiers</a> <a href="/blog/tags/imsi/" style="font-size: 10px;">imsi</a> <a href="/blog/tags/inject/" style="font-size: 10px;">inject</a> <a href="/blog/tags/inject-code/" style="font-size: 10px;">inject code</a> <a href="/blog/tags/injection/" style="font-size: 10.77px;">injection</a> <a href="/blog/tags/inline/" style="font-size: 10.77px;">inline</a> <a href="/blog/tags/insomnidroid/" style="font-size: 10.77px;">insomnidroid</a> <a href="/blog/tags/insomnihack/" style="font-size: 10px;">insomnihack</a> <a href="/blog/tags/insomnihack-ctf/" style="font-size: 10px;">insomnihack ctf</a> <a href="/blog/tags/internals/" style="font-size: 10px;">internals</a> <a href="/blog/tags/is-forward-locked/" style="font-size: 10px;">is_forward_locked</a> <a href="/blog/tags/italy/" style="font-size: 10px;">italy</a> <a href="/blog/tags/jasmin/" style="font-size: 10px;">jasmin</a> <a href="/blog/tags/java/" style="font-size: 14.62px;">java</a> <a href="/blog/tags/javadoc/" style="font-size: 10.77px;">javadoc</a> <a href="/blog/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/blog/tags/just-continue/" style="font-size: 10px;">just continue</a> <a href="/blog/tags/kernel/" style="font-size: 10.77px;">kernel</a> <a href="/blog/tags/keygen/" style="font-size: 10.77px;">keygen</a> <a href="/blog/tags/legacy-native/" style="font-size: 10px;">legacy native</a> <a href="/blog/tags/let-ida-continue/" style="font-size: 10px;">let ida continue</a> <a href="/blog/tags/libpdfreader-so/" style="font-size: 10px;">libpdfreader.so</a> <a href="/blog/tags/licensing/" style="font-size: 10px;">licensing</a> <a href="/blog/tags/life/" style="font-size: 11.54px;">life</a> <a href="/blog/tags/live/" style="font-size: 10px;">live</a> <a href="/blog/tags/live-android-market/" style="font-size: 10px;">live android market</a> <a href="/blog/tags/locked/" style="font-size: 10px;">locked</a> <a href="/blog/tags/locking-phone/" style="font-size: 10px;">locking phone</a> <a href="/blog/tags/lookout/" style="font-size: 10.77px;">lookout</a> <a href="/blog/tags/lvl-drm/" style="font-size: 10px;">lvl drm</a> <a href="/blog/tags/mac-os-x/" style="font-size: 10px;">mac os x</a> <a href="/blog/tags/make/" style="font-size: 10px;">make</a> <a href="/blog/tags/malware/" style="font-size: 12.31px;">malware</a> <a href="/blog/tags/market/" style="font-size: 16.15px;">market</a> <a href="/blog/tags/market-DRM/" style="font-size: 10px;">market DRM</a> <a href="/blog/tags/market-alternative/" style="font-size: 10px;">market alternative</a> <a href="/blog/tags/market-data/" style="font-size: 10.77px;">market data</a> <a href="/blog/tags/market-enabler/" style="font-size: 11.54px;">market enabler</a> <a href="/blog/tags/market-place/" style="font-size: 12.31px;">market place</a> <a href="/blog/tags/market-spoof/" style="font-size: 10px;">market spoof</a> <a href="/blog/tags/market-apk/" style="font-size: 11.54px;">market.apk</a> <a href="/blog/tags/master/" style="font-size: 10px;">master</a> <a href="/blog/tags/memory-hacking/" style="font-size: 10px;">memory hacking</a> <a href="/blog/tags/memory-manipulation/" style="font-size: 10px;">memory manipulation</a> <a href="/blog/tags/message/" style="font-size: 10px;">message</a> <a href="/blog/tags/mistake/" style="font-size: 10px;">mistake</a> <a href="/blog/tags/mobile/" style="font-size: 10px;">mobile</a> <a href="/blog/tags/mobile-spy/" style="font-size: 10px;">mobile spy</a> <a href="/blog/tags/mobile-spy-android/" style="font-size: 10px;">mobile spy android</a> <a href="/blog/tags/mobistealth/" style="font-size: 10px;">mobistealth</a> <a href="/blog/tags/model/" style="font-size: 10px;">model</a> <a href="/blog/tags/monetizing/" style="font-size: 10px;">monetizing</a> <a href="/blog/tags/money/" style="font-size: 10px;">money</a> <a href="/blog/tags/mtd-partition/" style="font-size: 10px;">mtd_partition</a> <a href="/blog/tags/mytouch/" style="font-size: 11.54px;">mytouch</a> <a href="/blog/tags/netbook/" style="font-size: 10px;">netbook</a> <a href="/blog/tags/netz/" style="font-size: 10px;">netz</a> <a href="/blog/tags/new-job/" style="font-size: 10px;">new job</a> <a href="/blog/tags/nmap/" style="font-size: 10px;">nmap</a> <a href="/blog/tags/no-dex/" style="font-size: 10px;">no dex?</a> <a href="/blog/tags/number-of-apps/" style="font-size: 10px;">number of apps</a> <a href="/blog/tags/odex/" style="font-size: 10px;">odex</a> <a href="/blog/tags/offset/" style="font-size: 10px;">offset</a> <a href="/blog/tags/overclock/" style="font-size: 10px;">overclock</a> <a href="/blog/tags/packagemanager/" style="font-size: 10px;">packagemanager</a> <a href="/blog/tags/packet/" style="font-size: 10px;">packet</a> <a href="/blog/tags/paid-apps/" style="font-size: 10.77px;">paid apps</a> <a href="/blog/tags/papicheat/" style="font-size: 10px;">papicheat</a> <a href="/blog/tags/papihack/" style="font-size: 10px;">papihack</a> <a href="/blog/tags/papihack-java/" style="font-size: 10px;">papihack.java</a> <a href="/blog/tags/papijump/" style="font-size: 10px;">papijump</a> <a href="/blog/tags/papipwn/" style="font-size: 10px;">papipwn</a> <a href="/blog/tags/papiriver/" style="font-size: 10px;">papiriver</a> <a href="/blog/tags/password/" style="font-size: 10px;">password</a> <a href="/blog/tags/patch/" style="font-size: 10px;">patch</a> <a href="/blog/tags/patching/" style="font-size: 10px;">patching</a> <a href="/blog/tags/patchme/" style="font-size: 10px;">patchme</a> <a href="/blog/tags/pdf-android/" style="font-size: 10px;">pdf android</a> <a href="/blog/tags/pdf-viewer/" style="font-size: 10px;">pdf viewer</a> <a href="/blog/tags/phoload/" style="font-size: 10px;">phoload</a> <a href="/blog/tags/phone-number/" style="font-size: 10px;">phone number</a> <a href="/blog/tags/phone-spoof/" style="font-size: 10px;">phone spoof</a> <a href="/blog/tags/plugmpk/" style="font-size: 10px;">plugmpk</a> <a href="/blog/tags/pm-disable/" style="font-size: 10px;">pm disable</a> <a href="/blog/tags/presentation/" style="font-size: 10px;">presentation</a> <a href="/blog/tags/privacy-concerns/" style="font-size: 10px;">privacy concerns</a> <a href="/blog/tags/program-protections/" style="font-size: 10px;">program protections</a> <a href="/blog/tags/protected-applications/" style="font-size: 10px;">protected applications</a> <a href="/blog/tags/protection-schemes/" style="font-size: 10px;">protection schemes</a> <a href="/blog/tags/purchasing-apps/" style="font-size: 11.54px;">purchasing apps</a> <a href="/blog/tags/purebasic/" style="font-size: 10px;">purebasic</a> <a href="/blog/tags/qemu/" style="font-size: 10px;">qemu</a> <a href="/blog/tags/radare/" style="font-size: 10px;">radare</a> <a href="/blog/tags/random/" style="font-size: 10px;">random</a> <a href="/blog/tags/refund-timeout/" style="font-size: 10px;">refund_timeout</a> <a href="/blog/tags/registration/" style="font-size: 10px;">registration</a> <a href="/blog/tags/relmpk/" style="font-size: 10px;">relmpk</a> <a href="/blog/tags/restrict/" style="font-size: 10px;">restrict</a> <a href="/blog/tags/restricted-buying/" style="font-size: 10.77px;">restricted buying</a> <a href="/blog/tags/restricted-market/" style="font-size: 10px;">restricted market</a> <a href="/blog/tags/retinax/" style="font-size: 10.77px;">retinax</a> <a href="/blog/tags/reveal-anti-sms-spy/" style="font-size: 10px;">reveal anti sms spy</a> <a href="/blog/tags/reverse-engineer/" style="font-size: 10px;">reverse engineer</a> <a href="/blog/tags/reverse-engineering/" style="font-size: 19.23px;">reverse engineering</a> <a href="/blog/tags/reverseengineering/" style="font-size: 10px;">reverseengineering</a> <a href="/blog/tags/reversing/" style="font-size: 10.77px;">reversing</a> <a href="/blog/tags/ro-secure/" style="font-size: 10px;">ro.secure</a> <a href="/blog/tags/root/" style="font-size: 14.62px;">root</a> <a href="/blog/tags/safe-mode/" style="font-size: 10px;">safe mode</a> <a href="/blog/tags/sapphire/" style="font-size: 10px;">sapphire</a> <a href="/blog/tags/sapphire-pdf/" style="font-size: 10px;">sapphire pdf</a> <a href="/blog/tags/sarcasm/" style="font-size: 10px;">sarcasm</a> <a href="/blog/tags/saving-adc2-apps/" style="font-size: 10px;">saving adc2 apps</a> <a href="/blog/tags/sc2/" style="font-size: 10px;">sc2</a> <a href="/blog/tags/scare-ware/" style="font-size: 10px;">scare-ware</a> <a href="/blog/tags/secure-code/" style="font-size: 12.31px;">secure code</a> <a href="/blog/tags/secure-android-id/" style="font-size: 10px;">secure.android_id</a> <a href="/blog/tags/security/" style="font-size: 12.31px;">security</a> <a href="/blog/tags/service/" style="font-size: 10px;">service</a> <a href="/blog/tags/setComponentEnabledSetting/" style="font-size: 10px;">setComponentEnabledSetting</a> <a href="/blog/tags/shell/" style="font-size: 10px;">shell</a> <a href="/blog/tags/sierra/" style="font-size: 10px;">sierra</a> <a href="/blog/tags/signature/" style="font-size: 10px;">signature</a> <a href="/blog/tags/skype/" style="font-size: 10px;">skype</a> <a href="/blog/tags/slow-news/" style="font-size: 10px;">slow-news</a> <a href="/blog/tags/smali/" style="font-size: 10px;">smali</a> <a href="/blog/tags/smali-mode/" style="font-size: 10.77px;">smali-mode</a> <a href="/blog/tags/smobile/" style="font-size: 10px;">smobile</a> <a href="/blog/tags/sms-backup/" style="font-size: 10px;">sms backup</a> <a href="/blog/tags/sms-replicator/" style="font-size: 10px;">sms replicator</a> <a href="/blog/tags/snippet/" style="font-size: 10px;">snippet</a> <a href="/blog/tags/solution/" style="font-size: 10px;">solution</a> <a href="/blog/tags/source/" style="font-size: 10px;">source</a> <a href="/blog/tags/source-android-com/" style="font-size: 10px;">source.android.com</a> <a href="/blog/tags/spoof/" style="font-size: 11.54px;">spoof</a> <a href="/blog/tags/spoof-android-id/" style="font-size: 10px;">spoof android_id</a> <a href="/blog/tags/spoof-id/" style="font-size: 10.77px;">spoof id</a> <a href="/blog/tags/spoofing-android-id/" style="font-size: 10.77px;">spoofing android_id</a> <a href="/blog/tags/spy/" style="font-size: 10.77px;">spy</a> <a href="/blog/tags/spyaware/" style="font-size: 10px;">spyaware</a> <a href="/blog/tags/spyware/" style="font-size: 10.77px;">spyware</a> <a href="/blog/tags/sqlite/" style="font-size: 10px;">sqlite</a> <a href="/blog/tags/ssl-cert/" style="font-size: 10px;">ssl cert</a> <a href="/blog/tags/ssl-certificate/" style="font-size: 10px;">ssl certificate</a> <a href="/blog/tags/stage0/" style="font-size: 10px;">stage0</a> <a href="/blog/tags/stage1/" style="font-size: 10px;">stage1</a> <a href="/blog/tags/starcraft-2/" style="font-size: 10px;">starcraft 2</a> <a href="/blog/tags/stealth/" style="font-size: 11.54px;">stealth</a> <a href="/blog/tags/su/" style="font-size: 10px;">su</a> <a href="/blog/tags/success/" style="font-size: 10px;">success</a> <a href="/blog/tags/sudo/" style="font-size: 10px;">sudo</a> <a href="/blog/tags/switzerland/" style="font-size: 10px;">switzerland</a> <a href="/blog/tags/system-settings/" style="font-size: 10px;">system settings</a> <a href="/blog/tags/t-mobile/" style="font-size: 14.62px;">t-mobile</a> <a href="/blog/tags/tcpdump/" style="font-size: 10px;">tcpdump</a> <a href="/blog/tags/teardown/" style="font-size: 10px;">teardown</a> <a href="/blog/tags/telnetd/" style="font-size: 10px;">telnetd</a> <a href="/blog/tags/test-keys/" style="font-size: 10px;">test-keys</a> <a href="/blog/tags/tmobile/" style="font-size: 13.08px;">tmobile</a> <a href="/blog/tags/tools/" style="font-size: 10px;">tools</a> <a href="/blog/tags/trojan/" style="font-size: 10px;">trojan</a> <a href="/blog/tags/uncrackable/" style="font-size: 10px;">uncrackable?</a> <a href="/blog/tags/underclock/" style="font-size: 10px;">underclock</a> <a href="/blog/tags/unique/" style="font-size: 10px;">unique</a> <a href="/blog/tags/unique-id/" style="font-size: 11.54px;">unique id</a> <a href="/blog/tags/unlocking-phone/" style="font-size: 10px;">unlocking phone</a> <a href="/blog/tags/unpacker/" style="font-size: 10px;">unpacker</a> <a href="/blog/tags/unpacking/" style="font-size: 10px;">unpacking</a> <a href="/blog/tags/updated-davlik-format/" style="font-size: 10px;">updated davlik format</a> <a href="/blog/tags/useless/" style="font-size: 10px;">useless</a> <a href="/blog/tags/userId/" style="font-size: 10.77px;">userId</a> <a href="/blog/tags/vaporware/" style="font-size: 10px;">vaporware</a> <a href="/blog/tags/vending-apk/" style="font-size: 16.15px;">vending.apk</a> <a href="/blog/tags/vending-disable-ssl-cert-check/" style="font-size: 10px;">vending.disable_ssl_cert_check</a> <a href="/blog/tags/verizon/" style="font-size: 10px;">verizon</a> <a href="/blog/tags/verizon-spoof/" style="font-size: 10px;">verizon spoof</a> <a href="/blog/tags/viking/" style="font-size: 10px;">viking</a> <a href="/blog/tags/viking-killer/" style="font-size: 10px;">viking killer</a> <a href="/blog/tags/virus/" style="font-size: 10px;">virus</a> <a href="/blog/tags/viruses/" style="font-size: 10px;">viruses</a> <a href="/blog/tags/virustotal/" style="font-size: 10px;">virustotal</a> <a href="/blog/tags/vm-read/" style="font-size: 10px;">vm_read()</a> <a href="/blog/tags/vm-read-overwrite/" style="font-size: 10px;">vm_read_overwrite</a> <a href="/blog/tags/vm-write/" style="font-size: 10px;">vm_write</a> <a href="/blog/tags/vodafone/" style="font-size: 10px;">vodafone</a> <a href="/blog/tags/web-activation/" style="font-size: 10px;">web activation</a> <a href="/blog/tags/web-appslib/" style="font-size: 10px;">web appslib</a> <a href="/blog/tags/without-adc2/" style="font-size: 10px;">without adc2</a> <a href="/blog/tags/without-vending/" style="font-size: 10px;">without vending</a> <a href="/blog/tags/xda/" style="font-size: 10px;">xda</a> <a href="/blog/tags/zeus/" style="font-size: 10px;">zeus</a> <a href="/blog/tags/zitmo/" style="font-size: 10px;">zitmo</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2013/02/">February 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2012/08/">August 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2012/07/">July 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2012/04/">April 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2012/03/">March 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2012/02/">February 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2012/01/">January 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2011/06/">June 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2011/03/">March 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2011/01/">January 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2010/11/">November 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2010/10/">October 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2010/09/">September 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2010/08/">August 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2010/05/">May 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2010/03/">March 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/11/">November 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/10/">October 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/09/">September 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/08/">August 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/07/">July 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/05/">May 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/04/">April 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/03/">March 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/02/">February 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2009/01/">January 2009</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2008/12/">December 2008</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2008/11/">November 2008</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2008/10/">October 2008</a></li></ul>
-    </div>
-  </div>
-
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2020 Tim Strazzere<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
+    </nav>
   </div>
 </footer>
+
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/blog/" class="mobile-nav-link">Home</a>
-  
-    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
+    <!-- styles -->
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
 
 
-  
-<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
-
-  
-<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
 
 
+    <!-- jquery -->
+
+<script src="/blog/lib/jquery/jquery.min.js"></script>
 
 
-<script src="/blog/js/script.js"></script>
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
 
 
+<script src="/blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
 
 
-  </div>
 </body>
 </html>
