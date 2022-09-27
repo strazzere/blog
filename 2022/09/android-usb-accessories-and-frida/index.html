@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Using a Typescript Frida-gadget for usb debuggingRecently on a project I was looking to do some “low level” analysis of between an application and a usb device plugged directly into the phone. This wa">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A Lesson in Safe Dex">
+<meta property="og:title" content="Android USB Accessory Sniffing">
 <meta property="og:url" content="https://strazzere.com/2022/09/android-usb-accessories-and-frida/index.html">
 <meta property="og:site_name" content="Strazzere">
 <meta property="og:description" content="Using a Typescript Frida-gadget for usb debuggingRecently on a project I was looking to do some “low level” analysis of between an application and a usb device plugged directly into the phone. This wa">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-09-27T07:00:00.000Z">
-<meta property="article:modified_time" content="2022-09-27T20:19:44.432Z">
+<meta property="article:modified_time" content="2022-09-27T20:23:13.303Z">
 <meta property="article:author" content="Tim Strazzere">
 <meta property="article:tag" content="android">
 <meta property="article:tag" content="reverse engineering">
@@ -42,7 +42,7 @@
         
     
     <!-- title -->
-    <title>A Lesson in Safe Dex</title>
+    <title>Android USB Accessory Sniffing</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -99,16 +99,16 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2022/09/android-usb-accessories-and-frida/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&text=A Lesson in Safe Dex"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=A Lesson in Safe Dex"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&is_video=false&description=A Lesson in Safe Dex"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=A Lesson in Safe Dex&body=Check out this article: https://strazzere.com/2022/09/android-usb-accessories-and-frida/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=A Lesson in Safe Dex"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=A Lesson in Safe Dex"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=A Lesson in Safe Dex"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=A Lesson in Safe Dex"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&name=A Lesson in Safe Dex&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&t=A Lesson in Safe Dex"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&text=Android USB Accessory Sniffing"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&is_video=false&description=Android USB Accessory Sniffing"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android USB Accessory Sniffing&body=Check out this article: https://strazzere.com/2022/09/android-usb-accessories-and-frida/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&name=Android USB Accessory Sniffing&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&t=Android USB Accessory Sniffing"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -125,7 +125,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        A Lesson in Safe Dex
+        Android USB Accessory Sniffing
     </h1>
 
 
@@ -221,16 +221,16 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2022/09/android-usb-accessories-and-frida/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&text=A Lesson in Safe Dex"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=A Lesson in Safe Dex"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&is_video=false&description=A Lesson in Safe Dex"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=A Lesson in Safe Dex&body=Check out this article: https://strazzere.com/2022/09/android-usb-accessories-and-frida/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=A Lesson in Safe Dex"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=A Lesson in Safe Dex"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=A Lesson in Safe Dex"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=A Lesson in Safe Dex"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&name=A Lesson in Safe Dex&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&t=A Lesson in Safe Dex"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&text=Android USB Accessory Sniffing"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&is_video=false&description=Android USB Accessory Sniffing"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android USB Accessory Sniffing&body=Check out this article: https://strazzere.com/2022/09/android-usb-accessories-and-frida/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&name=Android USB Accessory Sniffing&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&t=Android USB Accessory Sniffing"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
