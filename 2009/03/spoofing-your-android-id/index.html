@@ -174,9 +174,9 @@
 <p>Anyway — basically you can modify system values in a specific database, so any program that calls Settings.<code>System.Android_ID</code> can be given any id of your choosing.</p>
 <p>Just load up adb and navigate to the sqlite database: <code>/data/data/com.android.providers.settings/databases/settings.db</code></p>
 <p>Run the query;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from system;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from system;</span><br></pre></td></tr></table></figure>
 <p>You’ll see plenty of information which can then be changed. Running the following;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update system set value&#x3D;’dead00beef’ where name&#x3D;’android_id’;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update system set value=’dead00beef’ where name=’android_id’;</span><br></pre></td></tr></table></figure>
 <p>Would give you an ultra-slick <code>android_id</code> of <code>dead00beef</code> 🙂</p>
 <p>Note that this will NOT change the android id used by google products since they use one that is linked to your gmail account that the phone is associated with…</p>
 

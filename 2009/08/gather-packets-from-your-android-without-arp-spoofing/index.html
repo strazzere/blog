@@ -171,17 +171,17 @@
   <div class="content" itemprop="articleBody">
     <p><img src="http://173.230.150.16/blog/wp-content/uploads/2009/08/dump-300x254.jpg" alt="Dumping packets.." title="Dumping packets..."><br>So a while back I had written about gathering packets from the android phone - often using simple ARP spoofing and Wireshark to grab all the traffic. Sadly I kept postponing this post and then just forgot to put it up, showing how to grab the packets in a much easier way, which doesn’t even require you to put your android phone on a WIFI network.</p>
 <p>I’m not sure why this method never seemed to dawn on me in the beginning - since it’s so simple basically and has come in hand numerous times since :)</p>
-<p>On your computers shell/cmd;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell tcpdump -vv -s 0 -w &#x2F;sdcard&#x2F;output.cap</span><br></pre></td></tr></table></figure>
+<p>On your computers shell&#x2F;cmd;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell tcpdump -vv -s 0 -w /sdcard/output.cap</span><br></pre></td></tr></table></figure>
 <p>A quick run down of the switches we are using are the following;</p>
 <ul>
 <li><strong>-vv</strong>_ puts tcpdump into verbose mode - to give us some extra information</li>
 <li><em><strong>-s 0</strong></em> sets the size of sender to look for to zero, telling the program to grab all packets</li>
-<li><em><strong>-w /sdcard/output.cap</strong></em> will let us set the packets grabbed to be written to the sdcard for analysis later.</li>
+<li><em><strong>-w &#x2F;sdcard&#x2F;output.cap</strong></em> will let us set the packets grabbed to be written to the sdcard for analysis later.</li>
 </ul>
 <p>Once your done just break the command (<code>control-c</code>) and go open up the .cap file with your favorite analyzer like wireshark. You can also just run this command from your favorite terminal on the phone – allowing you to grab packets on the go. This should be pretty obvious, though I feel I must say it since people seem to think adb is something unlike a terminal? I’m not sure why this comes up, but people end up pasting the same thing I’ve done often, and then saying “You can just do it in a terminal on the phone, and it’s easiierr!”. Well yes, yes you can… Though copy-pasta-ing someones idea doesn’t make you much brighter ;)<br>Directly on the phone, or already adb’ed into it;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -vv -s 0 -w &#x2F;sdcard&#x2F;output.cap**</span><br></pre></td></tr></table></figure>
-<p><strong>Update: 8/31/09</strong> I’ve pulled the tcpdump from my rom and uploaded it to my server, you can download it here: <a href="http://www.strazzere.com/android/tcpdump" target="_blank" rel="noopener">tcpdump</a>. It is tcpdump version 3.9.8 libpcap version 0.9.8 - for anyone wondering. Push this file to you <code>/system/bin</code> or <code>/system/xbin</code> and then <code>chmod</code>ing it to be executable should make this work. Enjoy!</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -vv -s 0 -w /sdcard/output.cap**</span><br></pre></td></tr></table></figure>
+<p><strong>Update: 8&#x2F;31&#x2F;09</strong> I’ve pulled the tcpdump from my rom and uploaded it to my server, you can download it here: <a target="_blank" rel="noopener" href="http://www.strazzere.com/android/tcpdump">tcpdump</a>. It is tcpdump version 3.9.8 libpcap version 0.9.8 - for anyone wondering. Push this file to you <code>/system/bin</code> or <code>/system/xbin</code> and then <code>chmod</code>ing it to be executable should make this work. Enjoy!</p>
 
   </div>
 </article>

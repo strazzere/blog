@@ -17,8 +17,8 @@
 <meta property="article:modified_time" content="2020-03-29T21:50:35.646Z">
 <meta property="article:author" content="Tim Strazzere">
 <meta property="article:tag" content="android">
-<meta property="article:tag" content="g1">
 <meta property="article:tag" content="root">
+<meta property="article:tag" content="g1">
 <meta property="article:tag" content="beat to the punch">
 <meta property="article:tag" content="busybox">
 <meta property="article:tag" content="SMS">
@@ -167,8 +167,8 @@
   
 
   <div class="content" itemprop="articleBody">
-    <p>Well I was about half way done with my SMS application when I came upon this – looks like a much easier solution (for me, with a rooted phone atleast) than to just make a whole new application to do it all. This one is from ultimind over at the <a href="http://forum.xda-developers.com/showthread.php?t=448361" target="_blank" rel="noopener">xda-developers forums</a>;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; Playing around with the ls -R command, I found where the SMS database is kept, and it&#39;s somewhat readable in a text editor... _UPDATE (thanks staulkor): This database is viewable, and searchable using an SQLite database viewer._</span><br><span class="line">&gt; </span><br><span class="line">&gt; &gt; **Code:** &#x2F;data&#x2F;data&#x2F;com.android.providers&#x2F;telephony&#x2F;databases&#x2F;mmssms.db</span><br><span class="line">&gt; </span><br><span class="line">&gt; Just run the following command to back it up to the SD Card:</span><br><span class="line">&gt; </span><br><span class="line">&gt; &gt; **Code:** busybox cp &#x2F;data&#x2F;data&#x2F;com.android.providers.telephony&#x2F;databases&#x2F;mmssms.db &#x2F;sdcard</span><br><span class="line">&gt; </span><br><span class="line">&gt; Happy hacking</span><br></pre></td></tr></table></figure>
+    <p>Well I was about half way done with my SMS application when I came upon this – looks like a much easier solution (for me, with a rooted phone atleast) than to just make a whole new application to do it all. This one is from ultimind over at the <a target="_blank" rel="noopener" href="http://forum.xda-developers.com/showthread.php?t=448361">xda-developers forums</a>;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; Playing around with the ls -R command, I found where the SMS database is kept, and it&#x27;s somewhat readable in a text editor... _UPDATE (thanks staulkor): This database is viewable, and searchable using an SQLite database viewer._</span><br><span class="line">&gt; </span><br><span class="line">&gt; &gt; **Code:** /data/data/com.android.providers/telephony/databases/mmssms.db</span><br><span class="line">&gt; </span><br><span class="line">&gt; Just run the following command to back it up to the SD Card:</span><br><span class="line">&gt; </span><br><span class="line">&gt; &gt; **Code:** busybox cp /data/data/com.android.providers.telephony/databases/mmssms.db /sdcard</span><br><span class="line">&gt; </span><br><span class="line">&gt; Happy hacking</span><br></pre></td></tr></table></figure>
 
 <p>Obviously you need your phone rooted, and busybox installed - though for most that shouldn’t be a huge problem. For now this suits my needs so the SMS project will most likely be put on hold until I have more time to finish it.</p>
 
