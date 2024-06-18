@@ -1,0 +1,38 @@
+---
+title: Current protection schemes for G1 applications
+tags:
+  - android
+  - android market
+  - cracks
+  - expiration dates
+  - keygen
+  - protection schemes
+  - registration
+  - reverse engineering
+  - secure code
+url: current-protection-schemes-for-g1-applications.html
+id: 65
+categories:
+  - android
+  - reverse engineering
+  - secure code
+date: 2008-11-07 17:07:41
+---
+
+![](http://173.230.150.16/blog/wp-content/uploads/2008/11/broken-lock.jpg "broken-lock") A quick round up of protection schemes I've seen thus far in Android (G1 specifically) applications;
+
+*   Name/Serial combination - FireWallet, Googhelper etc.
+*   Expiration Dates - Texas Hold Em Beta, Mileage Ledger, etc.
+*   Registration Codes - Golf Tracks, etc.
+*   Online Activation Code - IMPlus
+*   "Lite" Version - AndSudoku, etc.
+
+I've been looking into each and every one, trying to see how each was implemented and used. All but the bottom two, online activation and "lite" versions seem to have been broken thus far. My guess is that the online activation will be broken also, though it will take more time than the rest.
+
+So, your a developer and you want to secure your product? I'd say the _best_ way to protect your program and maintain a cost efficient method would be a _good_ name and serial protection. As a malicious user cannot currently debug you program with normal tools like one might use IDA for the Windows Mobile platform, so this is an advantage for you. Deadlistings are pure dumps of the op codes, though thanks to the dexdump tool provided by google they have some hints as to what the op codes mean. This doesn't resolve to a very easy method of tracing a program and can be extremely difficult to decode an algorithm. Judging by the releases of the cracks and keygens for current Android programs, a good algorithm is hard to break. Googhelper is a good example of this, thus it has a crack released for this. The good thing for these developers is that a new release or update will make the crack useless since a key generator was not created. Firewallet does not seem to be so lucky as it has been keygenned successfully due to a weak algorithm. This still earns my vote as the _best_ solution to the problem, it isn't very intrusive to the user and can offer a relatively high form of security for the developer. The developer _must_ put the time into making a _good_ method of checking keys and write their code securely... You _should not_ depend the "security" of people being disallowed to access your dex files, as we've seen this isn't 100% with the G1 root work around. 
+On a quick side note - above I've listed "registration codes" which are often the same as the above, though are not tied to any specific name. I'm not going to go in depth about them as no developer has seemed to make one yet. Yes, I have a application listed next to it - that isn't a mistake. Maybe I'm just informing you that it isn't checking codes, and possibly just a static variable. This _obviously_ would not be a secure method if they are doing that...
+The next type of protection scheme I would like to talk about is expiration dates. This seems to be popular right now see that all applications must be listed as free. So developers have been assigning "expiration dates" on their beta products or their fully featured products so that people will have to buy them once the ability to do some comes out. This _seems_ like a rather good idea, however it has easily been cracked and will remain to be that way. Essentially local variables are stored in most of the programs with dates that are being checked to the calenders current dates. Or a database is written to with the data of first execution and then checked. These are simple and minor patches to work around. The method could be fairly useful, however it must be implemented in the correct way. This is again where I restate my mantra, write secure code! Don't rely on assuming people won't look for weak links - they _will_ always find them. Hopefully this doesn't affect many of the products already released, though unless they are release with many new features they seem to have released a full-functional product with a minor hindrance of an expiration date.
+One of the last schemes and probably the best used one thus far, proven by having yet to be cracked, is online activation codes. This is being used currently by IMPlus by shape-services. Essentially they tie a registration key to a person and/or device and allow them to enter it to register. This sends a signal to their website asking them if it's valid or not, and will return a response. This allows them to keep track of who is using their product and most likely provides them with analytics for themselves too. They seem to have interweave this process very well into the program so it would be seemingly hard to patch. It would be impossible to create a key generator for this program since it's being check server side. So one _could_ theoretically generate a correct serial, however the serial will check it to their database and realize that it doesn't exist or belongs to someone else. This is similar to cd-key checking of games, and it works rather well. This method is _not_ bulletproof though. As you see their products on other platforms have been broken, so I'm sure it is only a matter of time before this one is. A downside to this type of protection scheme is that your burdened with running the server all the time. If it goes down? Well sorry purchasing customers, you can't use your product right now! So you will forever need to run the service and be paying expenses for running it also. Though, bravo for withstanding the attacks I'm sure your getting from the scene teams in trying to crack your application. Shape-services undoubtedly has very knowledgeable and skill coders who practice good methods of writing secure code.
+The very last type of protection scheme is by far the most bulletproof, however it comes with many downsides. By providing "lite" versions of your software you essentially cripple your software and often literally rip-out the functionality of some parts. This is often used in games which are listed as demos which only include level one of the game, etc. While this does work, in a sense, it is essentially uncrackable and unkeygennable... Though customers just do not like this, take a look at reviews and people essentially just don't like it. _"Why do I only have one level!?", "Why would I pay for this garbage?!"_ To me at least, is just does not seem like a good model for selling a program. I understand the idea of it, but it doesn't seem to normally work out well. Either people get sick of the game on the first level or don't get enough of the game to get hooked. This leaves this with either a bad taste in their mouth or a sense of "I could live without that". Honestly, how many games have to played that are captivating and challenging in the first level?
+To summarize, nothing takes the cake like writing secure code, no matter which method of protection you choose. Name and serials to me, always seem like the most cost efficient and effective method to protecting applications, as long as they are done correctly and securely.
+Also, later today I should be finished with the PatchTest application I posted exactly a week ago, so hopefully some other people have gotten a chance to take a look at it. So, until then... Write more secure code!

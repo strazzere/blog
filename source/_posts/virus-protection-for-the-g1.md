@@ -1,0 +1,43 @@
+---
+title: Virus protection for the G1?!
+tags:
+  - android
+  - anti-virus
+  - g1
+  - hot air
+  - scare-ware
+  - smobile
+  - useless
+  - viruses
+url: virus-protection-for-the-g1.html
+id: 68
+categories:
+  - android
+date: 2008-11-07 21:05:53
+---
+
+![No... Not yet - and probably not for a while...](http://173.230.150.16/blog/wp-content/uploads/2008/11/g1-virus-300x251.jpg "G1-Virus?")
+Wait, what? There hasn't even been a virus or malicious file (publicly) released yet, and someone has already started selling anti-virus for the Android OS?! I had to see this one for myself...
+
+_...SMobile's of security engineers immediately went to work to create security solution designed specifically for the platform. SMobile Systems has announced its standard security offering, called SecurityShield(tm) -- an integrated application that includes anti-virus, anti-spam and firewall protection-- is up and running on the Android operating system._
+
+_"We believe that the launch of Android powered phones will usher in a period when the use of smartphones will skyrocket," said Rick Roscitt, chairman and chief executive officer, SMobile Systems. "As more consumers in the U.S. begin using their mobile devices as mini-computers for surfing the web and downloading third-party applications, mobile security becomes of paramount importance. Without security, millions of people could be at risk for hackers, spammers and others intent on stealing crucial personal, financial and even health information from their new Google-powered phones."_
+
+_The company plans on adapting the remainder of their applications to the Android platform in the coming weeks and months. Additionally, SMobile plans on creating new security products specifically tailored to Android, including an advanced application level firewall and system monitor. Currently, the Android platform does not allow the user to decide whether an application can make phones calls, send text or multi-media messages or make connections to the Internet during normal device use. This means that a virus can pose as an application and do things like dial phone numbers, send text messages and other functions that can cost the user money and leave their highly personal information vulnerable. The new technologies under development at SMobile will protect users against these new threats._
+
+_"SMobile believes that the Linux-based operating system will quickly enable hackers to explore and eventually exploit any security holes in the core Google software as well as third party software, allowing phishers, spammers, and others to look for ways to target user's information for ill intent," said George Tuvell, chief technology officer, SMobile Systems. "We have years of experience porting our applications into new mobile operating systems and developing the best mobile security products on the market. As leaders in this industry it is our responsibility to rapidly meet new market demands and respond to new market threats."_
+
+Wow, sound great doesn't it? Yea with a virus definition file like the following - why _wouldn't_ you want to buy it?
+```
+Cabir.A(drs)=886f1f10123a001019040010e5f79547e6ad0100bd00\*6f0064007500630074004900440054003200200052005300330041005300789c Cabir.D(sis)=9F883401F018A82D21F55309A96095D59069D3E4E76B51190E877B08F1852686 Cabir.H(Velasco)=49FF281C6946221C00F0DEFE00980001000903B030BC02BC0847000010B583B0 Cabir.I=30B581B0041C012100F0C8FD6D46201C00F09CFC011C281C00F0ECF9FFF7D4FD Cabir.dropper(sis)=D0B63D5C8FB25E6F9332EE07691FF25685355E3F950BEC03377ADBC291BA5AD1 Cabir.gen(app)=440400EB0600A0E10410A0E10D20A0E1200500EB70009FE5420400EB0500A0E1 Cabire.E(drs)=006a020000886f1f1000\*5c00760065006c006100730063006f005c006d006100720063006f0073002e00\*789ce3616067606160606074d890c5c2c00384000ca2018f Caribe.C(drs)=33645d2e444c4c0041564b4f4e5b31303030353663365d2e444c4c004241464c5b31303030336130665d2e44\*336433665d2e444c4c0045555345525b31303030333965355d2e444c4c0049524f4245585b31303030336435 Caribe.gen.app(fb4)=081394e5042084e2da0500eb0b0000ea0330a0e3fc3284e5fc3294e5020053e3 Caribe.gen.sis(fb4)=0930a0e30230cce730319fe50410a0e30310cce728219fe50130a0e30230cce7 Caribe.sis(drs)=72006900620065002e0072007300630021003a005c00730079007300740065006d005c0061007000700073005c006300610072006900620065005c006300610072006900620065002e0072007300630053006500720069006500730036003000500072006f0064007500630074004900440063006100720069006200650079 CommWarrior(sis)=886F1F10000000000000000022000000B601000016000000D801000063006F00 CommWarrior.A=04308DE2AC0E00EB04109DE594209FE50030D2E50120D2E5023483E1030051E1 CommWarrior.B=04308DE5043080E50410A0E110209FE5490D00EB000050E30200000A0200A0E3 Dampig.A=360031003000789CED5B0D7854C5B99EFD49B2C6054E20C00A51168834B511F7 Drever.A(sis)=4FA6591A61856662B3CD35BDDC2696771400FBED702CEFFBCC3B21D8616AC161 Drever.A(mdl)=08408DE50130A0E30C308DE50500A0E130109FE530209FE5023AA0E37E0000EB Drever.A(mdl)=68D08DE21040BDE81EFF2FE130402DE912DD4DE204D04DE218008DE274109FE5 Drever.A(sis)=BC27A009EBA91DE17655E8B921F30B2DB7603F07849177ACA983EA39E45C445D Drever.B(mdl)=1EFF2FE130402DE910D04DE20400A0E3930000EB005050E254309F1500308515 Drever.B(sis)=DB845142CF886EEE3EDFFB314361F0EF1A0543977F512A1E79AD98D7572AD612 Drever.C(mdl)=1040BDE81EFF2FE130402DE950D04DE20040A0E1D40300EB0030A0E300308DE5 Drever.C(sis)=F582DA17F15822A382A8537426C13BE4B3DBF7A1F39F44935A6CD9398A1BE930 Eicar-Test-Signature=4f2150254041505b345c505a58353428505e2937434329377d2445494341522d5354414e4441 dummy\_voip\_drs=4dda1f10123a001019040010d40a38ff1d890100040001000000000021000000c8000000010000000100000000000000
+```
+Looks great doesn't it? Twenty-five viruses, wait no, twenty-three viruses and two dummy files can be detected. That's a great service I'd love to pay money for. Now - I'm _sure_ they are going to expand they're database to include more files but serious, they are charging for this already?! Not only do they have a weak definition file, but if you bother to google any of the names, they are all Symbian viruses. So unless your using your Android phone to download and store files for you Symbian phone, why would you _need_ this application?
+
+I took a deep look into their files... The code looks pretty solid, it does what it should and what it is allowed too. The problem is, that even _if_ a virus came onto the AndroidOS system - this scanner will most likely _never_ find it. This program is not given above average access to the system, meaning it can only see what other applications see. So mostly files that do not matter this program can scan, if a virus where to use an exploit and gain high privileges then this program would be useless even if it did have good heuristics or definitions. It's a nice try guys, and you look like you have one of the best registration schemes yet, but I really don't think $9.99 for a license is worth it. Also note that the sales pitch claims to protect you from over "400 instances and varients of mobile malware" - what a crock of lies that is... Sounds to me like SMobile has been looking to produce some scare-ware and took notes from FSecure or McAfee.
+
+_SMobile VirusGuard for Android is the first antivirus application available to protect Google's revolutionary new mobile device operating system. VirusGuard provides users with protection against over 400 instances and variants of mobile malware. These viruses, worms and trojans can infect and cross-over between mobile devices via the memory card, web-browser and by the installation of open source applications._
+_VirusGuard provides users with the ability to scan memory cards and mobile devices to ensure files are not infected with malware. The on-demand scanning ability allows the user to scan selected files and folders to ensure the device and memory card are clean and protected. The update capability ensures that Android devices possesses the latest antivirus signatures and as Android malware grows, VirusGuard for Android users can rely on SMobile to detect new viruses, trojans and worms and to provide users with timely virus signature updates._
+_To easily install SMobile VirusGuard for Android, it is recommended that the installation file be downloaded from https://hosted.smobilesystems.com/smobile/downloads/SMobileAV.apk ._
+_To purchase the license key to activate the product, simply purchase the product via the shopping cart feature of this website and the key will be sent to you via e-mail. Complete installation and usage instructions can be found at:_
+
+_https://hosted.smobilesystems.com/main/docs/cons/SMobileAV\_G1\_UserGuide.pdf_
