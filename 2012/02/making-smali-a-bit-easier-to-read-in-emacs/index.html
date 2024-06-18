@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Spending a large amount of time using baksmali and reading through small files can be rather dull without the right tools. A while back I noticed a few people making color scheme files for vim, Notepa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Making smali a bit easier to read in Emacs">
+<meta property="og:url" content="https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Spending a large amount of time using baksmali and reading through small files can be rather dull without the right tools. A while back I noticed a few people making color scheme files for vim, Notepa">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2012/02/smali_coloring.png">
+<meta property="article:published_time" content="2012-02-06T00:06:22.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.093Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="baksmali">
+<meta property="article:tag" content="color scheme">
+<meta property="article:tag" content="emacs">
+<meta property="article:tag" content="smali">
+<meta property="article:tag" content="smali-mode">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://173.230.150.16/blog/wp-content/uploads/2012/02/smali_coloring.png">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Making smali a bit easier to read in Emacs</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&text=Making smali a bit easier to read in Emacs"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&title=Making smali a bit easier to read in Emacs"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&is_video=false&description=Making smali a bit easier to read in Emacs"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Making smali a bit easier to read in Emacs&body=Check out this article: https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&title=Making smali a bit easier to read in Emacs"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&title=Making smali a bit easier to read in Emacs"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&title=Making smali a bit easier to read in Emacs"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&title=Making smali a bit easier to read in Emacs"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&name=Making smali a bit easier to read in Emacs&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&t=Making smali a bit easier to read in Emacs"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Making smali a bit easier to read in Emacs
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2012-02-06T00:06:22.000Z" class="dt-published" itemprop="datePublished">2012-02-05</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/reverse-engineering/">reverse engineering</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/baksmali/" rel="tag">baksmali</a>, <a class="p-category" href="/tags/color-scheme/" rel="tag">color scheme</a>, <a class="p-category" href="/tags/emacs/" rel="tag">emacs</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>, <a class="p-category" href="/tags/smali/" rel="tag">smali</a>, <a class="p-category" href="/tags/smali-mode/" rel="tag">smali-mode</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="http://173.230.150.16/blog/wp-content/uploads/2012/02/smali_coloring.png" alt="Oh that? Just some pretty colors while reversing..." title="Oh that? Just some pretty colors for smali..."><br>Spending a large amount of time using baksmali and reading through small files can be rather dull without the right tools. A while back I noticed a few people making color scheme files for vim, Notepad+ and other tools I didn’t use. So after reading up on a quick few tutorials I created a smali-mode for Emacs.</p>
+<p>The code is up on my <a target="_blank" rel="noopener" href="https://github.com/strazzere/Emacs-Smali">github</a>, I haven’t actually touched it in a while until last night. I noticed a few other people actually pulled clones of it and made a few minor fixes! Some good fixes too, making the loading much faster and fixing some things I wasn’t too sure about myself for making an Emacs mode.</p>
+<p>Anyway - hopefully other people find this useful and maybe more people will contribute to the project. For people looking for the other color schemes here are some of those resources;</p>
+<p>Jon Larimer’s vim scheme;<br> <a target="_blank" rel="noopener" href="http://codetastrophe.com/smali.vim">http://codetastrophe.com/smali.vim</a><br>Lohan+’s Notepad+ color scheme;<br> <a target="_blank" rel="noopener" href="https://sites.google.com/site/lohanplus/files/smali_npp.xml">https://sites.google.com/site/lohanplus/files/smali_npp.xml</a> (<a target="_blank" rel="noopener" href="http://androidcracking.blogspot.com/2011/02/smali-syntax-highlighting-for-notepad.html">Directions here</a>)</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&text=Making smali a bit easier to read in Emacs"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&title=Making smali a bit easier to read in Emacs"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&is_video=false&description=Making smali a bit easier to read in Emacs"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Making smali a bit easier to read in Emacs&body=Check out this article: https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&title=Making smali a bit easier to read in Emacs"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&title=Making smali a bit easier to read in Emacs"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&title=Making smali a bit easier to read in Emacs"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&title=Making smali a bit easier to read in Emacs"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&name=Making smali a bit easier to read in Emacs&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2012/02/making-smali-a-bit-easier-to-read-in-emacs/&t=Making smali a bit easier to read in Emacs"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

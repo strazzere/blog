@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="So it was a long, long weekend - hope everyone enjoyed it and had a good turkey day. Sorry for the lack of updates, but snowboarding took precedence over blogging. I’ve stumbled across some more ident">
+<meta property="og:type" content="article">
+<meta property="og:title" content="More Identifiers without special permissions">
+<meta property="og:url" content="https://strazzere.com/2008/12/more-identifiers-without-special-permissions/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="So it was a long, long weekend - hope everyone enjoyed it and had a good turkey day. Sorry for the lack of updates, but snowboarding took precedence over blogging. I’ve stumbled across some more ident">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2008-12-01T19:33:06.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.094Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="g1">
+<meta property="article:tag" content="android.os.Build">
+<meta property="article:tag" content="board">
+<meta property="article:tag" content="brand">
+<meta property="article:tag" content="fingerprint">
+<meta property="article:tag" content="host">
+<meta property="article:tag" content="model">
+<meta property="article:tag" content="test-keys">
+<meta property="article:tag" content="unique id">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>More Identifiers without special permissions</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2008/12/unknownhostexception-on-androidos/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2008/11/uniquely-identifying-android-devices-with-special-permissions/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&text=More Identifiers without special permissions"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&title=More Identifiers without special permissions"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&is_video=false&description=More Identifiers without special permissions"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=More Identifiers without special permissions&body=Check out this article: https://strazzere.com/2008/12/more-identifiers-without-special-permissions/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&title=More Identifiers without special permissions"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&title=More Identifiers without special permissions"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&title=More Identifiers without special permissions"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&title=More Identifiers without special permissions"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&name=More Identifiers without special permissions&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&t=More Identifiers without special permissions"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        More Identifiers without special permissions
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2008-12-01T19:33:06.000Z" class="dt-published" itemprop="datePublished">2008-12-01</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/android-os-Build/" rel="tag">android.os.Build</a>, <a class="p-category" href="/tags/board/" rel="tag">board</a>, <a class="p-category" href="/tags/brand/" rel="tag">brand</a>, <a class="p-category" href="/tags/fingerprint/" rel="tag">fingerprint</a>, <a class="p-category" href="/tags/g1/" rel="tag">g1</a>, <a class="p-category" href="/tags/host/" rel="tag">host</a>, <a class="p-category" href="/tags/model/" rel="tag">model</a>, <a class="p-category" href="/tags/test-keys/" rel="tag">test-keys</a>, <a class="p-category" href="/tags/unique-id/" rel="tag">unique id</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>So it was a long, long weekend - hope everyone enjoyed it and had a good turkey day. Sorry for the lack of updates, but snowboarding took precedence over blogging. I’ve stumbled across some more identifiers that can be used for the Android OS, even better since these are obtained without special permissions.</p>
+<p>This one comes from <a target="_blank" rel="noopener" href="http://code.google.com/android/reference/android/os/Build.html">android.os.Build</a>.</p>
+<p>Now the output from the emulator will look something like this;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Model: generic</span><br><span class="line">Device: generic</span><br><span class="line">Fingerprint: generic/generic/generic/:1.0/110632/110632:sdk/test-keys</span><br><span class="line">Board: unknown</span><br><span class="line">Brand: generic</span><br><span class="line">ID: 110632</span><br><span class="line">Host: undroid12.corp.google.com</span><br><span class="line">Product: generic</span><br><span class="line">Tags: test-keys</span><br><span class="line">User: android-build</span><br><span class="line">Type: sdk</span><br><span class="line">Time: 1222115712000</span><br></pre></td></tr></table></figure>
+
+<p>When I get on my developer machine I will provide a dump of what these values look like on a G1 device. Though by looking at this output quickly, I wonder if the “fingerprint” would be able to provide a way of seeing if a phone is rooted or not? I guess we’ll see – I’ll be interested to see what the differences in all these results are between my phone and my bothers phone; mine being rooted and his not.</p>
+<p>Anyway, with these values, combined with past values we’ve found both with <a href="http://strazzere.com/blog/?p=116">special permissions</a> and <a href="http://strazzere.com/blog/?p=113">no special permissions</a>, you should be able to hash something together for a unique identifier.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import android.os.Build;</span><br><span class="line">...</span><br><span class="line">        StringBuilder Buffer = new StringBuilder();</span><br><span class="line">        String NEW_LINE = System.getProperty(&quot;line.separator&quot;);</span><br><span class="line"></span><br><span class="line">        Buffer.append(&quot;Model: &quot;+ (Build.MODEL).toString() + NEW_LINE);</span><br><span class="line">        Buffer.append(&quot;Device: &quot;+ (Build.DEVICE).toString() + NEW_LINE);</span><br><span class="line">        Buffer.append(&quot;Fingerprint: &quot;+ (Build.FINGERPRINT).toString() + NEW_LINE);</span><br><span class="line">        Buffer.append(&quot;Board: &quot;+ (Build.BOARD).toString() + NEW_LINE);</span><br><span class="line">        Buffer.append(&quot;Brand: &quot;+ (Build.BRAND).toString() + NEW_LINE);</span><br><span class="line">        Buffer.append(&quot;ID: &quot;+ (Build.ID).toString() + NEW_LINE);</span><br><span class="line">        Buffer.append(&quot;Host: &quot;+ (Build.HOST).toString() + NEW_LINE);</span><br><span class="line">        Buffer.append(&quot;Product: &quot;+ (Build.PRODUCT).toString() + NEW_LINE);</span><br><span class="line">        Buffer.append(&quot;Tags: &quot;+ (Build.TAGS).toString() + NEW_LINE);</span><br><span class="line">        Buffer.append(&quot;User: &quot;+ (Build.USER).toString() + NEW_LINE);</span><br><span class="line">        Buffer.append(&quot;Type: &quot;+ (Build.TYPE).toString() + NEW_LINE);</span><br><span class="line">        Buffer.append(&quot;Time: &quot;+ (Build.TIME) + NEW_LINE);</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>updated on December 1, 2008 at 9:00pm</strong><br>From a rooted G1 device:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Model: T-Mobile G1</span><br><span class="line">Device: dream</span><br><span class="line">Fingerprint: tmobile/kila/dream/trout:1.0/TC4-RC30/116143:user/xda-dev</span><br><span class="line">Board: trout</span><br><span class="line">Brand: tmobile</span><br><span class="line">ID: TC4-RC30</span><br><span class="line">Host: undroid11.corp.google.com</span><br><span class="line">Product: kila</span><br><span class="line">Tags: ota-rel-keys,release-keys</span><br><span class="line">User: android-build</span><br><span class="line">Type: user</span><br><span class="line">Time: 12255048530</span><br></pre></td></tr></table></figure>
+
+<p>Interesting results… :)</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&text=More Identifiers without special permissions"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&title=More Identifiers without special permissions"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&is_video=false&description=More Identifiers without special permissions"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=More Identifiers without special permissions&body=Check out this article: https://strazzere.com/2008/12/more-identifiers-without-special-permissions/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&title=More Identifiers without special permissions"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&title=More Identifiers without special permissions"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&title=More Identifiers without special permissions"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&title=More Identifiers without special permissions"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&name=More Identifiers without special permissions&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2008/12/more-identifiers-without-special-permissions/&t=More Identifiers without special permissions"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

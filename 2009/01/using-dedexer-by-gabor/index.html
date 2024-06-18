@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Was playing around with dedexer, mention in this previous post, and noticed it wasn’t working well on my ubuntu dev. machine. Turns out it just didn’t play well with the default ubuntu java - so switc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using Dedexer by Gabor...">
+<meta property="og:url" content="https://strazzere.com/2009/01/using-dedexer-by-gabor/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Was playing around with dedexer, mention in this previous post, and noticed it wasn’t working well on my ubuntu dev. machine. Turns out it just didn’t play well with the default ubuntu java - so switc">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2009-01-21T08:00:39.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.097Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="dex">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="g1">
+<meta property="article:tag" content="bytecode">
+<meta property="article:tag" content="Dedexer">
+<meta property="article:tag" content="Gabor">
+<meta property="article:tag" content="ddx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Using Dedexer by Gabor...</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2009/01/vendingodex-dumped/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2009/01/papihack/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/01/using-dedexer-by-gabor/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&text=Using Dedexer by Gabor..."><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&title=Using Dedexer by Gabor..."><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&is_video=false&description=Using Dedexer by Gabor..."><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Using Dedexer by Gabor...&body=Check out this article: https://strazzere.com/2009/01/using-dedexer-by-gabor/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&title=Using Dedexer by Gabor..."><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&title=Using Dedexer by Gabor..."><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&title=Using Dedexer by Gabor..."><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&title=Using Dedexer by Gabor..."><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&name=Using Dedexer by Gabor...&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/01/using-dedexer-by-gabor/&t=Using Dedexer by Gabor..."><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Using Dedexer by Gabor...
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2009-01-21T08:00:39.000Z" class="dt-published" itemprop="datePublished">2009-01-21</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Dedexer/" rel="tag">Dedexer</a>, <a class="p-category" href="/tags/Gabor/" rel="tag">Gabor</a>, <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/bytecode/" rel="tag">bytecode</a>, <a class="p-category" href="/tags/ddx/" rel="tag">ddx</a>, <a class="p-category" href="/tags/dex/" rel="tag">dex</a>, <a class="p-category" href="/tags/g1/" rel="tag">g1</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>Was playing around with dedexer, mention in this <a href="http://strazzere.com/blog/?p=165">previous post</a>, and noticed it wasn’t working well on my ubuntu dev. machine. Turns out it just didn’t play well with the default ubuntu java - so switching it made all the difference. So if your getting the following error or something like this when running:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tstrazze@strazz-workstation:~/Desktop$ java -jar ddx.jar -d dump classes.dex</span><br><span class="line">Processing com/android/im/util/QueryUtils</span><br><span class="line">Exception in thread “main” java.lang.NoSuchMethodError: method java.io.PrintStream. with signature (Ljava.io.File;)V was not found.</span><br><span class="line">at hu.uw.pallergabor.dedexer.JasminStyleCodeGenerator.generate(JasminStyleCodeGenerator.java:29)</span><br><span class="line">at hu.uw.pallergabor.dedexer.Dedexer.run(Dedexer.java:116)</span><br><span class="line">at hu.uw.pallergabor.dedexer.Dedexer.main(Dedexer.java:12)</span><br></pre></td></tr></table></figure>
+
+<p>Then run the following command;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tstrazze@strazz-workstation:~/Desktop$ java -version</span><br><span class="line">java version “1.5.0”</span><br><span class="line">gij (GNU libgcj) version 4.2.4 (Ubuntu 4.2.4-1ubuntu3)</span><br><span class="line"></span><br><span class="line">Copyright (C) 2007 Free Software Foundation, Inc.</span><br><span class="line">This is free software; see the source for copying conditions. There is NO</span><br><span class="line">warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span><br><span class="line">tstrazze@strazz-workstation:~/Desktop$ sudo update-java-alternatives -l</span><br><span class="line">java-6-sun 63 /usr/lib/jvm/java-6-sun</span><br><span class="line">java-gcj 1042 /usr/lib/jvm/java-gcj</span><br></pre></td></tr></table></figure>
+
+<p>We want to be using <em>java-6-sun</em>, not <em>java-gcj</em> so we’ll do the following;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">tstrazze@strazz-workstation:~/Desktop$ sudo update-java-alternatives -s java-gcj</span><br><span class="line">No alternatives for apt.</span><br><span class="line">No alternatives for extcheck.</span><br><span class="line">No alternatives for firefox-3.0-javaplugin.so.</span><br><span class="line">No alternatives for HtmlConverter.</span><br><span class="line">No alternatives for idlj.</span><br><span class="line">No alternatives for javap.</span><br><span class="line">No alternatives for java-rmi.cgi.</span><br><span class="line">No alternatives for jconsole.</span><br><span class="line">No alternatives for jdb.</span><br><span class="line">No alternatives for jhat.</span><br><span class="line">No alternatives for jinfo.</span><br><span class="line">No alternatives for jmap.</span><br><span class="line">No alternatives for jps.</span><br><span class="line">No alternatives for jrunscript.</span><br><span class="line">No alternatives for jsadebugd.</span><br><span class="line">No alternatives for jstack.</span><br><span class="line">No alternatives for jstat.</span><br><span class="line">No alternatives for jstatd.</span><br><span class="line">No alternatives for jvisualvm.</span><br><span class="line">No alternatives for schemagen.</span><br><span class="line">No alternatives for wsgen.</span><br><span class="line">No alternatives for wsimport.</span><br><span class="line">No alternatives for xjc.</span><br><span class="line">Using ‘/usr/lib/jvm/java-gcj/bin/appletviewer’ to provide ‘appletviewer’.</span><br><span class="line">Using ‘/usr/lib/jvm/java-gcj/bin/jarsigner’ to provide ‘jarsigner’.</span><br><span class="line">Using ‘/usr/lib/jvm/java-gcj/bin/javac’ to provide ‘javac’.</span><br><span class="line">Using ‘/usr/lib/jvm/java-gcj/bin/javadoc’ to provide ‘javadoc’.</span><br><span class="line">Using ‘/usr/lib/jvm/java-gcj/bin/javah’ to provide ‘javah’.</span><br><span class="line">Using ‘/usr/lib/jvm/java-gcj/bin/native2ascii’ to provide ‘native2ascii’.</span><br><span class="line">Using ‘/usr/lib/jvm/java-gcj/bin/rmic’ to provide ‘rmic’.</span><br><span class="line">Using ‘/usr/lib/jvm/java-gcj/bin/tnameserv’ to provide ‘tnameserv’.</span><br><span class="line">Using ‘/usr/lib/jvm/java-gcj/jre/bin/jar’ to provide ‘jar’.</span><br><span class="line">Using ‘/usr/lib/jvm/java-gcj/jre/bin/java’ to provide ‘java’.</span><br><span class="line">Using ‘/usr/lib/jvm/java-gcj/jre/bin/keytool’ to provide ‘keytool’.</span><br><span class="line">Using ‘/usr/lib/jvm/java-gcj/jre/bin/orbd’ to provide ‘orbd’.</span><br><span class="line">Using ‘/usr/lib/jvm/java-gcj/jre/bin/rmid’ to provide ‘rmid’.</span><br><span class="line">Using ‘/usr/lib/jvm/java-gcj/jre/bin/rmiregistry’ to provide ‘rmiregistry’.</span><br><span class="line">Using ‘/usr/lib/jvm/java-gcj/jre/bin/serialver’ to provide ‘serialver’.</span><br><span class="line">update-java-alternatives: plugin alternative does not exist: /usr/lib/gcj-4.2/libgcjwebplugin.so</span><br><span class="line">update-java-alternatives: plugin alternative does not exist: /usr/lib/gcj-4.2/libgcjwebplugin.so</span><br><span class="line">update-java-alternatives: plugin alternative does not exist: /usr/lib/gcj-4.2/libgcjwebplugin.so</span><br><span class="line">update-java-alternatives: plugin alternative does not exist: /usr/lib/gcj-4.2/libgcjwebplugin.so</span><br><span class="line">update-java-alternatives: plugin alternative does not exist: /usr/lib/gcj-4.2/libgcjwebplugin.so</span><br><span class="line">update-java-alternatives: plugin alternative does not exist: /usr/lib/gcj-4.2/libgcjwebplugin.so</span><br><span class="line">update-java-alternatives: plugin alternative does not exist: /usr/lib/gcj-4.2/libgcjwebplugin.so</span><br></pre></td></tr></table></figure>
+
+<p>Ta-da! A simple (and probably obvious for most) work around. Just figured I’d throw it up here to help anyone who might bump into the problem.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/01/using-dedexer-by-gabor/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&text=Using Dedexer by Gabor..."><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&title=Using Dedexer by Gabor..."><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&is_video=false&description=Using Dedexer by Gabor..."><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Using Dedexer by Gabor...&body=Check out this article: https://strazzere.com/2009/01/using-dedexer-by-gabor/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&title=Using Dedexer by Gabor..."><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&title=Using Dedexer by Gabor..."><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&title=Using Dedexer by Gabor..."><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&title=Using Dedexer by Gabor..."><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/01/using-dedexer-by-gabor/&name=Using Dedexer by Gabor...&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/01/using-dedexer-by-gabor/&t=Using Dedexer by Gabor..."><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

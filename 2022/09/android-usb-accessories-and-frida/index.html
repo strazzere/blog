@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Using a Typescript Frida-gadget for usb debuggingRecently on a project I was looking to do some “low level” analysis of between an application and a usb device plugged directly into the phone. This wa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android USB Accessory Sniffing">
+<meta property="og:url" content="https://strazzere.com/2022/09/android-usb-accessories-and-frida/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Using a Typescript Frida-gadget for usb debuggingRecently on a project I was looking to do some “low level” analysis of between an application and a usb device plugged directly into the phone. This wa">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-09-27T07:00:00.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.086Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="frida">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="usb accessories">
+<meta property="article:tag" content="typescript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Android USB Accessory Sniffing</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/11/hot-reloading-native-shim/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2020/06/Uncertified-Devices-and-Bad-Advice/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2022/09/android-usb-accessories-and-frida/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&text=Android USB Accessory Sniffing"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&is_video=false&description=Android USB Accessory Sniffing"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android USB Accessory Sniffing&body=Check out this article: https://strazzere.com/2022/09/android-usb-accessories-and-frida/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&name=Android USB Accessory Sniffing&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&t=Android USB Accessory Sniffing"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-a-Typescript-Frida-gadget-for-usb-debugging"><span class="toc-number">1.</span> <span class="toc-text">Using a Typescript Frida-gadget for usb debugging</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Boilerplate-gadget-code"><span class="toc-number">1.1.</span> <span class="toc-text">Boilerplate gadget code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Finding-the-Usb-Device"><span class="toc-number">1.2.</span> <span class="toc-text">Finding the Usb Device</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stitching-it-all-together"><span class="toc-number">1.3.</span> <span class="toc-text">Stitching it all together</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unsolved"><span class="toc-number">1.4.</span> <span class="toc-text">Unsolved</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLDR-Give-me-the-code"><span class="toc-number">1.5.</span> <span class="toc-text">TLDR - Give me the code</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Android USB Accessory Sniffing
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-09-27T07:00:00.000Z" class="dt-published" itemprop="datePublished">2022-09-27</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/reverse-engineering/">reverse engineering</a> › <a class="category-link" href="/categories/android/reverse-engineering/frida/">frida</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/frida/" rel="tag">frida</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>, <a class="p-category" href="/tags/typescript/" rel="tag">typescript</a>, <a class="p-category" href="/tags/usb-accessories/" rel="tag">usb accessories</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Using-a-Typescript-Frida-gadget-for-usb-debugging"><a href="#Using-a-Typescript-Frida-gadget-for-usb-debugging" class="headerlink" title="Using a Typescript Frida-gadget for usb debugging"></a>Using a Typescript Frida-gadget for usb debugging</h2><p>Recently on a project I was looking to do some “low level” analysis of between an application and a usb device plugged directly into the phone. This wasn’t anything I had ever actually done before, so it took a little bit of digging to figure out what was actually needed. On top of that, it had been a little bit since I had written a <code>frida</code> gadget. For the heck of it, I decided to just try and write everything in Typescript. Mostly this was a challenge to myself, but also an attempt to see if this would speed up any gadget writing in the future since it would allow me to rely on strong typing — or so I hoped.</p>
+<h3 id="Boilerplate-gadget-code"><a href="#Boilerplate-gadget-code" class="headerlink" title="Boilerplate gadget code"></a>Boilerplate gadget code</h3><p><a target="_blank" rel="noopener" href="https://github.com/oleavr">oleavr</a>, as always, was kind enough to have a good example of what a gadget should look like for <code>frida</code> which my code is based off of at <a target="_blank" rel="noopener" href="https://github.com/oleavr/frida-agent-example">frida-agent-example</a>. The main benefit I’ve found to utilizing this approach is being able to have <code>VSCode</code> open on your project, the <code>watch</code> command running, and the interact repl for your agent also running. Between the typescript bindings and the repl, you can quickly debug and test while just saving a file and having everything recompile at once.</p>
+<h3 id="Finding-the-Usb-Device"><a href="#Finding-the-Usb-Device" class="headerlink" title="Finding the Usb Device"></a>Finding the Usb Device</h3><p>While splunking in the Android docs, we can find that <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/hardware/usb/UsbManager#openAccessory(android.hardware.usb.UsbAccessory)">android.hardware.usb.UsbAccessory.openAccessory()</a> is the likely method we will want to hook. Specifically from the docs;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public ParcelFileDescriptor openAccessory (UsbAccessory accessory)</span><br><span class="line"></span><br><span class="line">Opens a file descriptor for reading and writing data to the USB accessory.</span><br></pre></td></tr></table></figure>
+
+<p>So we will want to hook this, intercept the return value of type <code>ParcelFileDescriptor</code> then utilize the <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/os/ParcelFileDescriptor#getFd()">getFd()</a> method. This means, based on the docs, from a hooking&#x2F;app perspective all the USB interaction is occuring transparently over a file descriptor. Great - so much like any type of file descriptor hooking, we only really care now about a few things;</p>
+<ol>
+<li>What is the file descriptor I care about</li>
+<li>Hook the <code>read()</code> and <code>write()</code> methods and filter by the file descriptor.</li>
+</ol>
+<p>To perform this hooking in the gadget, we will use essentially the code below;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Java.perform(() =&gt; &#123;</span><br><span class="line">  const usbManager = Java.use(&#x27;android.hardware.usb.UsbManager&#x27;)</span><br><span class="line">  usbManager.openAccessory.overload(&#x27;android.hardware.usb.UsbAccessory&#x27;).implementation = (usbAccessory: NativePointerValue) =&gt; &#123;</span><br><span class="line">    if (debug) &#123;</span><br><span class="line">      log(`usbManager.openAccessory(android.hardware.usb.UsbAccessory) called`)</span><br><span class="line">    &#125;</span><br><span class="line">    const ret = usbManager.openAccessory.call(this, usbAccessory)</span><br><span class="line">    const parcelFileDescriptor = Java.cast(ret, Java.use(&#x27;android.os.ParcelFileDescriptor&#x27;))</span><br><span class="line">    </span><br><span class="line">    log(`***** usb accessory FD : $&#123;parcelFileDescriptor&#125; $&#123;parcelFileDescriptor.getFd()&#125;`)</span><br><span class="line">    accessoryFD = parcelFileDescriptor.getFd()</span><br><span class="line">    return parcelFileDescriptor</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Above the <code>accessoryFD</code> variable would just be something that is scoped to be accessible from other hooks we create later for the <code>read</code> and <code>write</code> functionality.</p>
+<h3 id="Stitching-it-all-together"><a href="#Stitching-it-all-together" class="headerlink" title="Stitching it all together"></a>Stitching it all together</h3><p>For a <code>read</code> and <code>write</code> hook, all we need to do is a simple native <code>Interceptor.attach()</code> to <code>libc.so</code>, something like the following;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">const libcWrite = Module.findExportByName(&#x27;libc.so&#x27;, &#x27;write&#x27;)</span><br><span class="line">if (libcWrite) &#123;</span><br><span class="line">  Interceptor.attach(</span><br><span class="line">    libcWrite, &#123;</span><br><span class="line">      onEnter: function(args) &#123;</span><br><span class="line">        if (accessoryFD &amp;&amp; args[0].toInt32() === accessoryFD) &#123;</span><br><span class="line">          const size = args[2].toInt32()</span><br><span class="line">          log(`* usb accessory write`)</span><br><span class="line">          log(hexdump(args[1], &#123; length: size &#125;))</span><br><span class="line">          log(Thread.backtrace(this.context, Backtracer.ACCURATE).map(DebugSymbol.fromAddress).join(&#x27;\n&#x27;) + &#x27;\n&#x27;)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const libcRead = Module.findExportByName(&#x27;libc.so&#x27;, &#x27;read&#x27;)</span><br><span class="line">if (libcRead) &#123;</span><br><span class="line">  Interceptor.attach(</span><br><span class="line">    libcRead, &#123;</span><br><span class="line">      onEnter: function(args) &#123;</span><br><span class="line">        this.fd = args[0].toInt32()</span><br><span class="line">        this.size = args[2].toInt32()</span><br><span class="line">      &#125;,</span><br><span class="line">      onLeave: function(ret) &#123;</span><br><span class="line">        if (accessoryFD &amp;&amp; this.fd.toInt32() === accessoryFD) &#123;</span><br><span class="line">          log(`* usb accessory read`)</span><br><span class="line">          log(hexdump(ret, &#123; length: this.size &#125;))</span><br><span class="line">          log(Thread.backtrace(this.context, Backtracer.ACCURATE).map(DebugSymbol.fromAddress).join(&#x27;\n&#x27;) + &#x27;\n&#x27;)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Now from here on out we will be able to simply dump any of the “traffic” which is being sent to or received from the usb device. Blammo!</p>
+<h3 id="Unsolved"><a href="#Unsolved" class="headerlink" title="Unsolved"></a>Unsolved</h3><p>In my example code which is linked below, I was able to define and track down all the proper types, except for one. While utilizing a <code>java.lang.Thread</code> to generate stacktraces - which is something I often to do to highlight “where” in the code some function is called, it is annoyingly hard to figure out how to type this object.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// eslint-disable-next-line @typescript-eslint/ban-types</span><br><span class="line">let threadObj: Java.Wrapper&lt;&#123;&#125;&gt;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">      const ThreadDef = Java.use(&#x27;java.lang.Thread&#x27;)</span><br><span class="line">      threadObj = ThreadDef.$new()</span><br></pre></td></tr></table></figure>
+
+<p>While the typescript compiler itself doesn’t seem to have any issues with this (which might be a misnomer since it is <code>frida-compile</code> doing some of the lifting?) the linter hates this throwing the following error;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/home/diff/repo/rednaga/android/usb-accessory-gadget/agent/index.ts</span><br><span class="line">  4:29  error  Don&#x27;t use `&#123;&#125;` as a type. `&#123;&#125;` actually means &quot;any non-nullish value&quot;.</span><br><span class="line">- If you want a type meaning &quot;any object&quot;, you probably want `Record&lt;string, unknown&gt;` instead.</span><br><span class="line">- If you want a type meaning &quot;any value&quot;, you probably want `unknown` instead.</span><br><span class="line">- If you want a type meaning &quot;empty object&quot;, you probably want `Record&lt;string, never&gt;` instead  @typescript-eslint/ban-types</span><br></pre></td></tr></table></figure>
+
+<p>Which, to be honest, I’m not sure I fully understand. Obviously it wants a proper type, though none of those seem correct.</p>
+<p>The autogenerated documents seem to indicate that this is the actual return value, so I’m pretty unclear on what is happening here.<br><code>function Java.use&lt;&#123;&#125;&gt;(className: string): Java.Wrapper&lt;&#123;&#125;&gt;</code></p>
+<p>If anyone has ever solved for this, I’d be curious what the solution ends up being.</p>
+<h3 id="TLDR-Give-me-the-code"><a href="#TLDR-Give-me-the-code" class="headerlink" title="TLDR - Give me the code"></a>TLDR - Give me the code</h3><p>A fully working example to dump <code>read</code> and <code>writes</code> between an Android APK and a USB device can be found in this repository, <a target="_blank" rel="noopener" href="https://github.com/strazzere/usb-accessory-gadget">usb-accessory-gadget</a>.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-a-Typescript-Frida-gadget-for-usb-debugging"><span class="toc-number">1.</span> <span class="toc-text">Using a Typescript Frida-gadget for usb debugging</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Boilerplate-gadget-code"><span class="toc-number">1.1.</span> <span class="toc-text">Boilerplate gadget code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Finding-the-Usb-Device"><span class="toc-number">1.2.</span> <span class="toc-text">Finding the Usb Device</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stitching-it-all-together"><span class="toc-number">1.3.</span> <span class="toc-text">Stitching it all together</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unsolved"><span class="toc-number">1.4.</span> <span class="toc-text">Unsolved</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLDR-Give-me-the-code"><span class="toc-number">1.5.</span> <span class="toc-text">TLDR - Give me the code</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2022/09/android-usb-accessories-and-frida/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&text=Android USB Accessory Sniffing"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&is_video=false&description=Android USB Accessory Sniffing"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android USB Accessory Sniffing&body=Check out this article: https://strazzere.com/2022/09/android-usb-accessories-and-frida/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&title=Android USB Accessory Sniffing"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&name=Android USB Accessory Sniffing&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2022/09/android-usb-accessories-and-frida/&t=Android USB Accessory Sniffing"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

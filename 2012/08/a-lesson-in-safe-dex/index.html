@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It’s been almost a full week since my talk, Dex Education: Practicing Safe Dex, though I think I’m only now beginning to recover. The past few months have truly been a whirlwind of both working on dis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Lesson in Safe Dex">
+<meta property="og:url" content="https://strazzere.com/2012/08/a-lesson-in-safe-dex/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="It’s been almost a full week since my talk, Dex Education: Practicing Safe Dex, though I think I’m only now beginning to recover. The past few months have truly been a whirlwind of both working on dis">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.strazzere.com/blog/wp-content/uploads/2012/08/presentation-cropped.png">
+<meta property="article:published_time" content="2012-08-02T22:29:02.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.085Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="apkfuscator">
+<meta property="article:tag" content="blackhat">
+<meta property="article:tag" content="blackhat 2012">
+<meta property="article:tag" content="bytecode obfuscation">
+<meta property="article:tag" content="conference">
+<meta property="article:tag" content="dalvik">
+<meta property="article:tag" content="defcon">
+<meta property="article:tag" content="dex">
+<meta property="article:tag" content="dex bytecode">
+<meta property="article:tag" content="presentation">
+<meta property="article:tag" content="reverse engineering">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.strazzere.com/blog/wp-content/uploads/2012/08/presentation-cropped.png">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>A Lesson in Safe Dex</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2012/08/dexploration-what-a-default-dex-looks-like/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2012/07/mobile-security-meetup-dextemplate-and-smali-mode/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2012/08/a-lesson-in-safe-dex/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&text=A Lesson in Safe Dex"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&title=A Lesson in Safe Dex"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&is_video=false&description=A Lesson in Safe Dex"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Lesson in Safe Dex&body=Check out this article: https://strazzere.com/2012/08/a-lesson-in-safe-dex/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&title=A Lesson in Safe Dex"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&title=A Lesson in Safe Dex"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&title=A Lesson in Safe Dex"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&title=A Lesson in Safe Dex"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&name=A Lesson in Safe Dex&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&t=A Lesson in Safe Dex"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        A Lesson in Safe Dex
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2012-08-02T22:29:02.000Z" class="dt-published" itemprop="datePublished">2012-08-02</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/dex-bytecode/">dex bytecode</a> › <a class="category-link" href="/categories/android/dex-bytecode/reverse-engineering/">reverse engineering</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/apkfuscator/" rel="tag">apkfuscator</a>, <a class="p-category" href="/tags/blackhat/" rel="tag">blackhat</a>, <a class="p-category" href="/tags/blackhat-2012/" rel="tag">blackhat 2012</a>, <a class="p-category" href="/tags/bytecode-obfuscation/" rel="tag">bytecode obfuscation</a>, <a class="p-category" href="/tags/conference/" rel="tag">conference</a>, <a class="p-category" href="/tags/dalvik/" rel="tag">dalvik</a>, <a class="p-category" href="/tags/defcon/" rel="tag">defcon</a>, <a class="p-category" href="/tags/dex/" rel="tag">dex</a>, <a class="p-category" href="/tags/dex-bytecode/" rel="tag">dex bytecode</a>, <a class="p-category" href="/tags/presentation/" rel="tag">presentation</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/08/presentation-cropped.png" alt="Presenting at Blackhat 2012" title="Presenting at Blackhat 2012"><br>It’s been almost a full week since my talk, <a target="_blank" rel="noopener" href="https://www.blackhat.com/html/bh-us-12/bh-us-12-briefings.html#Strazzere">Dex Education: Practicing Safe Dex</a>, though I think I’m only now beginning to recover. The past few months have truly been a whirlwind of both working on dissecting malware at Lookout and working on putting together a solid presentation for BlackHat. So far I’ve been unable to draw a crowd like Charlie, though maybe someday I’ll have people sitting in the aisles fighting for a seat during a presentation. Until then the people who went will just have to deal with the extra legroom. Over all the presentation seemed to go over pretty well, some interesting chats afterwards with some smart people. A few people where interested in the slides and proof of concept code, so I told them I would <a target="_blank" rel="noopener" href="https://twitter.com/timstrazz/status/228617373840728064">tweet it</a> and also make a blog post about it.</p>
+<p>My slides are available <a target="_blank" rel="noopener" href="http://www.strazzere.com/papers/DexEducation-PracticingSafeDex.pdf">here</a> with the proof of concept code being hosted on my github page <a target="_blank" rel="noopener" href="https://github.com/strazzere/APKfuscator">here</a>.</p>
+<p>The proof of concept crackme code on the same github page as well shortly. I’ve got some extra content that I wasn’t able to fit into the slide-deck, heck it was 96 slides as is after trimming some things out. While I didn’t intend to try and cover everything possible to break most analysis tools, I wanted to attempt to cover as much as possible. Over the course of a few days or weeks, I’ll try to roll out details in my blog about how certain things worked, mainly for people who where unable to attend the presentation, hear my explanations or ask me things at the conference. Feel free to reach out to me if there is anything I’ve missed or you would live a better explanation about.</p>
+<p>A few people asked me about Blackhat and Defcon - wondering if it’s worth attending. So to step on a soap box just for a minute, I’ll give the mini speech that I normally tell people. Conferences are only worth what you put into them, go to talks that seem interesting and are outside of your direct field of work. Why attend talks outside the direct field of work? I’ve found it’s a great way to try and find different perspectives, which often can be related back into your own work and field. It is also quiet hard to appreciate a talk on something that you deal with daily, definitely very important to try and keep this in mind if you do see those types of talks. As a presenter myself, I found it exceptionally hard to not go <em>too</em> low level while still feeling like I can add value to everyone in the audience. After attending the talks you chose, <em>meet</em> the presenters and pick their brains, this is honestly where you can learn the most. As I have said, it’s really hard to make a presentation accessible for a whole audience, talking directly with these people will give you so much more information than the slides often do. The people you meet at the bars (for Blackhat @ Caesars goto the Galleria bar) are often people you talk to online already. Make friends, go outside that comfort zone and buy some people drinks. Most everyone is friendly, if they aren’t - don’t drink with them. Almost all conferences are worth going to, Blackhat and Defcon included, mainly due to the talent it attacks that you can find hanging out at the bars.</p>
+<p>Probably the greatest thing about Blackhat for me was to meet some really great people I’ve only had the pleasure of talking to online. Talking with Mila, the mind behind Contagio Dump, was really great - able to pay her back a little for all the hard work she does with a beer or two. Got to talk with some of the original DroidSecurity (now AVG) guys, Elad and Oren, it’s <em>never</em> a dull moment talking to an Israeli reverse engineer - just look at <a target="_blank" rel="noopener" href="http://www.twitter.com/ihackbanme">Zuk</a>. Another interesting person who I got to hang out with was along side me in the malware talk track, <a target="_blank" rel="noopener" href="http://www.twitter.com/snare">@snare</a>. He did some crazy things with <a target="_blank" rel="noopener" href="http://ho.ax/posts/2012/07/black-hat-usa-2012/">EFI rootkits for OSX</a>, pretty scary and interesting stuff all in the same talk.</p>
+<p>People often say it isn’t what you know, but who you know. I’d argue the security space is a ying and yang of both; to be a valuable (reverser) engineer you need to know your stuff and the people to help you succeed.</p>
+<p>Enough on this soapbox, hopefully you enjoy the slides and code. If you ever run into me at a conference - let’s have a beer or two and chat.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2012/08/a-lesson-in-safe-dex/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&text=A Lesson in Safe Dex"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&title=A Lesson in Safe Dex"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&is_video=false&description=A Lesson in Safe Dex"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Lesson in Safe Dex&body=Check out this article: https://strazzere.com/2012/08/a-lesson-in-safe-dex/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&title=A Lesson in Safe Dex"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&title=A Lesson in Safe Dex"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&title=A Lesson in Safe Dex"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&title=A Lesson in Safe Dex"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&name=A Lesson in Safe Dex&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2012/08/a-lesson-in-safe-dex/&t=A Lesson in Safe Dex"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253SlideME is pleased to announce support for paid applications with ourrelease of SAM 2.3, the first bil">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SlideMe &#x2F; SlideLock released - does it really protect?">
+<meta property="og:url" content="https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253SlideME is pleased to announce support for paid applications with ourrelease of SAM 2.3, the first bil">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/02/slide_lock_tm_wide.png">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/01/strictly_confidential-230x300.jpg">
+<meta property="article:published_time" content="2009-02-04T00:33:52.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.096Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="g1">
+<meta property="article:tag" content="SlideLOCK">
+<meta property="article:tag" content="AndroidOS">
+<meta property="article:tag" content="SlideMe">
+<meta property="article:tag" content="data harvesting">
+<meta property="article:tag" content="forward locking">
+<meta property="article:tag" content="Protection Scheme">
+<meta property="article:tag" content="web activation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/02/slide_lock_tm_wide.png">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>SlideMe / SlideLock released - does it really protect?</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2009/02/newer-vendingodex-dump-rc33/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2009/01/vendingodex-dumped/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&text=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&title=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&is_video=false&description=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SlideMe / SlideLock released - does it really protect?&body=Check out this article: https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&title=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&title=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&title=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&title=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&name=SlideMe / SlideLock released - does it really protect?&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&t=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        SlideMe / SlideLock released - does it really protect?
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2009-02-04T00:33:52.000Z" class="dt-published" itemprop="datePublished">2009-02-03</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/AndroidOS/" rel="tag">AndroidOS</a>, <a class="p-category" href="/tags/Protection-Scheme/" rel="tag">Protection Scheme</a>, <a class="p-category" href="/tags/SlideLOCK/" rel="tag">SlideLOCK</a>, <a class="p-category" href="/tags/SlideMe/" rel="tag">SlideMe</a>, <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/data-harvesting/" rel="tag">data harvesting</a>, <a class="p-category" href="/tags/forward-locking/" rel="tag">forward locking</a>, <a class="p-category" href="/tags/g1/" rel="tag">g1</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>, <a class="p-category" href="/tags/web-activation/" rel="tag">web activation</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="http://173.230.150.16/blog/wp-content/uploads/2009/02/slide_lock_tm_wide.png" alt="SlideLOCK - protecting the apps?" title="SlideLOCK - protecting the apps?"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">SlideME is pleased to announce support for paid applications with our</span><br><span class="line">release of SAM 2.3, the first billing solution for Android that includes a</span><br><span class="line">mobile client. You can download SAM 2.3 at http://slideme.org/sam2.apk</span><br><span class="line"></span><br><span class="line">Several weeks back, we ran into the issue of the G1 not protecting against</span><br><span class="line">applications being removed from the device, so we are introducing SlideLock,</span><br><span class="line">which you can embed into your application to prevent forwarding to another</span><br><span class="line">device. This is independent from support for paid applications, and will</span><br><span class="line">provide additional protection, if the developer chooses to use it.:</span><br><span class="line">http://slideme.org/slidelock</span><br><span class="line"></span><br><span class="line">Developers of paid applications will also need to sign in and approve the</span><br><span class="line">new developer agreement and assign tokens, which authorize downloads.</span><br><span class="line"></span><br><span class="line">This is a major release:</span><br><span class="line"></span><br><span class="line">*Billing*</span><br><span class="line">* No country restrictions on purchasing applications. Anyone can buy &amp; sell.</span><br><span class="line">* Support for global payments via SlideCollect including users paying via</span><br><span class="line">their Amazon Payments account.</span><br><span class="line">* High payout rates to content providers/developers ~98%:</span><br><span class="line">http://SlideME.org/rate-schedule</span><br><span class="line">* Sales tax is legitimately applied to sales, including all of the European</span><br><span class="line">Union</span><br><span class="line">* SlideME Prepaid MasterCard: developers from anywhere in the world can</span><br><span class="line">receive a debit card and get paid without a need of a bank account.</span><br><span class="line"></span><br><span class="line">* Multiple payout methods</span><br><span class="line">* Fraud detection: SlideME has partnered with Retail Decisions, a world</span><br><span class="line">leader in credit card fraud prevention, in order to combat fraud and further</span><br><span class="line">reduce chargebacks. More information about ReD is available at</span><br><span class="line">http://www.redplc.com</span><br><span class="line">* The Shopper Guarantee – All customers receive the Shopper Guarantee. This</span><br><span class="line">guarantees shoppers that they will either receive their digital downloads</span><br><span class="line">via SAM, or they will receive their money back. This guarantee can increase</span><br><span class="line">customer confidence in purchasing from SlideME website.</span><br><span class="line"></span><br><span class="line">*Client*</span><br><span class="line">* SAM 2.3 with a new user interface</span><br><span class="line">* SAM 2.3 billing support</span><br><span class="line">* SAM 2.3 supports secure method so shoppers never need to enter their</span><br><span class="line">credit card or sensitive information from within their handset.</span><br><span class="line"></span><br><span class="line">*DRM*</span><br><span class="line">* SlideLOCK has been released to protect your applications and prevent</span><br><span class="line">forwarding</span><br><span class="line">*</span><br><span class="line">Infrastructure*</span><br><span class="line">* 24/7 support has been implemented to support you and users in the best</span><br><span class="line">possible way.</span><br><span class="line">* High Availability secured environment</span><br><span class="line">* Distributed feeds of content on SlideME’s Marketplace to further promote</span><br><span class="line">your applications</span><br></pre></td></tr></table></figure>
+<p>Alright everything seems all great and what not, but the whole SlideLOCK idea seems like it’s trying a little too hard. Two big permissions must be added for the SlideLOCK to work correctly, both <code>READ_PHONE_STATE</code> and <code>INTERNET_ACCESS</code>.</p>
+<p><img src="http://173.230.150.16/blog/wp-content/uploads/2009/01/strictly_confidential-230x300.jpg" alt="Keep your code secure!" title="Keep your code secure!"><br>Why does slideLock need <code>READ_PHONE_STATE</code>? Well because it’s grabbing your <code>NetworkOperator</code>, <code>NetworkCountryIso</code>, <code>DeviceSoftwareVersion</code>, <code>PhoneType</code>, <code>NetworkType</code>, <code>SimCountryIso</code>, <code>SimOperator</code>, <code>SimSerialNumber</code>, <code>SubscriberId</code> and <code>isNetworkRoaming</code> variables. It uses <code>INTERNET_ACCESS</code> to send these in an https request to the slideme website as follows;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sb.append(&quot;https://slideme.org/mobileapp/install-check?device_id=&quot;).append(mng.getDeviceId()).append(&quot;key=&quot;).append(key).</span><br><span class="line">append(&quot;version=&quot;).append(version).append(&quot;versionCode=&quot;).append(versionCode)</span><br><span class="line">.append(&quot;network_op=&quot;).append(mng.getNetworkOperator()).append(&quot;network_op_name=&quot;).append(mng.getNetworkOperatorName()).</span><br><span class="line">append(&quot;network_iso=&quot;).append(mng.getNetworkCountryIso()).append(&quot;software_version=&quot;).append(mng.getDeviceSoftwareVersion())</span><br><span class="line">.append(&quot;phone_type=&quot;).append(mng.getPhoneType()).append(&quot;network_type=&quot;).append(mng.getNetworkType())</span><br><span class="line">.append(&quot;sim_iso=&quot;).append(mng.getSimCountryIso()).append(&quot;sim_op=&quot;).append(mng.getSimOperator())</span><br><span class="line">.append(&quot;sim_serial=&quot;).append(mng.getSimSerialNumber()).append(&quot;subscriber_id=&quot;).append(mng.getSubscriberId())</span><br><span class="line">.append(&quot;roaming=&quot;).append(mng.isNetworkRoaming()).append(&quot;lock_version=1.1&quot;);</span><br></pre></td></tr></table></figure>
+<p>So, in theory, what SlideLOCK does is ping it’s site with <em>all</em> your information (which, by the way, does it really need <em>all</em> that information to make a unique id?!) and the application version and key. It checks this against a database which I’m guessing will show who has purchased this, then it sends back either a yes or a no. Pretty bloated up program for simple checking if a user bought a program, seems like that should be fairly easy for someone to throw together without using their own SDK. The whole “lock” idea seems to be a way of trying to shelter developers into thinking they are fully protected… My main concern is, while this idea may have worked on WindowCE&#x2F;Mobile - what is going to stop a user from editing their hosts file? By default a application is set to run if the network connection appears down, so a simple edit to the hosts file should kill this… Though I’m not condoning this in anyway. Also a user would have to find someone to give them the files that are “locked” to their phone. I originally though they where modifying each .apk for users and having them hardcoded to a device id - guess not!</p>
+<p>On a somewhat tangent… Isn’t it strange that they never even ask for an <code>ANDROID_ID</code>? Honestly, it makes you think if they are just harvesting data from users while making a “match”. I mean - the <code>SimSerialNumber</code> should provide something completely unique anyway…</p>
+<p>I’d put my money on this be “circumvented” pretty fast and easily.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&text=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&title=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&is_video=false&description=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SlideMe / SlideLock released - does it really protect?&body=Check out this article: https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&title=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&title=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&title=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&title=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&name=SlideMe / SlideLock released - does it really protect?&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/02/slideme-slidelock-released-does-it-really-protect/&t=SlideMe / SlideLock released - does it really protect?"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

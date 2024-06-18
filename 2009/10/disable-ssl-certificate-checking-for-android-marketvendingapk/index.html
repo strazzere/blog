@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Note: This might be well, a little low level for some people to understand - though I’m sure this will end up finding the right people. If you understand this post - then you’ll understand the signifi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Disable SSL Certificate Checking for Android Market&#x2F;Vending.apk">
+<meta property="og:url" content="https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Note: This might be well, a little low level for some people to understand - though I’m sure this will end up finding the right people. If you understand this post - then you’ll understand the signifi">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/10/setgetprop-300x135.png">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/10/turnoffsslcheck1.png">
+<meta property="article:published_time" content="2009-10-05T23:26:09.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.090Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="g1">
+<meta property="article:tag" content="market place">
+<meta property="article:tag" content="vending.apk">
+<meta property="article:tag" content="mytouch">
+<meta property="article:tag" content="tmobile">
+<meta property="article:tag" content="AndroidOS">
+<meta property="article:tag" content="certification check">
+<meta property="article:tag" content="disable ssl">
+<meta property="article:tag" content="disable_ssl_cert_check">
+<meta property="article:tag" content="reverseengineering">
+<meta property="article:tag" content="ro.secure">
+<meta property="article:tag" content="sapphire">
+<meta property="article:tag" content="ssl cert">
+<meta property="article:tag" content="ssl certificate">
+<meta property="article:tag" content="vending.disable_ssl_cert_check">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/10/setgetprop-300x135.png">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Disable SSL Certificate Checking for Android Market/Vending.apk</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2009/10/state-of-the-android-archos-and-some-more/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2009/09/adc2-and-downloading-apps/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&text=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&title=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&is_video=false&description=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Disable SSL Certificate Checking for Android Market/Vending.apk&body=Check out this article: https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&title=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&title=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&title=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&title=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&name=Disable SSL Certificate Checking for Android Market/Vending.apk&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&t=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Disable SSL Certificate Checking for Android Market/Vending.apk
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2009-10-05T23:26:09.000Z" class="dt-published" itemprop="datePublished">2009-10-05</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/AndroidOS/" rel="tag">AndroidOS</a>, <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/certification-check/" rel="tag">certification check</a>, <a class="p-category" href="/tags/disable-ssl/" rel="tag">disable ssl</a>, <a class="p-category" href="/tags/disable-ssl-cert-check/" rel="tag">disable_ssl_cert_check</a>, <a class="p-category" href="/tags/g1/" rel="tag">g1</a>, <a class="p-category" href="/tags/market-place/" rel="tag">market place</a>, <a class="p-category" href="/tags/mytouch/" rel="tag">mytouch</a>, <a class="p-category" href="/tags/reverseengineering/" rel="tag">reverseengineering</a>, <a class="p-category" href="/tags/ro-secure/" rel="tag">ro.secure</a>, <a class="p-category" href="/tags/sapphire/" rel="tag">sapphire</a>, <a class="p-category" href="/tags/ssl-cert/" rel="tag">ssl cert</a>, <a class="p-category" href="/tags/ssl-certificate/" rel="tag">ssl certificate</a>, <a class="p-category" href="/tags/tmobile/" rel="tag">tmobile</a>, <a class="p-category" href="/tags/vending-apk/" rel="tag">vending.apk</a>, <a class="p-category" href="/tags/vending-disable-ssl-cert-check/" rel="tag">vending.disable_ssl_cert_check</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="http://173.230.150.16/blog/wp-content/uploads/2009/10/setgetprop-300x135.png" alt="Changing the properties.." title="Changing the properties.."><br><em><strong>Note:</strong> This might be well, a little low level for some people to understand - though I’m sure this will end up finding the right people. If you understand this post - then you’ll understand the significance of what the purposes of doing this would be for</em> :)</p>
+<p>Just randomly looking to do specific things with the Market, I finally figured out a way to force the Market into accepting any certificate. It turns out there is actually a little bit of code (leftover from testing?) that if special parameters are set, will allow you to disable ssl certificate checking. This essentially allows us to well, do lots of things we otherwise wouldn’t be able to do!</p>
+<p>Obviously your going to need root to enable this - and I’m going to provide you the way I’ve enabled it; using adb. Again like I’ve stated countless times, anything you do via ADB you should be able to do via a console on the device, I’m not sure why people always repaste everything and say just do it via a console thinking it’s some big news… The two variables we’re going to have to set are <code>ro.secure</code> and <code>vending.disable_ssl_cert_check</code>. Personally, my devices both have <code>ro.secure</code> already set (properly) to 0. <code>vending.disable_ssl_cert_check</code> is a new variable that we will be creating, setting it to “TRUE”. Simply fire up adb and run the following commands (as root);</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setprop ro.secure 0</span><br><span class="line">setprop vending.disable_ssl_cert_check TRUE</span><br></pre></td></tr></table></figure>
+<p>You can quickly run a <code>getprop</code> to verify you typed everything correctly; <code>ro.secure</code> should be located as the first variable and the vending one is the last (since it is new). You can verify that these settings are correct and working by watching your console log for the Vending.apk via DDMS. The following string should appear while loading the Market: “Turning off SSL certification check.” This can be seen below:<br><img src="http://173.230.150.16/blog/wp-content/uploads/2009/10/turnoffsslcheck1.png" alt="&quot;Turning off SSL Check&quot;" title="Turning off SSL Check"><br>Also as a final reminder, every reboot these variables must be reset, since there is no program actually setting them already. You must reinitialize these variables (in my case, I only have to initialize <code>vending.disable_ssl_cert_check</code>) if you would like to use this mode.</p>
+<p>Hopefully this will be of use to someone other than myself!</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&text=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&title=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&is_video=false&description=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Disable SSL Certificate Checking for Android Market/Vending.apk&body=Check out this article: https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&title=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&title=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&title=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&title=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&name=Disable SSL Certificate Checking for Android Market/Vending.apk&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/10/disable-ssl-certificate-checking-for-android-marketvendingapk/&t=Disable SSL Certificate Checking for Android Market/Vending.apk"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

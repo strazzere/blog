@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Recently, Axelle from Fortinet aka Crypto Girl, presented a well done paper at InsomniHack 2012 - which she just posted on her twitter account. It does a very good job at outlining the basics of how t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="InsomniDroid - great presentation on Android Reversing Tools">
+<meta property="og:url" content="https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Recently, Axelle from Fortinet aka Crypto Girl, presented a well done paper at InsomniHack 2012 - which she just posted on her twitter account. It does a very good job at outlining the basics of how t">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.strazzere.com/blog/wp-content/uploads/2012/03/androguard.png">
+<meta property="og:image" content="http://www.strazzere.com/blog/wp-content/uploads/2012/03/android-architecture.jpg">
+<meta property="article:published_time" content="2012-03-06T21:55:11.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.092Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="crackme">
+<meta property="article:tag" content="insomnidroid">
+<meta property="article:tag" content="android malware">
+<meta property="article:tag" content="cryptax">
+<meta property="article:tag" content="fortiguard">
+<meta property="article:tag" content="insomnihack">
+<meta property="article:tag" content="tools">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.strazzere.com/blog/wp-content/uploads/2012/03/androguard.png">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>InsomniDroid - great presentation on Android Reversing Tools</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2012/03/insomnidroid-crackme-solution/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2012/02/making-smali-a-bit-easier-to-read-in-emacs/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&text=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&title=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&is_video=false&description=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=InsomniDroid - great presentation on Android Reversing Tools&body=Check out this article: https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&title=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&title=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&title=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&title=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&name=InsomniDroid - great presentation on Android Reversing Tools&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&t=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        InsomniDroid - great presentation on Android Reversing Tools
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2012-03-06T21:55:11.000Z" class="dt-published" itemprop="datePublished">2012-03-06</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/reverse-engineering/">reverse engineering</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/android-malware/" rel="tag">android malware</a>, <a class="p-category" href="/tags/crackme/" rel="tag">crackme</a>, <a class="p-category" href="/tags/cryptax/" rel="tag">cryptax</a>, <a class="p-category" href="/tags/fortiguard/" rel="tag">fortiguard</a>, <a class="p-category" href="/tags/insomnidroid/" rel="tag">insomnidroid</a>, <a class="p-category" href="/tags/insomnihack/" rel="tag">insomnihack</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>, <a class="p-category" href="/tags/tools/" rel="tag">tools</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>Recently, Axelle from Fortinet aka Crypto Girl, presented a well done paper at <a target="_blank" rel="noopener" href="http://www.scrt.ch/en/insomnihack/2012/presentation">InsomniHack 2012</a> - which she just posted on her <a target="_blank" rel="noopener" href="http://www.twitter.com/cryptax">twitter</a> account. It does a <em>very</em> good job at outlining the basics of how to get into Android reversing and the Android reverse engineer tools. Since she works in the AV industry, it’s based on that view - a defensive analyst looking at malware. She does a great job describing the contents of an APK, how to read specific files (AndroidManifest.xml, etc) - giving multiple ways too. It’s nice to see how different people tackle these types of issues.</p>
+<p>It’s also a nice thing to see someone outline all the different applicable tools. I haven’t seen anyone outside of a few Google people mention dexdump in a long time - definitely an underrated tool! It was interesting to see the list of tools she listed for decompiling the apk, specifically <em>ded</em>. I mention <em>ded</em> specifically since I’ve never actually seen anyone use it or mention it outside of the academic work done around it. <em>Dex2jar</em> was obviously mentioned, it’s quiet possibly the most (over)used tool out there. Personally I’m not that big of a fan of the project, though it definitely has some great use cases and people seem to love it.</p>
+<p>Axelle did a great job providing a tutorial with a clean step by step of what to look for when tackling malware. Great steps provided about which tool to use, how to identify interesting points and then a nice little “ops! the tool broke, lets switch to the next one!” which can often happen due to the early stages of development for most of these tools. She also provides a slide on how synthetic access is created when inner classes access private members of their enclosing classes. It’s an interesting concept that seems to be lost on many beginner reversers in the Android world.</p>
+<p>There are even a few slides on anti-emulator code, which has always been an interesting thing to me. She mentions how the Honeynet challenge implemented a few tricks and how one could either (1) modify the application or (2) modify the emulator. I’ve seen a few other people mention “hiding the emulator”, which has sent me into an interesting little tangent of research. Hopefully I’ll have time to add that into an expect Blackhat&#x2F;Defcon presentation I’m working on. Personally I’m not a fan of the simplistic approach of just changing the application or the emulator imei - there have to be a ton of easier ways for an attacker to find the emulator and the defender to hide it.</p>
+<p>Another awesome aspect of this presentation is how Axelle really did try to provide information about <em>every</em> tool. I’ve seen many people mention the use of Androguard, but not what features they use. I’ve personally messed around with it a bit, but haven’t found the urge to use it more often in my day to day work. I keep coming back to thinking, awesome features and implementation, though it’s just so much information I haven’t found it useful. One of Axelle’s slides I think sums it up pretty well;<br><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/03/androguard.png" alt="Uhmm -- maybe?" title="Worth the trouble?"><br>Enough about the presentation - you should read it yourself. The PDF is available from <a target="_blank" rel="noopener" href="http://www.fortiguard.com/sites/default/files/insomnidroid.pdf">Fortinets’s site</a> (<a target="_blank" rel="noopener" href="http://www.strazzere.com/papers/insomnidroid.pdf">local mirror</a>)</p>
+<p>As a last side note – it’s extremely refreshing to see an Android presentation that does <em>not</em> include this “presentation filler” known as the “Android Architecture” picture :) <img src="http://www.strazzere.com/blog/wp-content/uploads/2012/03/android-architecture.jpg" title="I HATE THIS PICTURE"></p>
+<p><strong>Edit:</strong> I forgot to link the crackme challenge which Axelle also provided at InsomniHack - which is also called InsomniDroid. It’s published over at root-me.org if anyway wants to take the challenge. It was a fun quick little challenge, available <a target="_blank" rel="noopener" href="http://www.root-me.org/en/Challenges-148/Realist/Insomni-Droid.html?lang=en">here</a>.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&text=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&title=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&is_video=false&description=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=InsomniDroid - great presentation on Android Reversing Tools&body=Check out this article: https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&title=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&title=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&title=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&title=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&name=InsomniDroid - great presentation on Android Reversing Tools&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/&t=InsomniDroid - great presentation on Android Reversing Tools"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="I’ve been working on the header a little more - so I figured I’d post some code I just finished throwing together quickly. It’s not all the code, since most of it is experimental and I’m not finished">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dex File Header Dump">
+<meta property="og:url" content="https://strazzere.com/2008/11/dex-file-header-dump/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="I’ve been working on the header a little more - so I figured I’d post some code I just finished throwing together quickly. It’s not all the code, since most of it is experimental and I’m not finished">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2008-11-23T05:27:40.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.089Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="dex bytecode">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="bytecode">
+<meta property="article:tag" content="code">
+<meta property="article:tag" content="dalvik vm">
+<meta property="article:tag" content="dex file">
+<meta property="article:tag" content="dex header">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Dex File Header Dump</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2008/11/beaten-to-the-punch-line/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2008/11/updated-dalvik-vm-dex-file-format/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2008/11/dex-file-header-dump/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2008/11/dex-file-header-dump/&text=Dex File Header Dump"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2008/11/dex-file-header-dump/&title=Dex File Header Dump"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2008/11/dex-file-header-dump/&is_video=false&description=Dex File Header Dump"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Dex File Header Dump&body=Check out this article: https://strazzere.com/2008/11/dex-file-header-dump/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2008/11/dex-file-header-dump/&title=Dex File Header Dump"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2008/11/dex-file-header-dump/&title=Dex File Header Dump"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2008/11/dex-file-header-dump/&title=Dex File Header Dump"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2008/11/dex-file-header-dump/&title=Dex File Header Dump"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2008/11/dex-file-header-dump/&name=Dex File Header Dump&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2008/11/dex-file-header-dump/&t=Dex File Header Dump"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Dex File Header Dump
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2008-11-23T05:27:40.000Z" class="dt-published" itemprop="datePublished">2008-11-22</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/coding/">coding</a> › <a class="category-link" href="/categories/android/coding/dex-bytecode/">dex bytecode</a> › <a class="category-link" href="/categories/android/coding/dex-bytecode/reverse-engineering/">reverse engineering</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/bytecode/" rel="tag">bytecode</a>, <a class="p-category" href="/tags/code/" rel="tag">code</a>, <a class="p-category" href="/tags/dalvik-vm/" rel="tag">dalvik vm</a>, <a class="p-category" href="/tags/dex-bytecode/" rel="tag">dex bytecode</a>, <a class="p-category" href="/tags/dex-file/" rel="tag">dex file</a>, <a class="p-category" href="/tags/dex-header/" rel="tag">dex header</a>, <a class="p-category" href="/tags/java/" rel="tag">java</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>I’ve been working on the header a little more - so I figured I’d post some code I just finished throwing together quickly. It’s not all the code, since most of it is experimental and I’m not finished doing it, but this will provide people with the information on how to dump the dex file header information.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br></pre></td><td class="code"><pre><span class="line">/* File: DexNfo.java</span><br><span class="line"> *</span><br><span class="line"> * Coded: Timothy Strazzere</span><br><span class="line"> * Date: 11/22/08</span><br><span class="line"> *</span><br><span class="line"> * Dump header information from a dex file, only supports &#x27;035&#x27; dex files, though will</span><br><span class="line"> * attempt to dump rest of the information, but will just warn you otherwise.</span><br><span class="line"> *</span><br><span class="line"> * Some code has been removed as it isn&#x27;t sure if it full works properly yet.</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import java.security.*;</span><br><span class="line">import java.util.zip.Adler32;</span><br><span class="line">import java.io.File;</span><br><span class="line">import java.io.FileInputStream;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.InputStream;</span><br><span class="line"></span><br><span class="line">/* To do...</span><br><span class="line"> *</span><br><span class="line"> * lots...</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class DexNfo&#123;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">        if (args.length == 1) &#123;</span><br><span class="line">        	try &#123;</span><br><span class="line">        		File file = new File(args[0]);</span><br><span class="line"></span><br><span class="line">        		byte[] barr, newbytes = null;</span><br><span class="line">        		newbytes = barr = getBytesFromFile(file);</span><br><span class="line"></span><br><span class="line">        		// add switch for this?</span><br><span class="line">        		System.out.printf(&quot;Original information: &quot; + args[0]);</span><br><span class="line"></span><br><span class="line">        		int magic = 0;</span><br><span class="line"></span><br><span class="line">        		for(int i = 0; i&lt;8; i++)</span><br><span class="line">        			magic+=barr[i];</span><br><span class="line"></span><br><span class="line">        		if(magic!=483) // technically anything higher should be a new dex file... &#x27;dex 036&#x27; etc..</span><br><span class="line">        			System.out.printf(&quot;\n** Warning: Magic; bad dex file or unsupported version loaded!&quot;);</span><br><span class="line"></span><br><span class="line">        		// Don&#x27;t output char 4 since it&#x27;s a newline char</span><br><span class="line">        		System.out.printf(&quot;\nMagic: %c%c%c %c%c%c&quot;, barr[0], barr[1], barr[2], /*barr[3],*/ barr[4], barr[5], barr[6], barr[7]);</span><br><span class="line"></span><br><span class="line">        		System.out.print(&quot;\nChecksum: &quot;);</span><br><span class="line">        		for(int i = 8; i&lt;12; i+=4)</span><br><span class="line">        			System.out.printf(&quot;0x%02X%02X%02X%02X &quot;, barr[i+3], barr[i+2], barr[i+1], barr[i]);</span><br><span class="line"></span><br><span class="line">        		System.out.print(&quot;\nSignature: 0x&quot;);</span><br><span class="line">        		for(int i = 12; i&lt;32; i+=4)</span><br><span class="line">        			System.out.printf(&quot;%02X%02X%02X%02X &quot;, barr[i], barr[i+1], barr[i+2], barr[i+3]);</span><br><span class="line"></span><br><span class="line">        		System.out.printf(&quot;\nLength: 0x%02X%02X&quot;, barr[33], barr[32]);</span><br><span class="line"></span><br><span class="line">        		if(barr[36]!= 112) // currently is always 0x70==(int)112...</span><br><span class="line">        			System.out.printf(&quot;\n** Warning: Header Length; bad dex file or unsupported version loaded!&quot;);</span><br><span class="line">        		System.out.printf(&quot;\nHeader Length: 0x%02X&quot;, barr[36]);</span><br><span class="line"></span><br><span class="line">        		// endian tag</span><br><span class="line">        		int endian = 0;</span><br><span class="line"></span><br><span class="line">        		for(int i = 0; i &lt; 4; i++)</span><br><span class="line">        			endian += barr[40+i];</span><br><span class="line"></span><br><span class="line">        		if(endian != 276) // Currently always should be 0x78563412, which when added = int 114</span><br><span class="line">        			System.out.printf(&quot;\n** Warning: Endian Tag; bad dex file or unsupported version loaded!&quot;);</span><br><span class="line">        		System.out.printf(&quot;\nEndian Tag: 0x%02X%02X%02X%02X&quot;, barr[40],</span><br><span class="line">        				barr[41], barr[42], barr[43]);</span><br><span class="line"></span><br><span class="line">        		// map offset</span><br><span class="line">        		System.out.printf(&quot;\nMap Offset: 0x%02X%02X&quot;, barr[53], barr[52]);</span><br><span class="line"></span><br><span class="line">        		// string table size</span><br><span class="line">        		System.out.printf(&quot;\nString Table Size: 0x%02X%02X&quot;, barr[57], barr[56]);</span><br><span class="line"></span><br><span class="line">        		// string table offset</span><br><span class="line">        		System.out.printf(&quot;\nString Table Offset: 0x%02X%02X&quot;, barr[61], barr[60]);</span><br><span class="line"></span><br><span class="line">        		// type table size</span><br><span class="line">        		System.out.printf(&quot;\nType Table Size: 0x%02X%02X&quot;, barr[65], barr[64]);</span><br><span class="line"></span><br><span class="line">        		// type table offset</span><br><span class="line">        		System.out.printf(&quot;\nType Table Offset: 0x%02X%02X&quot;, barr[69], barr[68]);</span><br><span class="line"></span><br><span class="line">        		// Prototype table size</span><br><span class="line">        		System.out.printf(&quot;\nPrototype Table Size: 0x%02X%02X&quot;, barr[73], barr[72]);</span><br><span class="line"></span><br><span class="line">        		// Prototype table offset</span><br><span class="line">        		System.out.printf(&quot;\nPrototype Table Offset: 0x%02X%02X&quot;, barr[77], barr[76]);</span><br><span class="line"></span><br><span class="line">        		// Field table size</span><br><span class="line">        		System.out.printf(&quot;\nField Table Size: 0x%02X%02X&quot;, barr[81], barr[80]);</span><br><span class="line"></span><br><span class="line">        		// Field table offset</span><br><span class="line">        		System.out.printf(&quot;\nField Table Offset: 0x%02X%02X&quot;, barr[85], barr[84]);</span><br><span class="line"></span><br><span class="line">        		// Method table size</span><br><span class="line">        		System.out.printf(&quot;\nMethod Table Size: 0x%02X%02X&quot;, barr[89], barr[88]);</span><br><span class="line"></span><br><span class="line">        		// Method table offset</span><br><span class="line">        		System.out.printf(&quot;\nMethod Table Offset: 0x%02X%02X&quot;, barr[93], barr[92]);</span><br><span class="line"></span><br><span class="line">        		// Class table size</span><br><span class="line">        		System.out.printf(&quot;\nClass Table Size: 0x%02X%02X&quot;, barr[97], barr[96]);</span><br><span class="line"></span><br><span class="line">        		// Class table offset</span><br><span class="line">        		System.out.printf(&quot;\nClass Table Offset: 0x%02X%02X&quot;, barr[101], barr[100]);</span><br><span class="line"></span><br><span class="line">        		System.out.println();</span><br><span class="line"></span><br><span class="line">        		// add switch for this too?</span><br><span class="line"></span><br><span class="line">        		calcSignature(newbytes);</span><br><span class="line">        		calcChecksum(newbytes);</span><br><span class="line">        		System.out.print(&quot;\n\nNew Checksum: &quot;);</span><br><span class="line">        		for(int i = 8; i&lt;12; i+=4)</span><br><span class="line">        			System.out.printf(&quot;0x%02X%02X%02X%02X &quot;, newbytes[i+3], newbytes[i+2], newbytes[i+1], newbytes[i]);</span><br><span class="line">        		System.out.print(&quot;\nNew Signature: 0x&quot;);</span><br><span class="line">        		for(int i = 12; i&lt;32; i+=4)</span><br><span class="line">        			System.out.printf(&quot;%02X%02X%02X%02X &quot;, newbytes[i], newbytes[i+1], newbytes[i+2], newbytes[i+3]);</span><br><span class="line"></span><br><span class="line">        		System.out.printf(&quot;\nLength: %04X&quot;, calcSize(newbytes));</span><br><span class="line"></span><br><span class="line">        		// output compares to the two, highlight differences...</span><br><span class="line">        	&#125;</span><br><span class="line">            catch (Exception e) &#123;</span><br><span class="line">            	System.err.println(&quot;File input error&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        	System.out.println(&quot;Invalid parameters&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    public static byte[] getBytesFromFile(File file) throws IOException &#123;</span><br><span class="line">        InputStream is = new FileInputStream(file);</span><br><span class="line"></span><br><span class="line">        // Get the size of the file</span><br><span class="line">        long length = file.length();</span><br><span class="line"></span><br><span class="line">        if (length &gt; Integer.MAX_VALUE) &#123;</span><br><span class="line">            // File is too large</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // Create the byte array to hold the data</span><br><span class="line">        byte[] bytes = new byte[(int)length];</span><br><span class="line"></span><br><span class="line">        // Read in the bytes</span><br><span class="line">        int offset = 0;</span><br><span class="line">        int numRead = 0;</span><br><span class="line">        while (offset &lt; bytes.length</span><br><span class="line">               &amp;&amp; (numRead=is.read(bytes, offset, bytes.length-offset)) &gt;= 0) &#123;</span><br><span class="line">            offset += numRead;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // Ensure all the bytes have been read in</span><br><span class="line">        if (offset &lt; bytes.length) &#123;</span><br><span class="line">            throw new IOException(&quot;Could not completely read file &quot;+file.getName());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // Close the input stream and return bytes</span><br><span class="line">        is.close();</span><br><span class="line">        return bytes;</span><br><span class="line">    &#125;</span><br><span class="line">    private static void calcSignature(byte bytes[])</span><br><span class="line">    &#123;</span><br><span class="line">        MessageDigest md;</span><br><span class="line">        try</span><br><span class="line">        &#123;</span><br><span class="line">            md = MessageDigest.getInstance(&quot;SHA-1&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        catch(NoSuchAlgorithmException ex)</span><br><span class="line">        &#123;</span><br><span class="line">            throw new RuntimeException(ex);</span><br><span class="line">        &#125;</span><br><span class="line">        md.update(bytes, 32, bytes.length - 32);</span><br><span class="line">        try</span><br><span class="line">        &#123;</span><br><span class="line">            int amt = md.digest(bytes, 12, 20);</span><br><span class="line">            if(amt != 20)</span><br><span class="line">                throw new RuntimeException((new StringBuilder()).append(&quot;unexpected digest write: &quot;).append(amt).append(&quot; bytes&quot;).toString());</span><br><span class="line">        &#125;</span><br><span class="line">        catch(DigestException ex)</span><br><span class="line">        &#123;</span><br><span class="line">            throw new RuntimeException(ex);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static void calcChecksum(byte bytes[])</span><br><span class="line">    &#123;</span><br><span class="line">        Adler32 a32 = new Adler32();</span><br><span class="line">        a32.update(bytes, 12, bytes.length - 12);</span><br><span class="line">        int sum = (int)a32.getValue();</span><br><span class="line">        bytes[8] = (byte)sum;</span><br><span class="line">        bytes[9] = (byte)(sum &gt;&gt; 8);</span><br><span class="line">        bytes[10] = (byte)(sum &gt;&gt; 16);</span><br><span class="line">        bytes[11] = (byte)(sum &gt;&gt; 24);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static int calcSize(byte bytes[])</span><br><span class="line">    &#123;</span><br><span class="line">    	return(bytes.length);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This now dumps all the header information from the original file, and will recalculate the signature and checksum in case something has changed. A version should be available shortly to check for differences in all the values, hopefully soon being able to calculate the correct values if something is wrong.<br>Maybe this will be useful for someone? Otherwise, oh well it’s just here in case I delete my files. Working on functions to find the new values after patching and to allow patching&#x2F;injection of code. I’ll have to write up more later as I don’t have an overwhelming amount of time right now, busy day and I’m exhausted. Saw Sara play some volleyball, finished up solo campaign in COD5, spent a few hours reading and researching some dex related things and trying to get some more injection to work. Tomorrow I probably won’t have time to post - but trust me, this stuff will be up sooner or later. It’s a big puzzle I’m chipping away at, and it’s bugging the heck out of me not having the answers.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2008/11/dex-file-header-dump/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2008/11/dex-file-header-dump/&text=Dex File Header Dump"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2008/11/dex-file-header-dump/&title=Dex File Header Dump"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2008/11/dex-file-header-dump/&is_video=false&description=Dex File Header Dump"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Dex File Header Dump&body=Check out this article: https://strazzere.com/2008/11/dex-file-header-dump/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2008/11/dex-file-header-dump/&title=Dex File Header Dump"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2008/11/dex-file-header-dump/&title=Dex File Header Dump"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2008/11/dex-file-header-dump/&title=Dex File Header Dump"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2008/11/dex-file-header-dump/&title=Dex File Header Dump"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2008/11/dex-file-header-dump/&name=Dex File Header Dump&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2008/11/dex-file-header-dump/&t=Dex File Header Dump"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

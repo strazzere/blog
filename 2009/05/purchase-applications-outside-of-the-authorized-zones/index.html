@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="First let me just make a little disclaimer that this is my own translation from Italian to English and I used google-translate a little bit also. So try to hang in there with me since my Italian isn’t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Purchase applications outside of the &quot;authorized&quot; zones">
+<meta property="og:url" content="https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="First let me just make a little disclaimer that this is my own translation from Italian to English and I used google-translate a little bit also. So try to hang in there with me since my Italian isn’t">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/05/android-market-paid-apps-italy-200x300.png">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/05/market-enabler-200x300.png">
+<meta property="article:published_time" content="2009-05-03T18:03:00.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.095Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="g1">
+<meta property="article:tag" content="market">
+<meta property="article:tag" content="Vending">
+<meta property="article:tag" content="market enabler">
+<meta property="article:tag" content="purchasing apps">
+<meta property="article:tag" content="t-mobile">
+<meta property="article:tag" content="spoof">
+<meta property="article:tag" content="andrea">
+<meta property="article:tag" content="androidiani">
+<meta property="article:tag" content="italy">
+<meta property="article:tag" content="paid apps">
+<meta property="article:tag" content="restrict">
+<meta property="article:tag" content="vodafone">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/05/android-market-paid-apps-italy-200x300.png">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Purchase applications outside of the &#34;authorized&#34; zones</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2009/05/how-to-manually-access-restricted-market-areas/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2009/05/success-buying-g1-applications-when-not-in-an-authorized-buying-country/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&text=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&title=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&is_video=false&description=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Purchase applications outside of the &#34;authorized&#34; zones&body=Check out this article: https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&title=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&title=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&title=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&title=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&name=Purchase applications outside of the &#34;authorized&#34; zones&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&t=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Purchase applications outside of the &#34;authorized&#34; zones
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2009-05-03T18:03:00.000Z" class="dt-published" itemprop="datePublished">2009-05-03</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Vending/" rel="tag">Vending</a>, <a class="p-category" href="/tags/andrea/" rel="tag">andrea</a>, <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/androidiani/" rel="tag">androidiani</a>, <a class="p-category" href="/tags/g1/" rel="tag">g1</a>, <a class="p-category" href="/tags/italy/" rel="tag">italy</a>, <a class="p-category" href="/tags/market/" rel="tag">market</a>, <a class="p-category" href="/tags/market-enabler/" rel="tag">market enabler</a>, <a class="p-category" href="/tags/paid-apps/" rel="tag">paid apps</a>, <a class="p-category" href="/tags/purchasing-apps/" rel="tag">purchasing apps</a>, <a class="p-category" href="/tags/restrict/" rel="tag">restrict</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>, <a class="p-category" href="/tags/spoof/" rel="tag">spoof</a>, <a class="p-category" href="/tags/t-mobile/" rel="tag">t-mobile</a>, <a class="p-category" href="/tags/vodafone/" rel="tag">vodafone</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="http://173.230.150.16/blog/wp-content/uploads/2009/05/android-market-paid-apps-italy-200x300.png" alt="Paid apps on an italian G1" title="Paid apps on an italian G1"><br>First let me just make a little disclaimer that this is my own translation from Italian to English and I used google-translate a little bit also. So try to hang in there with me since my Italian isn’t very good, and I’ve tried to rephrase things to make a little more sense in English. For the original article (Italian) go to <a target="_blank" rel="noopener" href="http://www.androidiani.com/applicazioni/applicazioni-a-pagamento-anche-in-italia-con-marketenabler-2177">androidiani.com</a> and for the translated (via google-translate) go here <a target="_blank" rel="noopener" href="http://translate.google.com/translate?prev=hp&hl=en&js=n&u=http://www.androidiani.com/applicazioni/applicazioni-a-pagamento-anche-in-italia-con-marketenabler-2177&sl=auto&tl=en">translated androidiani.com</a>.</p>
+<p>As announced previously, today will be the launch day of the program we have called “Android Enabler”. This is a program that should help people across the world (and in the US) who have been restricted thus far with the inability to purchase applications on the Android Market.</p>
+<p>If you have previously read the blog (and if you do not, perhaps it is time you subscribe ;)) you would know that <a href="http://strazzere.com/blog/?p=249">yesterday</a> we launched a preview of the application and what will be going on. On to the news now though…</p>
+<p><strong>The Builders</strong><br>We start by presenting Tim Strazzere, an American friend (in fact I recently discovered he has ancestors from Sicily), who write an interesting articles on reversing applications and control systems from the Android OS. <a href="http://strazzere.com/blog/">(Link to blog)</a><br>He has written a few “bomb shell” articles that have been about reversing the market. After contacting him I discovered that he was working on a <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Scraper_site">scraper</a> of the market.<br>Then we came to meet on gchat where we talked about the possibilities and how we could accomplish such a task of purchasing outside of the US. I provided the out-of-the-country phone and knowledge, and provided the reversing knowledge. ;)<br>The other coder of this application is myself, Andrea Baccega, that was absolutely bored to ask his friend over the ocean to purchase applications, reimburse his fee, and then get the application to be able to review it for my site. _ (Tim: I was getting bored of that myself!)_</p>
+<p><strong>The method</strong><br>Tim and I quickly set to work to find ways to enable the market for pay applications outside of the US (which at the time was the only viable market, with UK soon to follow). First I will explain the methods we tried and the solutions we used, this will hopefully let you understand the process we used for which the final solution came about.<br>To be able to play around with the data the market would send to the phone, we needed to understand how the data was exchanged with google servers. It was not enough to simple snag the packages by a simple <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack">mitm (man in the middle) attack</a>. As one might expect, the data being exchanged was not always clear…<br>At this point, if we wanted to understand what we where sending to google, we had to reverse the market and understand exactly what function is employed to encode and decode the data being sent and received. More importantly though, we had to understand what was going on within these two methods.<br>Surprisingly, we found that the method of encoding and decoding that are used are extensively documents and were Baser64.decodeWebSafe and Base64encodeWebSafe. Both part of the google data API. Though the values that the android where producing where often a <em>little</em> nerfed and not out-of-the-box uses of these functions.<br>Once we decoded and sniffed a good number of packages from both the US and Italy we knew what information apparently was going to be required to change:</p>
+<ul>
+<li><strong>Name</strong> of the operator (which in Italy would often be IT and Vodafone, in the US would often be T-Mobile)</li>
+<li><strong>Operator number</strong> (which in Italy was 22210 though it needed to be 31026) <em>This is a number made up of the MCC + MNC</em></li>
+</ul>
+<p>According to our theory, simply by changing every occurrence of these values, we should be able to access the paid applications on the market from anywhere.<br>After a quick brainstorming session we figured the following routes would be the best solutions:</p>
+<ol>
+<li>Intercept the outgoing packet and change on the fly (too costly, too time consuming and would probably require writing a driver or massive patch)</li>
+<li>Change the core android functions that manages requests and posts to the internet.</li>
+<li>Change the core android functions that return the operator name and operator number.</li>
+</ol>
+<p><strong>Framework.jar</strong><br>At fire glance, I immediately worked to rebuild the entire Android OS and create a patch that would manage and restore the values from Italian to the US values.<br>Although this process had turned out to be a long and painful process, which I’ll spare you the details of. Essentially I was recompiling the <a target="_blank" rel="noopener" href="http://developer.android.com/reference/android/telephony/ServiceState.html">ServiceState</a> class. (it should be easy to guess where)<br>Once recompiled with the changed we crossed our fingers and with some effort, managed to get it to run on my Italian G1 running “thedude” patched firmware.<br>To our surprise, however, the enormous amount of work done was not enough to make it fully functional. The market seemed to be pulling data from other locations that just the ServiceState class. The data it was pulling turned to be half Italian and Half American, so we started to work on a different solution.</p>
+<p><strong>Setprop</strong><br>In the amended version of “thedude” I wanted to make one more final test. For those who do not know android has a list of global variables that are used as real properties.<br>Some of the properties are written, while others are read-only values. Through a few bash commands, we discovered that the previous patch I had created was not changing all the properties that we needed to change, so these had to be manually changed through the shell.<br>After several attempts we succeeded … <em>We finally saw paid applications!</em> … Now Tim says:</p>
+<blockquote>
+<p>“Why don’t we just see if we can do this through all setprop commands, opposed to even using the patched ServiceState class?”</p>
+</blockquote>
+<p>Done… This method also worked, so it was much easier to do. Next I downloaded the latest version of the android firmware are just released by JesusFreke.<br>Retried all the setprop commands we had figured out, crossed out fingers - and then reopened the market. Success, it works!<br>The result of this discovery is that all the idea we had, we basically in vain. They all would have worked - though this was much more simple than we originally thought it would be.<br>Moreover, the final solution we came to, was not firmware dependent - there is no reason to patch framework.jar so you could use this on any firmware, as long as you have root.<br><img src="http://173.230.150.16/blog/wp-content/uploads/2009/05/market-enabler-200x300.png" alt="Market Enabler" title="Market Enabler"></p>
+<p><strong>Application</strong><br>I will just quickly go over the disclaimer for this applications and a quick how to;</p>
+<p><em>Disclaimer</em></p>
+<ul>
+<li>As usual, I am not responsible for the use of this application. This application is to be used as a Proof of Concept only, for enabling paid applications on your phone.</li>
+<li>If using this program to enable paid applications, I am not responsible for anything that happens to your phone or applications that you’ve purchase should this be fixed at a later date.</li>
+<li>The application will be issued under the GPL shortly, once I can gather up the code and clean it up a little bit.</li>
+</ul>
+<p><em><strong>How to Use the program</strong></em><br>The applications only has two buttons ;) a right and a left one.</p>
+<p>The left button enables paid applications on the market The right button restores the normal values (in case some applications have problems after changing the values)</p>
+<p>That’s it! Doesn’t get much easier than that. ;)</p>
+<p><em><strong>Note:</strong></em><br>Each reboot you must restart this application to enable the paid applications on the market.</p>
+<p><strong>Download Market Enabler</strong><br>The <em>Market Enabler</em> can be downloaded from <a target="_blank" rel="noopener" href="http://www.androidiani.com/Firmwares/download.php?id=6">here</a>.</p>
+<p>To install the application you can simply run the command:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb install MarketEnabler.apk</span><br></pre></td></tr></table></figure>
+<p>Or open the Android Browser to this link: <a target="_blank" rel="noopener" href="http://tinyurl.com/marketenabler">http://tinyurl.com/marketenabler</a></p>
+<p>For problems with the application, refer to our <a target="_blank" rel="noopener" href="http://www.androidiani.com/forum/">forum! (Italian)</a> Or post here for help in English.</p>
+<p><strong>Note:</strong><br>To use the market to pay for applications you have to register an account on google checkout. Google Checkout is a secure payment platform similar to paypal. To do this, use your pc to navigate to <a target="_blank" rel="noopener" href="https://checkout.google.com/?saveUserPref=true&hl=it">this web site</a>. The instructions will guide you to sign up step by step ;)</p>
+<p><strong>Donations:</strong><br>Donations are always welcome! Also I will publish a list of all donors, who have supported our work.<br>To donate (even $1), click <a target="_blank" rel="noopener" href="http://www.androidiani.com/supporta-androidianicom">here</a>. (Click the “Donate” button that says paypal)</p>
+<p><strong>Copyright</strong><br>You can copy of take ideas from this program&#x2F;post and redistribute the post&#x2F;application (which will soon be released under the GPL) as long as the source of the article and the download link is not changed.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&text=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&title=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&is_video=false&description=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Purchase applications outside of the &#34;authorized&#34; zones&body=Check out this article: https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&title=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&title=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&title=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&title=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&name=Purchase applications outside of the &#34;authorized&#34; zones&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/05/purchase-applications-outside-of-the-authorized-zones/&t=Purchase applications outside of the &#34;authorized&#34; zones"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

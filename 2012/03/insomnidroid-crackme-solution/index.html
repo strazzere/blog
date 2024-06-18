@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It’s a bit amusing that this solution for the InsomniHack CTF challenge named “InsomniDroid” was written up past midnight because I couldn’t sleep. Regardless, this was typed up as a play-by-play anal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="InsomniDroid - crackme solution">
+<meta property="og:url" content="https://strazzere.com/2012/03/insomnidroid-crackme-solution/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="It’s a bit amusing that this solution for the InsomniHack CTF challenge named “InsomniDroid” was written up past midnight because I couldn’t sleep. Regardless, this was typed up as a play-by-play anal">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.strazzere.com/blog/wp-content/uploads/2012/03/not-done.png">
+<meta property="og:image" content="http://www.strazzere.com/blog/wp-content/uploads/2012/03/insomnidroid-congrats.png">
+<meta property="article:published_time" content="2012-03-07T13:00:39.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.092Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="crackme">
+<meta property="article:tag" content="insomnidroid">
+<meta property="article:tag" content="insomnihack ctf">
+<meta property="article:tag" content="solution">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.strazzere.com/blog/wp-content/uploads/2012/03/not-done.png">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>InsomniDroid - crackme solution</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2012/03/ops-did-i-publish-that-in-the-aosp/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2012/03/insomnidroid-great-presentation-on-android-reversing-tools/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2012/03/insomnidroid-crackme-solution/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&text=InsomniDroid - crackme solution"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&title=InsomniDroid - crackme solution"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&is_video=false&description=InsomniDroid - crackme solution"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=InsomniDroid - crackme solution&body=Check out this article: https://strazzere.com/2012/03/insomnidroid-crackme-solution/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&title=InsomniDroid - crackme solution"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&title=InsomniDroid - crackme solution"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&title=InsomniDroid - crackme solution"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&title=InsomniDroid - crackme solution"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&name=InsomniDroid - crackme solution&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&t=InsomniDroid - crackme solution"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        InsomniDroid - crackme solution
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2012-03-07T13:00:39.000Z" class="dt-published" itemprop="datePublished">2012-03-07</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/reverse-engineering/">reverse engineering</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/crackme/" rel="tag">crackme</a>, <a class="p-category" href="/tags/insomnidroid/" rel="tag">insomnidroid</a>, <a class="p-category" href="/tags/insomnihack-ctf/" rel="tag">insomnihack ctf</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>, <a class="p-category" href="/tags/solution/" rel="tag">solution</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/03/not-done.png" alt="not-done" title="not done"><br>It’s a bit amusing that this solution for the <em>InsomniHack</em> CTF challenge named <em>“InsomniDroid”</em> was written up past midnight because I couldn’t sleep. Regardless, this was typed up as a play-by-play analysis taken from my crib notes when I actually was solving the crackme, so try to bare with me as this may read a bit odd. While some of the steps might seem odd - I find it is often just easier to tackle each APK in the same manner. This sets up a nice way to quickly find the call-stack and how things get executed and where. When tackling this challenge, I attempted to only use <em>baksmali</em>, opposed to any other tools for simplicity and since not everyone has IDA Pro. Anyway, if you haven’t downloaded the challenge yet you can get it from <a target="_blank" rel="noopener" href="http://www.root-me.org/en/Challenges-148/Realist/Insomni-Droid.html">root-me.org</a> or from this <a target="_blank" rel="noopener" href="http://www.strazzere.com/crackmes/insomnidroid.apk">local mirror</a> (MD5: c2f94fd52c8f270e66d8b16e07fe93e4). If you haven’t solved the challenge yet, I’d recommend to stop reading here and give it a good try. Starting off, we shoudl take a quick look at the AndroidManifest.xml through AXMLPrinter shows which is the main activity;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity android:label=&quot;@7F040001&quot; android:name=&quot;.InsomniActivity&quot;&gt;</span><br><span class="line">	&lt;intent-filter&gt;</span><br><span class="line">		&lt;action android:name=&quot;android.intent.action.MAIN&quot;&gt;&lt;/action&gt;</span><br><span class="line">		&lt;category android:name=&quot;android.intent.category.LAUNCHER&quot;&gt;</span><br><span class="line">		&lt;/category&gt;</span><br><span class="line">	&lt;/intent=filter&gt;</span><br><span class="line">&lt;/activity&gt;</span><br></pre></td></tr></table></figure>
+<p>Now we see what where to start our search without opening the app yet, toss that crackme into baksmali and get ready for the output. No baksmali tricks in place, so we can just take a look right at the main activity, <em>InsomniActivity</em>. The only interesting bits for us is the call to <em>compute</em> method on <em>keyBytes</em> and setting an <em>onClick</em> listener for the validate button;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.line 24</span><br><span class="line">sget-object v0, Lcom/fortiguard/insomnihack2012/challenge/Compute;-&gt;keyBytes:[B</span><br><span class="line">invoke-static &#123;v0&#125;, Lcom/fortiguard/insomnihack2012/challenge/Compute;-&gt;compute([B)V</span><br><span class="line"></span><br><span class="line">.line 26</span><br><span class="line">iget-object v0, p0, Lcom/fortiguard/insomnihack2012/challenge/InsomniActivity;-&gt;validateBtn:Landroid/widget/Button;</span><br><span class="line">new-instance v1, Lcom/fortiguard/insomnihack2012/challenge/InsomniActivity$1;</span><br><span class="line">invoke-direct &#123;v1, p0&#125;, Lcom/fortiguard/insomnihack2012/challenge/InsomniActivity$1;-&gt;&lt;init&gt;(Lcom/fortiguard/insomnihack2012/challenge/InsomniActivity;)V</span><br><span class="line">invoke-virtual &#123;v0, v1&#125;, Landroid/widget/Button;-&gt;setOnClickListener(Landroid/view/View$OnClickListener;)V</span><br></pre></td></tr></table></figure>
+<p>Seems weird that we’re computing something, though never doing anything with the returned result. Let’s just take note of that and come back later. If we look into the <em>onClick</em> listener (<em>InsomniActivity$1</em>) we can see what is going on deeper in the app;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// boolean b = checkSecret(editTxt.getText.toString());</span><br><span class="line">.line 30</span><br><span class="line">iget-object v1, p0, Lcom/fortiguard/insomnihack2012/challenge/InsomniActivity$1;-&gt;this$0:Lcom/fortiguard/insomnihack2012/challenge/InsomniActivity;</span><br><span class="line">iget-object v1, v1, Lcom/fortiguard/insomnihack2012/challenge/InsomniActivity;-&gt;editTxt:Landroid/widget/EditText;</span><br><span class="line">invoke-virtual &#123;v1&#125;, Landroid/widget/EditText;-&gt;getText()Landroid/text/Editable;</span><br><span class="line">move-result-object v1</span><br><span class="line">invoke-interface &#123;v1&#125;, Landroid/text/Editable;-&gt;toString()Ljava/lang/String;</span><br><span class="line">move-result-object v1</span><br><span class="line">invoke-static &#123;v1&#125;, Lcom/fortiguard/insomnihack2012/challenge/Compute;-&gt;checkSecret(Ljava/lang/String;)Z</span><br><span class="line">move-result v0</span><br><span class="line"></span><br><span class="line">// if(b == true) good_boy else bad_boy</span><br><span class="line">.line 31</span><br><span class="line">.local v0, b:Z</span><br><span class="line">if-eqz v0, :cond_24</span><br></pre></td></tr></table></figure>
+<p>Here we can see the bulk of this <em>onClick</em> listener just grabs the text from the <em>EditText</em> widget and uses it as a parameter for the <em>checkSecret</em> function. Now onward to the <em>checkSecret</em> function;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">.method public static checkSecret(Ljava/lang/String;)Z</span><br><span class="line">    .registers 7</span><br><span class="line">    .parameter &quot;input&quot;</span><br><span class="line"></span><br><span class="line">    .prologue</span><br><span class="line">    .line 63</span><br><span class="line">    :try_start_0</span><br><span class="line">    // Get a sha-256 messagedisgest</span><br><span class="line">    const-string v3, &quot;SHA-256&quot;</span><br><span class="line">    invoke-static &#123;v3&#125;, Ljava/security/MessageDigest;-&gt;getInstance(Ljava/lang/String;)Ljava/security/MessageDigest;</span><br><span class="line">    move-result-object v1</span><br><span class="line"></span><br><span class="line">    // reset</span><br><span class="line">    .line 64</span><br><span class="line">    .local v1, digest:Ljava/security/MessageDigest;</span><br><span class="line">    invoke-virtual &#123;v1&#125;, Ljava/security/MessageDigest;-&gt;reset()V</span><br><span class="line"></span><br><span class="line">    // get bytes of passed in string</span><br><span class="line">    .line 65</span><br><span class="line">    invoke-virtual &#123;p0&#125;, Ljava/lang/String;-&gt;getBytes()[B</span><br><span class="line">    move-result-object v3</span><br><span class="line"></span><br><span class="line">    // create new digest</span><br><span class="line">    invoke-virtual &#123;v1, v3&#125;, Ljava/security/MessageDigest;-&gt;digest([B)[B</span><br><span class="line">    move-result-object v0</span><br><span class="line"></span><br><span class="line">    // get secret hash that appears to be precomputed</span><br><span class="line">    .local v0, computedHash:[B</span><br><span class="line">    sget-object v3, Lcom/fortiguard/insomnihack2012/challenge/Compute;-&gt;secretHash:[B</span><br><span class="line"></span><br><span class="line">    // compare digest&#x27;s hash to the precomputed one</span><br><span class="line">    invoke-static &#123;v3, v0&#125;, Ljava/util/Arrays;-&gt;equals([B[B)Z</span><br><span class="line">    :try_end_16</span><br><span class="line">    .catch Ljava/lang/Exception; &#123;:try_start_0 .. :try_end_16&#125; :catch_1b</span><br><span class="line"></span><br><span class="line">    move-result v3</span><br><span class="line"></span><br><span class="line">    if-eqz v3, :cond_35</span><br><span class="line"></span><br><span class="line">    .line 67</span><br><span class="line">    const/4 v3, 0x1</span><br><span class="line"></span><br><span class="line">    .line 73</span><br><span class="line">    .end local v0           #computedHash:[B</span><br><span class="line">    .end local v1           #digest:Ljava/security/MessageDigest;</span><br><span class="line">    :goto_1a</span><br><span class="line">    return v3</span><br><span class="line"></span><br><span class="line">    // catch hashing exception</span><br><span class="line">    .line 70</span><br><span class="line">    :catch_1b</span><br><span class="line">    move-exception v3</span><br><span class="line">    move-object v2, v3</span><br><span class="line">    .line 71</span><br><span class="line">    .local v2, exp:Ljava/lang/Exception;</span><br><span class="line">    const-string v3, &quot;InsomniDroid&quot;</span><br><span class="line">    new-instance v4, Ljava/lang/StringBuilder;</span><br><span class="line">    const-string v5, &quot;checkSecret: &quot;</span><br><span class="line">    invoke-direct &#123;v4, v5&#125;, Ljava/lang/StringBuilder;-&gt;&lt;init&gt;(Ljava/lang/String;)V</span><br><span class="line">    invoke-virtual &#123;v2&#125;, Ljava/lang/Exception;-&gt;toString()Ljava/lang/String;</span><br><span class="line">    move-result-object v5</span><br><span class="line">    invoke-virtual &#123;v4, v5&#125;, Ljava/lang/StringBuilder;-&gt;append(Ljava/lang/String;)Ljava/lang/StringBuilder;</span><br><span class="line">    move-result-object v4</span><br><span class="line">    invoke-virtual &#123;v4&#125;, Ljava/lang/StringBuilder;-&gt;toString()Ljava/lang/String;</span><br><span class="line">    move-result-object v4</span><br><span class="line">    invoke-static &#123;v3, v4&#125;, Landroid/util/Log;-&gt;w(Ljava/lang/String;Ljava/lang/String;)I</span><br><span class="line">    .line 73</span><br><span class="line">    .end local v2           #exp:Ljava/lang/Exception;</span><br><span class="line">    :cond_35</span><br><span class="line">    const/4 v3, 0x0</span><br><span class="line">    goto :goto_1a</span><br><span class="line">.end method</span><br></pre></td></tr></table></figure>
+<p>Ok, this doesn’t help us much. As we can see from the inlined comments I put above, all it’s doing is a SHA-256 hash for our input and comparing it to <em>secretHash</em> - which obviously must also be a SHA-256 digest. Let’s see if we can find this being set anywhere;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">different:insomnidroid tstrazzere$ grep -r &quot;secretHash&quot; * | grep &quot;sput-object&quot; com/fortiguard/insomnihack2012/challenge/Compute.smali: sput-object \ v0, Lcom/fortiguard/insomnihack2012/challenge/Compute;-&gt;secretHash:[B </span><br></pre></td></tr></table></figure>
+<p>Only one hit - this is good. Let’s go back into <em>Compute.smali</em> and check out whats actually going on. Once we get in here we can see what appears to be, some left over code, along with an array-fill for the <em>secretHash</em> which is trigger the <em>sput-object</em> search we just performed. Let’s get the hash;<br><code>6152587ede8a26f53fd391b055d4de501ee8b2497fe74f8fd69f2c72e2f3e37a</code> And toss that into a hashcat… Maybe it’s an easy one to get and I won’t have to do any other work… Probably not - that would seem like a brute force challenge and not a crackme one, definitely not something simple like that for someone named “crypto girl”. So lets keep looking! Looking back at <em>Compute.smali</em> lets looks back into that function, <em>compute([B)</em> we noticed being called earlier in the APK - but never had the return value used. This one looks interesting because (1) it’s seems left over, is called once but not using the return value and (2) it’s the only place certain left over variables are being touched like <em>c1_null</em>, <em>c2</em> and is also expecting the parameter <em>keyBytes</em> which we also have a variable for. </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">.method public static checkSecret(Ljava/lang/String;)Z</span><br><span class="line">    .registers 7</span><br><span class="line">    .parameter &quot;input&quot;</span><br><span class="line"></span><br><span class="line">    .prologue</span><br><span class="line">    .line 63</span><br><span class="line">    :try_start_0</span><br><span class="line">    // Get a sha-256 messagedisgest</span><br><span class="line">    const-string v3, &quot;SHA-256&quot;</span><br><span class="line">    invoke-static &#123;v3&#125;, Ljava/security/MessageDigest;-&gt;getInstance(Ljava/lang/String;)Ljava/security/MessageDigest;</span><br><span class="line">    move-result-object v1</span><br><span class="line"></span><br><span class="line">    // reset</span><br><span class="line">    .line 64</span><br><span class="line">    .local v1, digest:Ljava/security/MessageDigest;</span><br><span class="line">    invoke-virtual &#123;v1&#125;, Ljava/security/MessageDigest;-&gt;reset()V</span><br><span class="line"></span><br><span class="line">    // get bytes of passed in string</span><br><span class="line">    .line 65</span><br><span class="line">    invoke-virtual &#123;p0&#125;, Ljava/lang/String;-&gt;getBytes()[B</span><br><span class="line">    move-result-object v3</span><br><span class="line"></span><br><span class="line">    // create new digest</span><br><span class="line">    invoke-virtual &#123;v1, v3&#125;, Ljava/security/MessageDigest;-&gt;digest([B)[B</span><br><span class="line">    move-result-object v0</span><br><span class="line"></span><br><span class="line">    // get secret hash that appears to be precomputed</span><br><span class="line">    .local v0, computedHash:[B</span><br><span class="line">    sget-object v3, Lcom/fortiguard/insomnihack2012/challenge/Compute;-&gt;secretHash:[B</span><br><span class="line"></span><br><span class="line">    // compare digest&#x27;s hash to the precomputed one</span><br><span class="line">    invoke-static &#123;v3, v0&#125;, Ljava/util/Arrays;-&gt;equals([B[B)Z</span><br><span class="line">    :try_end_16</span><br><span class="line">    .catch Ljava/lang/Exception; &#123;:try_start_0 .. :try_end_16&#125; :catch_1b</span><br><span class="line"></span><br><span class="line">    move-result v3</span><br><span class="line"></span><br><span class="line">    if-eqz v3, :cond_35</span><br><span class="line"></span><br><span class="line">    .line 67</span><br><span class="line">    const/4 v3, 0x1</span><br><span class="line"></span><br><span class="line">    .line 73</span><br><span class="line">    .end local v0           #computedHash:[B</span><br><span class="line">    .end local v1           #digest:Ljava/security/MessageDigest;</span><br><span class="line">    :goto_1a</span><br><span class="line">    return v3</span><br><span class="line"></span><br><span class="line">    // catch hashing exception</span><br><span class="line">    .line 70</span><br><span class="line">    :catch_1b</span><br><span class="line">    move-exception v3</span><br><span class="line">    move-object v2, v3</span><br><span class="line">    .line 71</span><br><span class="line">    .local v2, exp:Ljava/lang/Exception;</span><br><span class="line">    const-string v3, &quot;InsomniDroid&quot;</span><br><span class="line">    new-instance v4, Ljava/lang/StringBuilder;</span><br><span class="line">    const-string v5, &quot;checkSecret: &quot;</span><br><span class="line">    invoke-direct &#123;v4, v5&#125;, Ljava/lang/StringBuilder;-&gt;&lt;init&gt;(Ljava/lang/String;)V</span><br><span class="line">    invoke-virtual &#123;v2&#125;, Ljava/lang/Exception;-&gt;toString()Ljava/lang/String;</span><br><span class="line">    move-result-object v5</span><br><span class="line">    invoke-virtual &#123;v4, v5&#125;, Ljava/lang/StringBuilder;-&gt;append(Ljava/lang/String;)Ljava/lang/StringBuilder;</span><br><span class="line">    move-result-object v4</span><br><span class="line">    invoke-virtual &#123;v4&#125;, Ljava/lang/StringBuilder;-&gt;toString()Ljava/lang/String;</span><br><span class="line">    move-result-object v4</span><br><span class="line">    invoke-static &#123;v3, v4&#125;, Landroid/util/Log;-&gt;w(Ljava/lang/String;Ljava/lang/String;)I</span><br><span class="line">    .line 73</span><br><span class="line">    .end local v2           #exp:Ljava/lang/Exception;</span><br><span class="line">    :cond_35</span><br><span class="line">    const/4 v3, 0x0</span><br><span class="line">    goto :goto_1a</span><br><span class="line">.end method</span><br></pre></td></tr></table></figure>
+<p>This seems interesting… It’s taking in the <em>keyBytes</em> as a parameter, using them to create a <em>SecretKeySpec</em> then using the <em>ivBytes</em> to initialize an <em>IvParameterSpec</em>. Then it attempts to decrypt the <em>c1_null</em> variable, though it does nothing with this return value. After that, we decrypt something that is much larger and again, don’t do anything with the value. Essentially this maps out to the following java code;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">byte[] key_bytes = new byte[] &#123;</span><br><span class="line">  0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3</span><br><span class="line">&#125;;</span><br><span class="line">byte[] iv_bytes = new byte[] &#123;</span><br><span class="line">  0, 1, 2, 3, 0, 1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 1</span><br><span class="line">&#125;;</span><br><span class="line">byte[] c1_null = new byte[] &#123;</span><br><span class="line">  (byte) 0xec, (byte) 0x34, (byte) 0x27, (byte) 0x1d, (byte) 0x0f, (byte) 0x97, (byte) 0x40, (byte) 0x4e,</span><br><span class="line">  (byte) 0xf5, (byte) 0xe9, (byte) 0x5c, (byte) 0xa2, (byte) 0xfe, (byte) 0x0d, (byte) 0x84, (byte) 0x21</span><br><span class="line">&#125;;</span><br><span class="line">byte[] c2 = new byte[] &#123;</span><br><span class="line">  (byte) 0xaf, (byte) 0x5b, (byte) 0x49, (byte) 0x7a, (byte) 0x7d, (byte) 0xf6, (byte) 0x34, (byte) 0x3d,</span><br><span class="line">  (byte) 0xd4, (byte) 0xc9, (byte) 0x18, (byte) 0xcd, (byte) 0x90, (byte) 0x79, (byte) 0xa4, (byte) 0x53,</span><br><span class="line">  (byte) 0x89, (byte) 0x19, (byte) 0x52, (byte) 0x6e, (byte) 0x6a, (byte) 0xb7, (byte) 0x01, (byte) 0x0b,</span><br><span class="line">  (byte) 0xa6, (byte) 0xc9, (byte) 0x1f, (byte) 0xf6, (byte) 0xac, (byte) 0x2d, (byte) 0xe7, (byte) 0x4e,</span><br><span class="line">  (byte) 0x99, (byte) 0x5a, (byte) 0x53, (byte) 0x78, (byte) 0x7d, (byte) 0xe4, (byte) 0x60, (byte) 0x75,</span><br><span class="line">  (byte) 0xdc, (byte) 0xc9, (byte) 0x0f, (byte) 0xc7, (byte) 0x9d, (byte) 0x7f, (byte) 0xe1, (byte) 0x55,</span><br><span class="line">  (byte) 0xcc, (byte) 0x77, (byte) 0x48, (byte) 0x79, (byte) 0x6a, (byte) 0xb7, (byte) 0x29, (byte) 0x3d,</span><br><span class="line">  (byte) 0xcf, (byte) 0xc9, (byte) 0x6e, (byte) 0xcf, (byte) 0x95, (byte) 0x6b, (byte) 0xe9, (byte) 0x49,</span><br><span class="line">  (byte) 0xde, (byte) 0x46, (byte) 0x17, (byte) 0x75, (byte) 0x64, (byte) 0xf6, (byte) 0x2b, (byte) 0x2b,</span><br><span class="line">  (byte) 0xaa, (byte) 0x84, (byte) 0x6d, (byte) 0x90, (byte) 0xcd, (byte) 0x39, (byte) 0xb1, (byte) 0x17</span><br><span class="line">&#125;;</span><br><span class="line">SecretKeySpec key_spec = new SecretKeySpec(key_bytes, &quot;AES&quot;);</span><br><span class="line">IvParameterSpec iv_parameter = new IvParameterSpec(iv_bytes);</span><br><span class="line">try &#123;</span><br><span class="line">  Cipher cipher = Cipher.getInstance(&quot;AES/CTR/NoPadding&quot;);</span><br><span class="line">  cipher.init(Cipher.DECRYPT_MODE, key_spec, iv_parameter);</span><br><span class="line">  byte[] result = cipher.doFinal(c1_null);</span><br><span class="line">  byte[] p2 = new byte[c2.length];</span><br><span class="line">  for(int i = 0; i &lt; c2.length; i += 0x10) &#123;</span><br><span class="line">    cipher.init(Cipher.DECRYPT_MODE, key_spec, iv_parameter);</span><br><span class="line">    cipher.doFinal(c2, i, 0x10, p2, i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125; catch(Exception e) &#123;</span><br><span class="line">  System.out.println(&quot;ops: &quot; + e.toString());</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>At this point I’m assuming I just solved this – run the app, look at the output… Garbage – it’s just not UTF-8 (or UTF-16) characters. That can’t be it – I don’t think the challenge would be to include non-ascii characters! After staring at this a bit longer I decided to look at the lengths of what is being output. <em>result</em> has a length that will always going to be 16. <em>p2</em> will end up having a length that is always being divisible by 16… Well - lets try some operations between the two resulting arrays that aren’t being used. First one I tried was XOR’ing them together (everyone loves XOR, malware writers, crackme writers, etc, etc) – and this ended up being exactly what needed to be done. </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">byte[] key_bytes = new byte[] &#123;</span><br><span class="line">  0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3</span><br><span class="line">&#125;;</span><br><span class="line">byte[] iv_bytes = new byte[] &#123;</span><br><span class="line">  0, 1, 2, 3, 0, 1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 1</span><br><span class="line">&#125;;</span><br><span class="line">byte[] c1_null = new byte[] &#123;</span><br><span class="line">  (byte) 0xec, (byte) 0x34, (byte) 0x27, (byte) 0x1d, (byte) 0x0f, (byte) 0x97, (byte) 0x40, (byte) 0x4e,</span><br><span class="line">  (byte) 0xf5, (byte) 0xe9, (byte) 0x5c, (byte) 0xa2, (byte) 0xfe, (byte) 0x0d, (byte) 0x84, (byte) 0x21</span><br><span class="line">&#125;;</span><br><span class="line">byte[] c2 = new byte[] &#123;</span><br><span class="line">  (byte) 0xaf, (byte) 0x5b, (byte) 0x49, (byte) 0x7a, (byte) 0x7d, (byte) 0xf6, (byte) 0x34, (byte) 0x3d,</span><br><span class="line">  (byte) 0xd4, (byte) 0xc9, (byte) 0x18, (byte) 0xcd, (byte) 0x90, (byte) 0x79, (byte) 0xa4, (byte) 0x53,</span><br><span class="line">  (byte) 0x89, (byte) 0x19, (byte) 0x52, (byte) 0x6e, (byte) 0x6a, (byte) 0xb7, (byte) 0x01, (byte) 0x0b,</span><br><span class="line">  (byte) 0xa6, (byte) 0xc9, (byte) 0x1f, (byte) 0xf6, (byte) 0xac, (byte) 0x2d, (byte) 0xe7, (byte) 0x4e,</span><br><span class="line">  (byte) 0x99, (byte) 0x5a, (byte) 0x53, (byte) 0x78, (byte) 0x7d, (byte) 0xe4, (byte) 0x60, (byte) 0x75,</span><br><span class="line">  (byte) 0xdc, (byte) 0xc9, (byte) 0x0f, (byte) 0xc7, (byte) 0x9d, (byte) 0x7f, (byte) 0xe1, (byte) 0x55,</span><br><span class="line">  (byte) 0xcc, (byte) 0x77, (byte) 0x48, (byte) 0x79, (byte) 0x6a, (byte) 0xb7, (byte) 0x29, (byte) 0x3d,</span><br><span class="line">  (byte) 0xcf, (byte) 0xc9, (byte) 0x6e, (byte) 0xcf, (byte) 0x95, (byte) 0x6b, (byte) 0xe9, (byte) 0x49,</span><br><span class="line">  (byte) 0xde, (byte) 0x46, (byte) 0x17, (byte) 0x75, (byte) 0x64, (byte) 0xf6, (byte) 0x2b, (byte) 0x2b,</span><br><span class="line">  (byte) 0xaa, (byte) 0x84, (byte) 0x6d, (byte) 0x90, (byte) 0xcd, (byte) 0x39, (byte) 0xb1, (byte) 0x17</span><br><span class="line">&#125;;</span><br><span class="line">SecretKeySpec key_spec = new SecretKeySpec(key_bytes, &quot;AES&quot;);</span><br><span class="line">IvParameterSpec iv_parameter = new IvParameterSpec(iv_bytes);</span><br><span class="line">try &#123;</span><br><span class="line">  Cipher cipher = Cipher.getInstance(&quot;AES/CTR/NoPadding&quot;);</span><br><span class="line">  cipher.init(Cipher.DECRYPT_MODE, key_spec, iv_parameter);</span><br><span class="line">  byte[] result = cipher.doFinal(c1_null);</span><br><span class="line">  byte[] p2 = new byte[c2.length];</span><br><span class="line">  for(int i = 0; i &lt; c2.length; i += 0x10) &#123;</span><br><span class="line">    cipher.init(Cipher.DECRYPT_MODE, key_spec, iv_parameter);</span><br><span class="line">    cipher.doFinal(c2, i, 0x10, p2, i);</span><br><span class="line">  &#125;</span><br><span class="line">  byte[] solution = new byte[p2.length];</span><br><span class="line">  for(int x = 0; x &lt; p2.length / result.length; x++)&#123;</span><br><span class="line">    for(int i = 0; i &lt; result.length; i++) &#123;</span><br><span class="line">      solution[i + x * result.length ] = (byte) (result[i] ^ p2[i + (x * result.length)]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  System.out.println(new String(solution));</span><br><span class="line">&#125;</span><br><span class="line">catch(Exception e) &#123;</span><br><span class="line">  System.out.println(&quot;ops: &quot; + e.toString());</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>After running this we get the output;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Congrats! Dont re-use AES CTR counters ;) Secret Code is: 2mkfmh2r0hkake_m123456</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="http://www.strazzere.com/blog/wp-content/uploads/2012/03/insomnidroid-congrats.png"><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/03/insomnidroid-congrats.png" title="insomnidroid-congrats"></a> Ah - Crypto girl left us a nice crypto related message. Essentially explaining what went on here. Fun stuff and definitely glad I didn’t wait for hashcat to try and spit out that password.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2012/03/insomnidroid-crackme-solution/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&text=InsomniDroid - crackme solution"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&title=InsomniDroid - crackme solution"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&is_video=false&description=InsomniDroid - crackme solution"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=InsomniDroid - crackme solution&body=Check out this article: https://strazzere.com/2012/03/insomnidroid-crackme-solution/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&title=InsomniDroid - crackme solution"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&title=InsomniDroid - crackme solution"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&title=InsomniDroid - crackme solution"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&title=InsomniDroid - crackme solution"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&name=InsomniDroid - crackme solution&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2012/03/insomnidroid-crackme-solution/&t=InsomniDroid - crackme solution"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Strazzere">
+<meta property="og:url" content="https://strazzere.com/page/5/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="Android, reverse engineering, reversing, ida, dex, dalvik, security, infosec, exploits, vulnerabilities">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Strazzere</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+    <div class="content index py4 h-card">
+        
+          <header id="header">
+  <a class="u-url u-uid" href="/">
+  
+    
+      
+        <img id="logo" alt class="u-logo"
+          srcset="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=50, https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=75 1.5x, https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=100 2x"
+          src="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93" />
+      
+    
+  
+    <div id="title">
+      <h1 class="p-name">Strazzere</h1>
+    </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-2x"></i></a>
+      </li>
+      <!--
+     --><li><a href="/">Home</a></li><!--
+   --><!--
+     --><li><a href="/about/">About</a></li><!--
+   --><!--
+     --><li><a href="/archives/">Writing</a></li><!--
+   --><!--
+     --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+   -->
+    </ul>
+  </div>
+</header>
+
+        
+        <section id="about" class="p-note">
+  
+  
+    <p>
+      Find me on
+      
+      
+      
+        
+        
+          <a class="icon u-url" target="_blank" rel="noopener me" href="https://github.com/strazzere" aria-label="github" title="github">
+            <i class="fa-brands fa-github"></i><!--
+      ---></a><!--
+    ---><!--
+    --->, 
+        
+      
+        
+        
+          <a class="icon u-url" target="_blank" rel="noopener me" href="https://twitter.com/timstrazz" aria-label="twitter" title="twitter">
+            <i class="fa-brands fa-twitter"></i><!--
+      ---></a><!--
+    ---><!--
+    --->, 
+        
+      
+        
+        
+          <a class="icon u-url" target="_blank" rel="noopener me" href="https://www.linkedin.com/in/timstrazzere" aria-label="linkedin" title="linkedin">
+            <i class="fa-brands fa-linkedin"></i><!--
+      ---></a><!--
+    ---><!--
+    ---> and 
+        
+      
+        
+        
+          <a class="icon u-email" target="_blank" rel="noopener" href="mailto:diff@protonmail.com" aria-label="mail" title="mail">
+            <i class="fa-solid fa-envelope"></i><!--
+      ---></a>
+        <!--
+    --->.
+        
+      
+    </p>
+  
+</section>
+
+<section id="writing">
+  <span class="h1"><a href="/archives/">Writing</a></span>
+  
+  <ul class="post-list">
+    
+    
+      
+    
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2024-06-18T07:00:00.000Z" class="dt-published" itemprop="datePublished">2024-06-18</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2024/06/frida-stack-making-life-a-bit-nicer/">frida-stack, making life a bit nicer while reversing unknown issues</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2024-05-09T07:00:00.000Z" class="dt-published" itemprop="datePublished">2024-05-09</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2024/05/generic-functions-for-timing/">Generic functions with generic arguments for timing</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2023-10-17T07:00:00.000Z" class="dt-published" itemprop="datePublished">2023-10-17</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2023/10/s3-iam-serverless-access-denied/">S3, IAM, Serverless and Access Denied</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2023-10-06T07:00:00.000Z" class="dt-published" itemprop="datePublished">2023-10-06</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2023/10/home-assistant-and-the-house-fan/">Home Assistant and the Whole House Fan</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2022-11-24T08:00:00.000Z" class="dt-published" itemprop="datePublished">2022-11-24</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2022/11/hot-reloading-native-shim/">Hot reloading to fix LD_LIBRARY_PATH issues</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2022-09-27T07:00:00.000Z" class="dt-published" itemprop="datePublished">2022-09-27</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2022/09/android-usb-accessories-and-frida/">Android USB Accessory Sniffing</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2020-06-07T07:00:00.000Z" class="dt-published" itemprop="datePublished">2020-06-07</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2020/06/Uncertified-Devices-and-Bad-Advice/">Uncertified Devices and Bad Advice</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2020-05-17T07:00:00.000Z" class="dt-published" itemprop="datePublished">2020-05-17</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2020/05/Tales-from-the-crash-dlopen-and-dlerror/">Tales from the crash; dlopen() and dlerror() patterns</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2020-05-09T07:00:00.000Z" class="dt-published" itemprop="datePublished">2020-05-09</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2020/05/quick-n-dirty-check-for-android-binaries/">Quick n dirty, check for Android binaries</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2020-05-08T07:00:00.000Z" class="dt-published" itemprop="datePublished">2020-05-08</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2020/05/making-up-frida-functions/">&#34;Making up&#34; functions in Frida</a>
+    
+
+
+</span>
+      </li>
+    
+  </ul>
+  
+</section>
+
+
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

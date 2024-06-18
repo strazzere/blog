@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Progress has been quiet slow as of lately, albeit progress none the less though. As normal, I figured I’d attempt to document this so that anyone attempting to root devices in the future that might be">
+<meta property="og:type" content="article">
+<meta property="og:title" content="An update on the Archos 5 Android rooting...">
+<meta property="og:url" content="https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Progress has been quiet slow as of lately, albeit progress none the less though. As normal, I figured I’d attempt to document this so that anyone attempting to root devices in the future that might be">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/11/archosloading-300x225.jpg">
+<meta property="article:published_time" content="2009-11-21T01:00:08.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.086Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="Android root">
+<meta property="article:tag" content="androidroot.cramfs">
+<meta property="article:tag" content="androidroot.cramfs.secure">
+<meta property="article:tag" content="Archo 5 Android">
+<meta property="article:tag" content="archos">
+<meta property="article:tag" content="Archos 5 Internet Tablet">
+<meta property="article:tag" content="archos init">
+<meta property="article:tag" content="archos recovery">
+<meta property="article:tag" content="Archos root">
+<meta property="article:tag" content="bootloader">
+<meta property="article:tag" content="cramfs">
+<meta property="article:tag" content="cramfs.secure">
+<meta property="article:tag" content="GPL">
+<meta property="article:tag" content="kernel">
+<meta property="article:tag" content="mtd_partition">
+<meta property="article:tag" content="MTD_WRITEABLE">
+<meta property="article:tag" content="root">
+<meta property="article:tag" content="stage0">
+<meta property="article:tag" content="stage1">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/11/archosloading-300x225.jpg">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>An update on the Archos 5 Android rooting...</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2010/03/adjacking-where-did-my-ad-revenue-go/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2009/10/real-appslib-application-stats/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&text=An update on the Archos 5 Android rooting..."><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&title=An update on the Archos 5 Android rooting..."><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&is_video=false&description=An update on the Archos 5 Android rooting..."><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=An update on the Archos 5 Android rooting...&body=Check out this article: https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&title=An update on the Archos 5 Android rooting..."><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&title=An update on the Archos 5 Android rooting..."><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&title=An update on the Archos 5 Android rooting..."><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&title=An update on the Archos 5 Android rooting..."><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&name=An update on the Archos 5 Android rooting...&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&t=An update on the Archos 5 Android rooting..."><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        An update on the Archos 5 Android rooting...
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2009-11-21T01:00:08.000Z" class="dt-published" itemprop="datePublished">2009-11-20</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/archos/">archos</a> › <a class="category-link" href="/categories/android/archos/coding/">coding</a> › <a class="category-link" href="/categories/android/archos/coding/reverse-engineering/">reverse engineering</a> › <a class="category-link" href="/categories/android/archos/coding/reverse-engineering/updating/">updating</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Android-root/" rel="tag">Android root</a>, <a class="p-category" href="/tags/Archo-5-Android/" rel="tag">Archo 5 Android</a>, <a class="p-category" href="/tags/Archos-5-Internet-Tablet/" rel="tag">Archos 5 Internet Tablet</a>, <a class="p-category" href="/tags/Archos-root/" rel="tag">Archos root</a>, <a class="p-category" href="/tags/GPL/" rel="tag">GPL</a>, <a class="p-category" href="/tags/MTD-WRITEABLE/" rel="tag">MTD_WRITEABLE</a>, <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/androidroot-cramfs/" rel="tag">androidroot.cramfs</a>, <a class="p-category" href="/tags/androidroot-cramfs-secure/" rel="tag">androidroot.cramfs.secure</a>, <a class="p-category" href="/tags/archos/" rel="tag">archos</a>, <a class="p-category" href="/tags/archos-init/" rel="tag">archos init</a>, <a class="p-category" href="/tags/archos-recovery/" rel="tag">archos recovery</a>, <a class="p-category" href="/tags/bootloader/" rel="tag">bootloader</a>, <a class="p-category" href="/tags/cramfs/" rel="tag">cramfs</a>, <a class="p-category" href="/tags/cramfs-secure/" rel="tag">cramfs.secure</a>, <a class="p-category" href="/tags/kernel/" rel="tag">kernel</a>, <a class="p-category" href="/tags/mtd-partition/" rel="tag">mtd_partition</a>, <a class="p-category" href="/tags/root/" rel="tag">root</a>, <a class="p-category" href="/tags/stage0/" rel="tag">stage0</a>, <a class="p-category" href="/tags/stage1/" rel="tag">stage1</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="http://173.230.150.16/blog/wp-content/uploads/2009/11/archosloading-300x225.jpg" alt="Penguin inside ;)" title="Penguin inside ;)"><br>Progress has been quiet slow as of lately, albeit progress none the less though. As normal, I figured I’d attempt to document this so that anyone attempting to root devices in the future that might be similar to the Archos might have an easier time :)</p>
+<p>Thus far when rooting phones we have been coming in contact with less protection. After gaining root we have been able to remount the partitions and edit them directly - making the changes persistent immediately. Though there is a fundamental difference with the Archos that comes into play. The Archos stores everything on a (maybe two or three?) flash chips. The partitions of the chips are like normal phones and mounted as read-only. The problem comes into play since what is mounted is not a filesystem, but a cramfs file. This cramfs file is what needs to be modified to create any changes to the system files.</p>
+<p>So just modify the cramfs file, right? Nope - Archos caught you on this one. Simply modifying the cramfs, which is actually a <code>cramfs.secure</code> file will lead to a bad signature error. What the heck is that all about? Essentially when Archos creates a firmware update and flashes a new <code>androidroot.cramfs.secure</code> to the device. This file is signed with a signature of itself. Sadly we cannot recreate the signature for the file since it’s an RSA&#x2F;MD5 signature of the contents. This means that they basically run a program after the have a androidroot.cramfs to append the signature like the following:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">secure = RSA(MD5(cramfsFile)) + cramfsFile;</span><br></pre></td></tr></table></figure>
+<p>The RSA function uses a private key that we do not, and most likely will never have. Essentially in the bootloader there is a program called cramfschecker that does something like the following pseudo code:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(RSADecrypt(signature) == MD5(file)) ? return goodFile : return badFile;</span><br></pre></td></tr></table></figure>
+<p>The RSADecrypt function uses a public key that we have <a href="http://strazzere.com/blog/?p=311">found</a>, but is no help to us.<br>Alright, know that we know what files need to get modified and how we are locked out of them, how do we actually get past this? This is where we have to get into modifying the kernel and boot loader. The flash memory is a little tricky but essentially is mapped out like the following:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mtd device – name —– nickname – description</span><br><span class="line">mtd0 ——- stage1 — boot0 —- bootloader part 1, also contains keystore</span><br><span class="line">mtd1 ——- stage2 — boot1 —- bootloader part 2, also contains boot image</span><br><span class="line">mtd2 ——- recovery – recovery – recovery kernel and recovery.cpio (filesystem)</span><br><span class="line">mtd3 ——- init —– init —– init (main) kernel and init.cpio (filesystem)</span><br></pre></td></tr></table></figure>
+<p>Now here is where the cool stuff comes into play. Stage1, among other things, checks the signature of stage2 to verify that it has not been modified. When stage2 begins it performs the same type of check on recovery and init. Inside recovery and init a program called cramfschecker is called, which checks the actual cramfs.secure files that we want to change. So the chain of trust is as follows:<br><code>Stage1 -&gt; Stage2 -&gt; recovery/init -&gt; cramfs.secure</code><br>We need to modify Stage1 to accept any stage2, stage2 to accept any recovery&#x2F;init and then remove the cramfschecker call so we can execute anything we’d like without worrying about if it is signed or not.</p>
+<p>Now we know everything that needs to be done, so lets do it! Well, it’s sadly not <em>that</em> easy. We know how and can modify the cramfs files, that’s not hard. We can flash new a recovery&#x2F;init, and even flash a new stage2. The problem is that we cannot currently flash a stage1 since it is marked as read-only after boot by the kernel. Yes, it is marked read-only, not locked - which if it where we could simply use a <code>flash_unlock</code> tool on it.</p>
+<p>Currently I’ve been diving into the init kernel, which is at the beginning part of the init section, gzipped. This has been pretty tough trudging and I’ve enlisted the help of <a target="_blank" rel="noopener" href="http://archos.g3nius.org/">EiNSTeiN_</a>. This is still pretty ugly stuff to look through though - we are basically looking for a small struct that make uses the kernel module to set the partition to read-only. The struct should look something like this:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct mtd_partition &#123;</span><br><span class="line">	char name; 				/* identifier string */</span><br><span class="line">	uint64_t size; 				/* partition size */</span><br><span class="line">	uint64_t offset; 			/* offset within the master MTD space */</span><br><span class="line">	// Probably set to MTD_WRITEABLE (0x0400), since it is MASKING this flag</span><br><span class="line">	uint32_t mask_flags; 			/* master MTD flags to mask out for this partition */</span><br><span class="line">	struct nand_ecclayout *ecclayout; 	/* out of band layout for this partition (NAND only)*/</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Though this should all be GPLed code - since it is the kernel! Ah hah! That could make things <em>so much easier</em>. Sadly Archos has not yet posted the <a target="_blank" rel="noopener" href="http://www.archos.com/support/support_tech/updates.html?country=us&lang=en">GPLed kernel source code</a> for the Gen7 devices (which the Android model is).</p>
+<p>After about two to three weeks of trying to track down someone, anyone with an Archos contact, or even just someone at Archos who isn’t outsourced technical support I finally got an answer! Prior to reaching this person I mainly got the run around, saying it will be up soon or that it is already posted. For some reason it also kept getting lost in the translation that I was requesting the GPLed *kernel* source code from the Archos 5 Android model. Someone in France apparently kept seeing “Android” and said “NO! It’s Apache, we don’t have to release that, Google hosts the source, goto them!” <em>Finally</em> I got a response, rather promptly I might add, from a USA Archos representative saying that Google hosts the code. After exchanging a few more emails they finally understood that I was requesting the Gen7 kernel source code, which is under the GPL license - NOT the Android source code which is under Apache. PHEW!</p>
+<p>So the latest update is that we are essentially in a holding pattern, waiting for next week to come. I’ve been promised that the GPLed source code for the kernel <em>will</em> be posted by the end of next week, though I shouldn’t hold my breath until Friday. If it doesn’t appear on the site by Friday evening EST then I can start calling and complaining again… This time someone can actually be help responsible though, so I feel like it will actually happen. Once we get this code, it’s only a matter of time before EiNSTeiN_ and myself track down the right code which should help us in creating a program to patch the mtd partitions into being read&#x2F;writable.</p>
+<p>If you feel like you can help us with this, feel free to post here, email me or send a reply on twitter. Also if you just want to get the most updated information, I’d recommend you follow me on twitter <a target="_blank" rel="noopener" href="http://www.twitter.com/timstrazz">@timstrazz</a>.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&text=An update on the Archos 5 Android rooting..."><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&title=An update on the Archos 5 Android rooting..."><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&is_video=false&description=An update on the Archos 5 Android rooting..."><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=An update on the Archos 5 Android rooting...&body=Check out this article: https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&title=An update on the Archos 5 Android rooting..."><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&title=An update on the Archos 5 Android rooting..."><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&title=An update on the Archos 5 Android rooting..."><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&title=An update on the Archos 5 Android rooting..."><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&name=An update on the Archos 5 Android rooting...&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/11/an-update-on-the-archos-5-android-rooting/&t=An update on the Archos 5 Android rooting..."><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

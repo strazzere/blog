@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="I’ve noticed some people have been having trouble with Andrea’s program, the Market-Enabler - so prior to him launching his GPL’ed code for the program. I thought that I would explain what it is actua">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to manually access &quot;restricted&quot; market areas">
+<meta property="og:url" content="https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="I’ve noticed some people have been having trouble with Andrea’s program, the Market-Enabler - so prior to him launching his GPL’ed code for the program. I thought that I would explain what it is actua">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/01/android_market_combo_8282008_wide_600x297-300x148.png">
+<meta property="article:published_time" content="2009-05-05T18:24:50.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.092Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="g1">
+<meta property="article:tag" content="gsm.operator.alpha">
+<meta property="article:tag" content="gsm.operator.iso-country">
+<meta property="article:tag" content="gsm.operator.numeric">
+<meta property="article:tag" content="gsm.sim.operator.alpha">
+<meta property="article:tag" content="gsm.sim.operator.iso-country">
+<meta property="article:tag" content="gsm.sim.operator.numeric">
+<meta property="article:tag" content="purchasing apps">
+<meta property="article:tag" content="restricted buying">
+<meta property="article:tag" content="t-mobile">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/01/android_market_combo_8282008_wide_600x297-300x148.png">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>How to manually access &#34;restricted&#34; market areas</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2009/05/values-for-de-and-ch-markets/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2009/05/purchase-applications-outside-of-the-authorized-zones/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&text=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&title=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&is_video=false&description=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How to manually access &#34;restricted&#34; market areas&body=Check out this article: https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&title=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&title=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&title=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&title=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&name=How to manually access &#34;restricted&#34; market areas&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&t=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        How to manually access &#34;restricted&#34; market areas
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2009-05-05T18:24:50.000Z" class="dt-published" itemprop="datePublished">2009-05-05</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/g1/" rel="tag">g1</a>, <a class="p-category" href="/tags/gsm-operator-alpha/" rel="tag">gsm.operator.alpha</a>, <a class="p-category" href="/tags/gsm-operator-iso-country/" rel="tag">gsm.operator.iso-country</a>, <a class="p-category" href="/tags/gsm-operator-numeric/" rel="tag">gsm.operator.numeric</a>, <a class="p-category" href="/tags/gsm-sim-operator-alpha/" rel="tag">gsm.sim.operator.alpha</a>, <a class="p-category" href="/tags/gsm-sim-operator-iso-country/" rel="tag">gsm.sim.operator.iso-country</a>, <a class="p-category" href="/tags/gsm-sim-operator-numeric/" rel="tag">gsm.sim.operator.numeric</a>, <a class="p-category" href="/tags/purchasing-apps/" rel="tag">purchasing apps</a>, <a class="p-category" href="/tags/restricted-buying/" rel="tag">restricted buying</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>, <a class="p-category" href="/tags/t-mobile/" rel="tag">t-mobile</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="http://173.230.150.16/blog/wp-content/uploads/2009/01/android_market_combo_8282008_wide_600x297-300x148.png" alt="Mmmmm... Market Data..." title="Mmmmm... Market Data..."><br>I’ve noticed some people have been having trouble with Andrea’s program, the <a href="http://strazzere.com/blog/?p=255">Market-Enabler</a> - so prior to him launching his GPL’ed code for the program. I thought that I would explain what it is actually doing.<br>While I’m not 100% sure, I believe that the problems people are having are with the super-user whitelist application. So running these commands yourself via adb or the terminal on the phone should resolve any of the issues. Also, an obvious thing should be that, you DO need root! This method has been testing on 1.43 JF, 1.5 JF and theDUDE and has worked fine on all of them.</p>
+<p><strong>What to do</strong><br>Simply fire up adb or the terminal on your phone, and type in <code>getprop</code>. This will return a large list of variables - you should either make a back up of these or write them down. Simply typing <code>getprop &gt; prop.backup</code> will make a back up of these values and pipe them to the file named <code>prop.backup</code>. This will be needed incase you mess anything up. To enable seeing of paid applications that are available to the US, the following commands must be run:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">su</span><br><span class="line">setprop	gsm.sim.operator.numeric	31026</span><br><span class="line">setprop	gsm.operator.numeric	31026</span><br><span class="line">setprop	gsm.sim.operator.iso-country	us</span><br><span class="line">setprop	gsm.operator.iso-country	us</span><br><span class="line">setprop	gsm.operator.alpha	T-Mobile</span><br><span class="line">setprop	gsm.sim.operator.alpha	T-Mobile</span><br><span class="line">kill $(ps | grep vending | tr -s ‘ ‘ | cut -d ‘ ‘ -f2)</span><br><span class="line">rm -rf /data/data/com.android.vending/cache/*</span><br></pre></td></tr></table></figure>
+<p>Essentially you are setting the US standard values (for the T-Mobile Operator) on your phone, these values are the <code>gsm.sim.operator.numeric</code>, <code>gsm.operator.numeric</code>, <code>gsm.sim.operator.iso-country</code>, <code>gsm.operator.alpha</code> and <code>gsm.sim.operator.alpha</code>.</p>
+<p>The next line simply looks for the vending application, and kills the process. The next time will remove the cache files you have stored from the vending application. These two lines essentially make sure your phone will regrab the values you have set, so you can properly view the market data.</p>
+<p><strong>What about other markets?</strong><br>I’ve gotten quiet a few comments and questions regarding this. The same method used to set your phone to the US T-Mobile market could be used to set your phone to any other market. All you need to know is the values from that area. So get your friend to give you the values for their area and carrier and simply replace the values above with it.<br><strong>Again… Yet another note</strong><br>I did not make the program Market-Enabler, I only helped Andrea and have also translated his posted. Please when using this information quote your sources, both my site and Andrea’s Androidiani.com - it’s only fair to do so!</p>
+<p>Enjoy :)</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&text=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&title=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&is_video=false&description=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How to manually access &#34;restricted&#34; market areas&body=Check out this article: https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&title=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&title=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&title=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&title=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&name=How to manually access &#34;restricted&#34; market areas&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/05/how-to-manually-access-restricted-market-areas/&t=How to manually access &#34;restricted&#34; market areas"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

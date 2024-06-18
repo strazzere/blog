@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Originally I found the easiest way to download applications was just spoofing the final request. This worked - and worked well for the entire time I had been using it. Though it bugged me that I could">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Conquering the mysterious userId (Fixing Android Market downloading)">
+<meta property="og:url" content="https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Originally I found the easiest way to download applications was just spoofing the final request. This worked - and worked well for the entire time I had been using it. Though it bugged me that I could">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-02-05T01:07:41.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.088Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="apk">
+<meta property="article:tag" content="android market">
+<meta property="article:tag" content="vending.apk">
+<meta property="article:tag" content="android market api">
+<meta property="article:tag" content="downloading apks">
+<meta property="article:tag" content="userId">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Conquering the mysterious userId (Fixing Android Market downloading)</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2012/02/making-smali-a-bit-easier-to-read-in-emacs/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2012/01/quickly-setting-up-an-android-emulator-for-fuzzinghacking/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&text=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&title=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&is_video=false&description=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Conquering the mysterious userId (Fixing Android Market downloading)&body=Check out this article: https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&title=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&title=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&title=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&title=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&name=Conquering the mysterious userId (Fixing Android Market downloading)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&t=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Conquering the mysterious userId (Fixing Android Market downloading)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2012-02-05T01:07:41.000Z" class="dt-published" itemprop="datePublished">2012-02-04</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/reverse-engineering/">reverse engineering</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android-market/" rel="tag">android market</a>, <a class="p-category" href="/tags/android-market-api/" rel="tag">android market api</a>, <a class="p-category" href="/tags/apk/" rel="tag">apk</a>, <a class="p-category" href="/tags/downloading-apks/" rel="tag">downloading apks</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>, <a class="p-category" href="/tags/userId/" rel="tag">userId</a>, <a class="p-category" href="/tags/vending-apk/" rel="tag">vending.apk</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>Originally I found the easiest way to download applications was just <a href="http://strazzere.com/blog/?p=293">spoofing the final request</a>. This worked - and worked well for the entire time I had been using it. Though it bugged me that I couldn’t find out <em>where</em> the actual <code>userId</code> was coming from. So I keep digging and digging and finally came up with the solution which is posted below. I never really shared this though, since as I said - other people just used the hack and didn’t seem to care much. The main concern people had was “how do I get it faster” - which to that I always replied “learn whats going on”. Plenty of people figured it out, though now, according to the the emails I’ve been getting recently and the ones on the Android-Market-Api Google Group, this stopped old hack has working. So, I guess it’s about time to spill the rest of the mysery.</p>
+<p>The requests originally looked like this when being sniffed over the wire;</p>
+<p><code>http://android.clients.google.com/market/download/Download?userId=###&amp;deviceId=###&amp;assetId=###</code></p>
+<p>Though recently they started looking like this;</p>
+<p><code>http://android.clients.google.com/market/download/Download?packageName=com.package.name&amp;versionCode=##&amp;token=###</code></p>
+<p>Well - this didn’t matter much to me since I don’t use that project, but I’ve helped enough people through side channels that I figured the information is as good as public. So I’ve decided to write up a little “what is actually going on”.</p>
+<p>Just a little while ago I committed an updated <em><a target="_blank" rel="noopener" href="https://code.google.com/p/android-market-api/source/diff?spec=svn47&r=47&format=side&path=/trunk/AndroidMarketApi/proto/market.proto">market.proto</a></em> with the necessary fields to request downloads from the Android Market. Essentially I’ve added the <code>GetAssetRequest</code> and the <code>GetAssetRequest</code> which was previously missing. I also fixed the <code>unknown</code> field which is known as the <code>isSecure</code> field. This boolean field lets the market know what type of request is coming in and which token will be used.</p>
+<p>In the order versions of the vending apk, not everything was send over HTTPS. When most normal requests (get application info, queries, etc) where over unsecured HTTP, the GetAssetsRequest was considered “secure” and only went over HTTPS. This meant the <code>isSecure</code> field had to be set and a new authtoken would be used. Instead of the <code>android</code> service authtoken being sent, the <code>androidsecure</code> token would be sent. This is probably done so that if someone was sniffing requests, they couldn’t just reuse your <em>android</em> token and get away with it, though it may have been done for other reasons.</p>
+<p>So what was the mystery of the <code>userId</code>? Well - it was never found on the device, because it was never actually stored on the device. It was only stored sometimes inside of URLS which had been cached or saved to databases. If properly using the protobuf, this relieves the person from needing to find these values, since the market themselves provide them! It was a bit annoying to figure this out finally, but also a huge relief since I wasn’t going crazy not finding the <code>userId</code> anymore. So let’s sum this all up;</p>
+<ol>
+<li>Get the <code>android secure</code> token for your account, use this as the <code>authtoken</code> for your next request</li>
+<li>Build proper request protobuf; Use <code>authtoken</code> from above, set <code>isSecure</code> to true and add the <code>assetId</code> to a <code>GetAssetRequest</code></li>
+<li>Receive the <code>GetAssetResponse</code> and build an HTTP request from it using the; <code>blobUrl</code> as the URL and set a cookie using the <code>downloadAuthCookieName</code>&#x2F;<code>downloadAuthCookieValue</code> pair.</li>
+</ol>
+<p>Lastly, I’d like the apologize for the delay in this information. I feel a bit bad since I’ve known this for a while, but most people who ask me questions where just using the hack, which – until very recently worked fine. Also, it has always been possible to just reverse the apk yourself and figure out what was going on ;)</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&text=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&title=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&is_video=false&description=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Conquering the mysterious userId (Fixing Android Market downloading)&body=Check out this article: https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&title=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&title=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&title=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&title=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&name=Conquering the mysterious userId (Fixing Android Market downloading)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2012/02/conquering-the-mysterious-userid-fixing-android-market-downloading/&t=Conquering the mysterious userId (Fixing Android Market downloading)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

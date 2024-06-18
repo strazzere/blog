@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="DEX files, which are the compiled bytecode files that run on the Android OS. Essentially they are like the java bytecode, except they use a modified VM which is called “Dalvik” that was developed for">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DEX File signature and checksums">
+<meta property="og:url" content="https://strazzere.com/2008/10/dex-file-signature-and-checksums/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="DEX files, which are the compiled bytecode files that run on the Android OS. Essentially they are like the java bytecode, except they use a modified VM which is called “Dalvik” that was developed for">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2008-10-30T09:49:03.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.089Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="dex">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="bytecode">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>DEX File signature and checksums</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2008/10/ah-ha-success-in-patching-dex-file/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2008/10/dex-file-signature-and-checksums/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&text=DEX File signature and checksums"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&title=DEX File signature and checksums"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&is_video=false&description=DEX File signature and checksums"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DEX File signature and checksums&body=Check out this article: https://strazzere.com/2008/10/dex-file-signature-and-checksums/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&title=DEX File signature and checksums"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&title=DEX File signature and checksums"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&title=DEX File signature and checksums"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&title=DEX File signature and checksums"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&name=DEX File signature and checksums&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&t=DEX File signature and checksums"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        DEX File signature and checksums
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2008-10-30T09:49:03.000Z" class="dt-published" itemprop="datePublished">2008-10-30</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/dex-bytecode/">dex bytecode</a> › <a class="category-link" href="/categories/android/dex-bytecode/reverse-engineering/">reverse engineering</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/bytecode/" rel="tag">bytecode</a>, <a class="p-category" href="/tags/dex/" rel="tag">dex</a>, <a class="p-category" href="/tags/java/" rel="tag">java</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>DEX files, which are the compiled bytecode files that run on the Android OS. Essentially they are like the java bytecode, except they use a modified VM which is called “Dalvik” that was developed for the Android OS.</p>
+<p>So long story short - I want to know the structure of these files, and how to edit or patch them. Why? I enjoy reverse engineering things! Anyway there is a wealth of information that I could find on the following sites;</p>
+<p>Shane Isbell’s Weblog : <a target="_blank" rel="noopener" href="http://www.jroller.com/random7/entry/android_s_dex_class_structure">http://www.jroller.com/random7/entry/android_s_dex_class_structure</a> RetroCode, Dex File Formate : <a target="_blank" rel="noopener" href="http://www.retrodev.com/android/dexformat.html">http://www.retrodev.com/android/dexformat.html</a></p>
+<p>These site both have great information, thoughmore so on the second link. What intrigued me was that they must have a ‘checksum’ and a ‘SHA-1’ signature. The best information I could find though only eluded to this (Retrocode);</p>
+<blockquote>
+<p><strong>Notes:</strong> All non-string fields are stored in little-endian format. It would appear that the checksum and signature fields are assumed to be zero when calculating the checksum and signature.</p>
+</blockquote>
+<p>Well that doesn’t really help me if I’d like to patch a DEX file and then redo the signature and checksum. Especially since we don’t know what exactly is being used to calculate either or what checksum is being used to well, calculate the checksum! Good thing we can extract .jar files and decompile class files, even more so thank goodness google hasn’t used obstufication on any of the classes. An excerpt from <code>dx\com\android\dx\dex\file\DexFile.class</code> after being decompiled into DexFile.jar.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">private static void calcSignature(byte bytes[])</span><br><span class="line">&#123;</span><br><span class="line">  MessageDigest md;</span><br><span class="line">  try</span><br><span class="line">  &#123;</span><br><span class="line">    md = MessageDigest.getInstance(&quot;SHA-1&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  catch(NoSuchAlgorithmException ex)</span><br><span class="line">  &#123;</span><br><span class="line">    throw new RuntimeException(ex);</span><br><span class="line">  &#125;</span><br><span class="line">  md.update(bytes, 32, bytes.length - 32);</span><br><span class="line">  try</span><br><span class="line">  &#123;</span><br><span class="line">    int amt = md.digest(bytes, 12, 20);</span><br><span class="line">    if(amt != 20)</span><br><span class="line">      throw new RuntimeException((new StringBuilder()).append(&quot;unexpected digest write:&quot;).append(amt).append(&quot;bytes&quot;).toString());</span><br><span class="line">  &#125;</span><br><span class="line">  catch(DigestException ex)</span><br><span class="line">  &#123;</span><br><span class="line">    throw new RuntimeException(ex);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static void calcChecksum(byte bytes[])</span><br><span class="line">&#123;</span><br><span class="line">  Adler32 a32 = new Adler32();</span><br><span class="line">  a32.update(bytes, 12, bytes.length - 12);</span><br><span class="line">  int sum = (int)a32.getValue();</span><br><span class="line">  bytes[8] = (byte)sum;</span><br><span class="line">  bytes[9] = (byte)(sum &gt;&gt; 8);</span><br><span class="line">  bytes[10] = (byte)(sum &gt;&gt; 16);</span><br><span class="line">  bytes[11] = (byte)(sum &gt;&gt; 24);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Ah hah! Now we know how to calculate the signature and the checksum. Essentially is reads in all the bytes of the program, and it disreguards the first 32 bytes and calculates the signature using SHA-1. Then it calculates the checksum disreguarding the first 12 bytes (so it includes the signature). Excellent, lets drop this code into our own program so we can recalculate those values;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">*         ReDEX.class</span><br><span class="line">*         Coded: Timothy Strazzere</span><br><span class="line">*</span><br><span class="line">*         10/29/2008</span><br><span class="line">*</span><br><span class="line">*         Pass a .dex file as an argument and it will output the current</span><br><span class="line">*         checksum and signature that is in the file, then it will output</span><br><span class="line">*         the checksum and signature as it calculates them.</span><br><span class="line">*</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">import java.security.*;</span><br><span class="line">import java.util.zip.Adler32;</span><br><span class="line">import java.io.File;</span><br><span class="line">import java.io.FileInputStream;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.InputStream;</span><br><span class="line"></span><br><span class="line">public class ReDEX &#123;</span><br><span class="line"></span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">  if (args.length == 1) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      File file = new File(args[0]);</span><br><span class="line"></span><br><span class="line">      byte[] barr = null;</span><br><span class="line">      barr = getBytesFromFile(file);</span><br><span class="line"></span><br><span class="line">      System.out.print(:Original Checksum: &quot;);</span><br><span class="line">      for(int i = 8; i&lt;12; i+=4)</span><br><span class="line">      System.out.printf(&quot;0x%02X%02X%02X%02X &quot;, barr[i+3], barr[i+2], barr[i+1], barr[i]);</span><br><span class="line">      System.out.print(&quot;\nOriginal Signature: 0x&quot;);</span><br><span class="line">      for(int i = 12; i&lt;32; i+=4)</span><br><span class="line">      System.out.printf&quot;%02X%02X%02X%02X &quot;, barr[i], barr[i+1], barr[i+2], barr[i+3]);</span><br><span class="line"></span><br><span class="line">      calcSignature(barr);</span><br><span class="line">      calcChecksum(barr);</span><br><span class="line">      System.out.print(&quot;\n\nNew Checksum: &quot;);</span><br><span class="line">      for(int i = 8; i&lt;12; i+=4)</span><br><span class="line">        System.out.printf(&quot;0x%02X%02X%02X%02X &quot;, barr[i+3], barr[i+2], barr[i+1], barr[i]);</span><br><span class="line">      System.out.print(&quot;\nNew Signature: 0x&quot;);</span><br><span class="line">      for(int i = 12; i&lt;32; i+=4)</span><br><span class="line">      System.out.printf(&quot;%02X%02X%02X%02X &quot;, barr[i], barr[i+1], barr[i+2], barr[i+3]);</span><br><span class="line">    &#125;</span><br><span class="line">    catch (Exception e) &#123;</span><br><span class="line">      System.err.println(&quot;File input error&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  else</span><br><span class="line">    System.out.println(&quot;Invalid parameters&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static byte[] getBytesFromFile(File file) throws IOException &#123;</span><br><span class="line">  InputStream is = new FileInputStream(file);</span><br><span class="line"></span><br><span class="line">  // Get the size of the file</span><br><span class="line">  long length = file.length();</span><br><span class="line"></span><br><span class="line">  if (length &gt; Integer.MAX_VALUE) &#123;</span><br><span class="line">    // File is too large</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Create the byte array to hold the data</span><br><span class="line">  byte[] bytes = new byte[(int)length];</span><br><span class="line"></span><br><span class="line">  // Read in the bytes</span><br><span class="line">  int offset = 0;</span><br><span class="line">  int numRead = 0;</span><br><span class="line">  while (offset &lt; bytes.length &amp;&amp; (numRead=is.read(bytes, offset, bytes.length-offset)) &gt;= 0) &#123;</span><br><span class="line">    offset += numRead;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Ensure all the bytes have been read in</span><br><span class="line">  if (offset &lt; bytes.length) &#123;</span><br><span class="line">    throw new IOException(&quot;Could not completely read file &quot;+file.getName());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Close the input stream and return bytes</span><br><span class="line">  is.close();</span><br><span class="line">  return bytes;</span><br><span class="line">&#125;</span><br><span class="line">private static void calcSignature(byte bytes[])</span><br><span class="line">&#123;</span><br><span class="line">  MessageDigest md;</span><br><span class="line">  try</span><br><span class="line">  &#123;</span><br><span class="line">    md = MessageDigest.getInstance(&quot;SHA-1&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  catch(NoSuchAlgorithmException ex)</span><br><span class="line">  &#123;</span><br><span class="line">    throw new RuntimeException(ex);</span><br><span class="line">  &#125;</span><br><span class="line">  md.update(bytes, 32, bytes.length - 32);</span><br><span class="line">  try</span><br><span class="line">  &#123;</span><br><span class="line">    int amt = md.digest(bytes, 12, 20);</span><br><span class="line">    if(amt != 20)</span><br><span class="line">      throw new RuntimeException((new StringBuilder()).append(&quot;unexpected digest write:&quot;).append(amt).append(&quot;bytes&quot;).toString());</span><br><span class="line">  &#125;</span><br><span class="line">  catch(DigestException ex)</span><br><span class="line">  &#123;</span><br><span class="line">    throw new RuntimeException(ex);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static void calcChecksum(byte bytes[])</span><br><span class="line">&#123;</span><br><span class="line">  Adler32 a32 = new Adler32();</span><br><span class="line">  a32.update(bytes, 12, bytes.length - 12);</span><br><span class="line">  int sum = (int)a32.getValue();</span><br><span class="line">  bytes[8] = (byte)sum;</span><br><span class="line">  bytes[9] = (byte)(sum &gt;&gt; 8);</span><br><span class="line">  bytes[10] = (byte)(sum &gt;&gt; 16);</span><br><span class="line">  bytes[11] = (byte)(sum &gt;&gt; 24);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Excellent, now I can easily recalculate the signature and the checksum of the dex files. Note that the checksum is actually in little-endian so you need to reverse it when entering it in a hex editor.</p>
+<p>So, now the Android OS will allow you to install this dex file, after signing it in the correct package (apk). Though as of right now the program still crashes upon launching the file… Hhhmmmmm we’ll have to look into this more I guess.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2008/10/dex-file-signature-and-checksums/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&text=DEX File signature and checksums"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&title=DEX File signature and checksums"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&is_video=false&description=DEX File signature and checksums"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DEX File signature and checksums&body=Check out this article: https://strazzere.com/2008/10/dex-file-signature-and-checksums/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&title=DEX File signature and checksums"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&title=DEX File signature and checksums"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&title=DEX File signature and checksums"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&title=DEX File signature and checksums"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&name=DEX File signature and checksums&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2008/10/dex-file-signature-and-checksums/&t=DEX File signature and checksums"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

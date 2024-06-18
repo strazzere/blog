@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Well paid applications have officially rolled out, or rather - reached my phone through the android market. The first thing I wanted to find out, is what is the protection scheme used?! My first assum">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Market DRM busted &lt; 12 hrs!">
+<meta property="og:url" content="https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Well paid applications have officially rolled out, or rather - reached my phone through the android market. The first thing I wanted to find out, is what is the protection scheme used?! My first assum">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/02/location-300x229.jpg">
+<meta property="article:published_time" content="2009-02-20T22:50:29.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.086Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="root">
+<meta property="article:tag" content="&#x2F;data&#x2F;app">
+<meta property="article:tag" content="&#x2F;data&#x2F;app-private">
+<meta property="article:tag" content="android DRM">
+<meta property="article:tag" content="app-private">
+<meta property="article:tag" content="DRM">
+<meta property="article:tag" content="drm broken">
+<meta property="article:tag" content="g1">
+<meta property="article:tag" content="google">
+<meta property="article:tag" content="market">
+<meta property="article:tag" content="market DRM">
+<meta property="article:tag" content="protected applications">
+<meta property="article:tag" content="SlideLOCK">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/02/location-300x229.jpg">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Android Market DRM busted &lt; 12 hrs!</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2009/03/android-vending-asset-schema/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2009/02/soundmine/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&text=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&title=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&is_video=false&description=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android Market DRM busted &lt; 12 hrs!&body=Check out this article: https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&title=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&title=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&title=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&title=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&name=Android Market DRM busted &lt; 12 hrs!&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&t=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Android Market DRM busted &lt; 12 hrs!
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2009-02-20T22:50:29.000Z" class="dt-published" itemprop="datePublished">2009-02-20</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/data-app/" rel="tag">/data/app</a>, <a class="p-category" href="/tags/data-app-private/" rel="tag">/data/app-private</a>, <a class="p-category" href="/tags/DRM/" rel="tag">DRM</a>, <a class="p-category" href="/tags/SlideLOCK/" rel="tag">SlideLOCK</a>, <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/android-DRM/" rel="tag">android DRM</a>, <a class="p-category" href="/tags/app-private/" rel="tag">app-private</a>, <a class="p-category" href="/tags/drm-broken/" rel="tag">drm broken</a>, <a class="p-category" href="/tags/g1/" rel="tag">g1</a>, <a class="p-category" href="/tags/google/" rel="tag">google</a>, <a class="p-category" href="/tags/market/" rel="tag">market</a>, <a class="p-category" href="/tags/market-DRM/" rel="tag">market DRM</a>, <a class="p-category" href="/tags/protected-applications/" rel="tag">protected applications</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>, <a class="p-category" href="/tags/root/" rel="tag">root</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>Well paid applications have officially rolled out, or rather - reached my phone through the android market. The first thing I wanted to find out, is what is the protection scheme used?! My first assumption is that it might be something tied to your account, or android id - something sort of like SlideLOCK which I previously mentioned. So after looking around the market I downloaded a few applications and I also decided to download some “protected” free applications. Mainly I wanted free applications to toy with, so I didn’t feel bad possibly violating paid ones :)</p>
+<p>The programs I’ve started with where <em>Inaugural Address 2009</em> and <em>Phandroid News</em>. Both are “protected” applications. What does this mean exactly? After a little digging it was clear exactly what “protected” actually meant;<br><img src="http://173.230.150.16/blog/wp-content/uploads/2009/02/location-300x229.jpg" alt="Location, location, location!" title="Location, location, location!"><br>So first I checked as you can tell, the SD card. Originally I was checking posts at xda-devs and someone posted that they where located on the SD card and where .zip files. This is <em>false</em>, the packages are .apk and located in the <code>/data/app-private</code> folder as you can see from the screen shot above. Well, what does this mean exactly? This means a non protected app, which is stored in <code>/data/app</code> can be pulled using <code>adb</code>, while a protected app is located in <code>/data/app-private</code> is not allowed to be pulled by <code>adb</code>. Though… with a rooted phone - this isn’t exactly a problem since it can pull any file!  </p>
+<p>Alright, so what? Isn’t there some more protection involved in this?!  </p>
+<p>Sadly, that’s what I (wrongly) assumed too. What I assumed was that there would be some more protection other than just things being “protected” in a folder. Possibly, it being linked to the android id? Maybe it not being able to be installed on another device or through a “non-market” source. Or maybe the market would track it, since it does for updates on market installed applications… Well, sadly, no - no other protection seems to be present.<br>All “protected” applications can be dexdumped like a normal one, can be pulled (as long as you have a rooted phone), then reinstalled. The even worse part, is that protectd applications don’t stay in the protected folder when installed via a web download or <code>adb</code> install. They simply get pushed into the normal <code>/data/app</code> folder… Some protection huh? Oh, and my first assumption that the market might look for these also appears to be false. The market does not check any applications installed from an “unknown source” - so that idea for protection is a complete bust.  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">C:\Documents and Settings\tstrazze\Desktop\eclipse\android-sdk-windows-1.0_r1\t</span><br><span class="line">ols&gt;adb install phandroidnews.apk</span><br><span class="line">374 KB/s (0 bytes in 1286982.003s)</span><br><span class="line">pkg: /data/local/tmp/phandroidnews.apk</span><br><span class="line">Success</span><br><span class="line"></span><br><span class="line">C:\Documents and Settings\tstrazze\Desktop\eclipse\android-sdk-windows-1.0_r1\t</span><br><span class="line">ols&gt;adb shell</span><br><span class="line"># cd data</span><br><span class="line">cd data</span><br><span class="line"># cd app-private</span><br><span class="line">cd app-private</span><br><span class="line"># ls</span><br><span class="line">ls</span><br><span class="line"># cd ..</span><br><span class="line">cd ..</span><br><span class="line"># cd app</span><br><span class="line">cd app</span><br><span class="line"># ls</span><br><span class="line">ls</span><br><span class="line">GWiFi.apk</span><br><span class="line">com.a0soft.gphone.aClockPro.apk</span><br><span class="line">com.aevumobscurum.androidlite.apk</span><br><span class="line">com.android.ussdbal.apk</span><br><span class="line">com.angryredplanet.android.rings_extended.apk</span><br><span class="line">com.ap.SnapPhoto.apk</span><br><span class="line">com.appdroid.anycut.apk</span><br><span class="line">com.avaw.luklukpro.apk</span><br><span class="line">com.biggu.shopsavvy.apk</span><br><span class="line">com.blau.android.phandroidnews.apk</span><br><span class="line">com.bonfiremedia.android_ebay.apk</span><br><span class="line">com.brilaps.android.txtract.apk</span><br><span class="line">com.google.android.apps.uploader.apk</span><br><span class="line">com.google.code.p.mariosimulator.apk</span><br><span class="line">com.infonow.bofa.apk</span><br><span class="line">com.larvalabs.retrodefencelite.apk</span><br><span class="line">com.lindaandny.lindamanager.apk</span><br><span class="line">com.memoryup.apk</span><br><span class="line">com.mlogiciels.a.pipe.apk</span><br><span class="line">com.nextmobileweb.wikipedia.apk</span><br><span class="line">com.nubinews.fullreader.apk</span><br><span class="line">com.phonalyzr.apk</span><br><span class="line">com.r2.MemCuad.apk</span><br><span class="line">com.roundhill.androidWP.apk</span><br><span class="line">com.shazam.android.apk</span><br><span class="line">com.snctln.game.WordWrench.apk</span><br><span class="line">com.taskManager.rootTaskManager.apk</span><br><span class="line">net.sunflat.android.papijump.apk</span><br><span class="line">net.sunflat.android.papipole.apk</span><br><span class="line">net.sunflat.android.papiriver.apk</span><br><span class="line">org.connectbot.apk</span><br><span class="line">org.openintents.pocketplay.apk</span><br><span class="line">org.ouroborus.android.downloadcrutchlite.apk</span><br><span class="line">ru.orangesoftware.areminder.apk</span><br><span class="line">src.com.poidio.terminal.apk</span><br><span class="line">#</span><br></pre></td></tr></table></figure>
+
+<p>What sort of makes this whole ironic deal even odder, is the refund policy. Within twenty-four hours of a download, you are allowed to uninstall and get a full refund of the product you purchased. So you could theoretically just rip all the applications you want, not that I am suggesting this at all.</p>
+<p>Want to try this process? Well I’ve uploaded <a target="_blank" rel="noopener" href="http://www.strazzere.com/android/address.usa2009.apk">inaugural address</a> to my site for testing. This is the protected application that is <em>free</em> on the market. As you notice it will install to the <code>/data/app</code> directory, <em>not</em> the <code>/data/app-private</code> directory. I’ve tested this process with multiple application on my rooted G1, and a friend also verified that installed “protected” applications through an unknown source also works on thier stock G1 (non-rooted). (If the author wants me to remove this, I will gladly do so - I just wanted an example and figured a free application&#x2F;free service would not mind the attention)  </p>
+<p>So what are developers to do? Well, recently I bashed on the SlideLOCK in a previous post… Though - the more I looked at it, this seems like the best option for developers to protect their applications. Though, hopefully google will remedy this solution and fast. Until then though, strike-one google market.  </p>
+<p><em>Edit: The author of phandroid news asked me to remove his application, so I have. In it’s place I’ve uploaded the inaugural address 2009 application unless that author would like me to remove it.</em></p>
+<p><em><strong>Edit2:</strong></em> To clarify, I’ve tested this with a free PROTECTED application. This is NOT the same as a free non-protected application, at phandroid he shows what the step looks like to have a “protected” application opposed to a “non-protected” one. Also the protected applications appear to be identical to the paid applications, which are also protected.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&text=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&title=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&is_video=false&description=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android Market DRM busted &lt; 12 hrs!&body=Check out this article: https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&title=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&title=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&title=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&title=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&name=Android Market DRM busted &lt; 12 hrs!&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/02/android-market-drm-busted-12-hrs/&t=Android Market DRM busted &lt; 12 hrs!"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

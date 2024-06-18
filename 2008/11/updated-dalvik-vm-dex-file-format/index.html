@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="In my quest to writing a successful injector I’ve had to do a ton of digging into the dex file format. While mostly everything is open source, it’s not exactly easy to find all of the information - le">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Updated Dalvik VM Dex File Format">
+<meta property="og:url" content="https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="In my quest to writing a successful injector I’ve had to do a ton of digging into the dex file format. While mostly everything is open source, it’s not exactly easy to find all of the information - le">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2008/11/dex_header1-300x129.jpg">
+<meta property="article:published_time" content="2008-11-22T01:52:51.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.097Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="dex">
+<meta property="article:tag" content="dex bytecode">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="dalvik vm">
+<meta property="article:tag" content="dex header">
+<meta property="article:tag" content="dex 035">
+<meta property="article:tag" content="dex file format">
+<meta property="article:tag" content="header">
+<meta property="article:tag" content="ReDEX">
+<meta property="article:tag" content="updated davlik format">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://173.230.150.16/blog/wp-content/uploads/2008/11/dex_header1-300x129.jpg">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Updated Dalvik VM Dex File Format</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2008/11/dex-file-header-dump/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2008/11/promising-result-for-injecting-code/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&text=Updated Dalvik VM Dex File Format"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&title=Updated Dalvik VM Dex File Format"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&is_video=false&description=Updated Dalvik VM Dex File Format"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Updated Dalvik VM Dex File Format&body=Check out this article: https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&title=Updated Dalvik VM Dex File Format"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&title=Updated Dalvik VM Dex File Format"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&title=Updated Dalvik VM Dex File Format"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&title=Updated Dalvik VM Dex File Format"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&name=Updated Dalvik VM Dex File Format&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&t=Updated Dalvik VM Dex File Format"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Updated Dalvik VM Dex File Format
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2008-11-22T01:52:51.000Z" class="dt-published" itemprop="datePublished">2008-11-21</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/ReDEX/" rel="tag">ReDEX</a>, <a class="p-category" href="/tags/dalvik-vm/" rel="tag">dalvik vm</a>, <a class="p-category" href="/tags/dex/" rel="tag">dex</a>, <a class="p-category" href="/tags/dex-035/" rel="tag">dex 035</a>, <a class="p-category" href="/tags/dex-bytecode/" rel="tag">dex bytecode</a>, <a class="p-category" href="/tags/dex-file-format/" rel="tag">dex file format</a>, <a class="p-category" href="/tags/dex-header/" rel="tag">dex header</a>, <a class="p-category" href="/tags/header/" rel="tag">header</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>, <a class="p-category" href="/tags/updated-davlik-format/" rel="tag">updated davlik format</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="http://173.230.150.16/blog/wp-content/uploads/2008/11/dex_header1-300x129.jpg" alt="(lame dex file photoshopping joke huh?)" title="lame dex header file photoshopping joke"><br>In my quest to writing a successful injector I’ve had to do a ton of digging into the dex file format. While mostly everything is open source, it’s not exactly easy to find all of the information - let alone understand it. A great resource I’ve mentioned previously was the “Dalvik VM Dex File Format” over at <a target="_blank" rel="noopener" href="http://www.retrodev.com/android/dexformat.html">retrodev.org</a>. This resource is sadly out dated and no longer updated by pavone, but it does provide a wealth of information. I figured I’d post my results just as pavone has done so that anyone looking for the information will hopefully find it. Note that pavone’s version of the dex file he was examining was ‘dex 009’ according to the magic. The current one as of this posting is ‘dex 035’. I’ll repost this data as I figure out more about it and exactly how it is modified.</p>
+<p><strong>Magic</strong> – 8 bytes – “dex\n035\0”<br><strong>Checksum</strong> – 4 bytes – Adler32 checksum from bytes offset 12 and on<br><strong>Signature</strong> – 20 bytes – SHA-1 of bytes from 32 on<br><strong>File Size</strong> – 4 bytes – Exactly what it sounds like, the file size<br><strong>Header Size</strong> – 4 bytes – Will always be “70”<br><strong>Endian Tag</strong> – 8 bytes – Will always be “78563412”<br><strong>Zeros</strong> – 8 bytes – Exactly that, eight bytes of zeros<br><strong>Map Offset</strong> – 4 bytes – Leads to below, need more research on this though<br><strong>String Table Size</strong> – 4 bytes – Size of the string’s table<br><strong>String Table Offset</strong> – 4 bytes – Offset to the string table<br><strong>TypeTable Size</strong> – 4 bytes – Size of the type’s table<br><strong>Type Table Offset</strong> – 4 bytes – Offset to the type table<br><strong>Prototype Table Size</strong> – 4 bytes – Size of the prototype’s table<br><strong>Prototype Table Offset</strong> – 4 bytes – Offset to the prototype table<br><strong>Field Table Size</strong> – 4 bytes – Size of the field’s table<br><strong>Field Table Offset</strong> – 4 bytes – Offset to the field table<br><strong>Method Table Size</strong> – 4 bytes – Size of the method’s table<br><strong>Method Table Offset</strong> – 4 bytes – Offset to the method table<br><strong>Class Table Size</strong> – 4 bytes – Size of the class’s table<br><strong>Class Table Offset</strong> – 4 bytes – Offset to the class table</p>
+<p>You can easily note that all the sizes of these fields end up adding up to 0x70, which is the “Header Size”. Also if above isn’t clear enough, after a dex file is created, the signature is applied - which is a SHA-1 digest of all the bytes below it’s position. The checksum is an Alder32 hash of all the bytes below itself, including the signature. I actually discussed this in a previous post where I posted the code for “ReDEX”, the post was entitled “<a href="http://strazzere.com/blog/?p=3">DEX File signature and checksums</a>“.</p>
+<p>I’m actually revamping the “ReDEX” code to check and spit out this relevant information and more, though it’s not fully done. I’m also doing more research into the “Map” field and will hopefully be able to explain more about what is store, how it is stored and what not - more like the information originally presented on retrodev. Until then, this information will have to suffice, enjoy!</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&text=Updated Dalvik VM Dex File Format"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&title=Updated Dalvik VM Dex File Format"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&is_video=false&description=Updated Dalvik VM Dex File Format"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Updated Dalvik VM Dex File Format&body=Check out this article: https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&title=Updated Dalvik VM Dex File Format"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&title=Updated Dalvik VM Dex File Format"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&title=Updated Dalvik VM Dex File Format"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&title=Updated Dalvik VM Dex File Format"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&name=Updated Dalvik VM Dex File Format&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2008/11/updated-dalvik-vm-dex-file-format/&t=Updated Dalvik VM Dex File Format"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

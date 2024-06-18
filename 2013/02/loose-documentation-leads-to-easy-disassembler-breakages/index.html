@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="As people have seen in the past, I tend to have a fun time finding edge-cases which break tools. Often you can find these types of edge-cases while reading documentation and cross referencing the impl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Loose Documentation Leads to Easy Disassembler Breakages">
+<meta property="og:url" content="https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="As people have seen in the past, I tend to have a fun time finding edge-cases which break tools. Often you can find these types of edge-cases while reading documentation and cross referencing the impl">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.strazzere.com/blog/wp-content/uploads/2013/02/corrupt-file1.png">
+<meta property="og:image" content="http://www.strazzere.com/blog/wp-content/uploads/2013/02/corrupt-file1.png">
+<meta property="og:image" content="http://www.strazzere.com/blog/wp-content/uploads/2013/02/extra_info.jpg">
+<meta property="article:published_time" content="2013-02-16T02:23:41.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.093Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="IDA Pro">
+<meta property="article:tag" content="dex header">
+<meta property="article:tag" content="dex verification">
+<meta property="article:tag" content="documentation">
+<meta property="article:tag" content="radare">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.strazzere.com/blog/wp-content/uploads/2013/02/corrupt-file1.png">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Loose Documentation Leads to Easy Disassembler Breakages</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2014/07/compiling-an-emulator-kernel-for-loadable-modules/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2013/02/javascript-malware-cross-contamination-in-android-apks/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&text=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&title=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&is_video=false&description=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Loose Documentation Leads to Easy Disassembler Breakages&body=Check out this article: https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&title=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&title=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&title=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&title=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&name=Loose Documentation Leads to Easy Disassembler Breakages&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&t=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Loose Documentation Leads to Easy Disassembler Breakages
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2013-02-16T02:23:41.000Z" class="dt-published" itemprop="datePublished">2013-02-15</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/dex-bytecode/">dex bytecode</a> › <a class="category-link" href="/categories/android/dex-bytecode/reverse-engineering/">reverse engineering</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/IDA-Pro/" rel="tag">IDA Pro</a>, <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/dex-header/" rel="tag">dex header</a>, <a class="p-category" href="/tags/dex-verification/" rel="tag">dex verification</a>, <a class="p-category" href="/tags/documentation/" rel="tag">documentation</a>, <a class="p-category" href="/tags/radare/" rel="tag">radare</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>As people have seen in the past, I tend to have a fun time finding edge-cases which break tools. Often you can find these types of edge-cases while reading documentation and cross referencing the implementation of that in the systems your validating. A pretty good example of this is highlighted in my BlackHat 2012 talk, where I was looking at the header section, which is described as always have the value of 0x70. When looking at the open source tools, some checked to make sure this was true - others ignored it. The actual code in the <a target="_blank" rel="noopener" href="http://androidxref.com/4.2.2_r1/xref/dalvik/libdex/DexSwapVerify.cpp#2888">Dex Verifier</a> is as follows;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">if (okay) &#123;</span><br><span class="line">    state.pHeader = pHeader;</span><br><span class="line"></span><br><span class="line">    if (pHeader-&gt;headerSize &lt; sizeof(DexHeader)) &#123;</span><br><span class="line">        ALOGE(&quot;ERROR: Small header size %d, struct %d&quot;,</span><br><span class="line">                pHeader-&gt;headerSize, (int) sizeof(DexHeader));</span><br><span class="line">        okay = false;</span><br><span class="line">    &#125; else if (pHeader-&gt;headerSize &gt; sizeof(DexHeader)) &#123;</span><br><span class="line">        ALOGW(&quot;WARNING: Large header size %d, struct %d&quot;,</span><br><span class="line">                pHeader-&gt;headerSize, (int) sizeof(DexHeader));</span><br><span class="line">        // keep going?</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>From this we can see the actual implementation doesn’t care what the size of, as long as it is larger than the current structure size, which is 0x70. This allows for the verifier to be forward compatible, though if anyone was creating a tool and only read the documentation - this might not be fully understood or assumed. This leads me to two extremely easy breakages which I never mentioned in my talk, but noticed IDA Pro 6.4 and Radare would fail against. The issue that IDA Pro and Radare broke against, was a bad file magic. According to the documentation the magic bytes are the following;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DEX_FILE_MAGIC</span><br><span class="line">embedded in header_item The constant array/string DEX_FILE_MAGIC is the list of bytes that must appear at the beginning of a .dex file in order for it to be recognized as such. The value intentionally contains a newline (&quot;\n&quot; or 0x0a) and a null byte (&quot;\0&quot; or 0x00) in order to help in the detection of certain forms of corruption. The value also encodes a format version number as three decimal digits, which is expected to increase monotonically over time as the format evolves.</span><br><span class="line"></span><br><span class="line">ubyte[8] DEX_FILE_MAGIC = &#123; 0x64 0x65 0x78 0x0a 0x30 0x33 0x35 0x00 &#125; = &quot;dex\n035\0&quot;</span><br><span class="line"></span><br><span class="line">Note: At least a couple earlier versions of the format have been used in widely-available public software releases. For example, version 009 was used for the M3 releases of the Android platform (November–December 2007), and version 013 was used for the M5 releases of the Android platform (February–March 2008). In several respects, these earlier versions of the format differ significantly from the version described in this document.</span><br></pre></td></tr></table></figure>
+
+<p>So one might assume that the currently accepted magic bytes will be exactly <code>dex\n035\00</code> - though, they would be wrong in assuming this. If we take a look at the code in <a target="_blank" rel="noopener" href="http://androidxref.com/4.2.2_r1/xref/dalvik/libdex/DexSwapVerify.cpp#2785">DexFile.h</a>;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">/* DEX file magic number */</span><br><span class="line">#define DEX_MAGIC      &quot;dex\n&quot;</span><br><span class="line"></span><br><span class="line">/* current version, encoded in 4 bytes of ASCII */</span><br><span class="line">#define DEX_MAGIC_VERS  &quot;036\0&quot;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line"> * older but still-recognized version (corresponding to Android API</span><br><span class="line"> * levels 13 and earlier</span><br><span class="line"> */</span><br><span class="line">#define DEX_MAGIC_VERS_API_13  &quot;035\0&quot;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">/* (documented in header file) */</span><br><span class="line">bool dexHasValidMagic(const DexHeader* pHeader)</span><br><span class="line">&#123;</span><br><span class="line">    const u1* magic = pHeader-&gt;magic;</span><br><span class="line">    const u1* version = &amp;magic[4];</span><br><span class="line"></span><br><span class="line">    if (memcmp(magic, DEX_MAGIC, 4) != 0) &#123;</span><br><span class="line">        ALOGE(&quot;ERROR: unrecognized magic number (%02x %02x %02x %02x)&quot;,</span><br><span class="line">            magic[0], magic[1], magic[2], magic[3]);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if ((memcmp(version, DEX_MAGIC_VERS, 4) != 0) &amp;&amp;</span><br><span class="line">            (memcmp(version, DEX_MAGIC_VERS_API_13, 4) != 0)) &#123;</span><br><span class="line">        /*</span><br><span class="line">         * Magic was correct, but this is an unsupported older or</span><br><span class="line">         * newer format variant.</span><br><span class="line">         */</span><br><span class="line">        ALOGE(&quot;ERROR: unsupported dex version (%02x %02x %02x %02x)&quot;,</span><br><span class="line">            version[0], version[1], version[2], version[3]);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>We can see that there are constant magic bytes of <code>dex\n</code>, but the versioning afterwards - which is loosely explained in the documentation, has multiple options. Since API level 14 on, the verifier has accepted both “036\00” and “035\00” as valid versioning parts of the magic bytes. Since the magic bytes are not part of the checksum or the signature of the dex file, one can simply bump the version number without any specialized tools, just doing it with a hex editor would be fine. This lead to Radare failing to load the file and IDA Pro to thinking the file was corrupt with the following dialog and log output; <a target="_blank" rel="noopener" href="http://www.strazzere.com/blog/wp-content/uploads/2013/02/corrupt-file1.png"><img src="http://www.strazzere.com/blog/wp-content/uploads/2013/02/corrupt-file1.png" alt="Corrupt File Dialog"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Loading file &#x27;/Users/tstrazzere/reverse/targets/ida/classes-test.dex&#x27; into database...</span><br><span class="line">Detected file format: Android DEX file version 54.0</span><br><span class="line">bad dex version (0x30 33 36 00)</span><br></pre></td></tr></table></figure>
+<p>I originally reported this issue to January 22nd, 2013 and received a thank you and a fix back from them only two days later on the 24th. I’m unsure if they sent this out to all their customers or have it totally bundled into their latest packages, but you should easily be able to request it if not. For Radare I <a target="_blank" rel="noopener" href="https://github.com/strazzere/radare2/commit/3fcc031083016385fa201b3885896c758393d7f4">submitted a patch</a> for this issue which was quickly merge upstream by the extremely proactive author of the tool. The second breakage, which only directly effected IDA Pro, was revolving around the file size as dictated by the dex_header vs the actual file size. IDA Pro was comparing the two, and if they where not actually equal - assumes the file is corrupt. The documentation states, “size of the entire file (including the header), in bytes”, though the implementation of the code doesn’t actually care - as seen from the <a target="_blank" rel="noopener" href="http://androidxref.com/4.2.2_r1/xref/dalvik/libdex/DexSwapVerify.cpp#2836">DexSwapVerify.cpp</a> file;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">if (okay) &#123;</span><br><span class="line">    int expectedLen = (int) SWAP4(pHeader-&gt;fileSize);</span><br><span class="line">    if (len &lt; expectedLen) &#123;</span><br><span class="line">        ALOGE(&quot;ERROR: Bad length: expected %d, got %d&quot;, expectedLen, len);</span><br><span class="line">        okay = false;</span><br><span class="line">    &#125; else if (len != expectedLen) &#123;</span><br><span class="line">        ALOGW(&quot;WARNING: Odd length: expected %d, got %d&quot;, expectedLen,</span><br><span class="line">                len);</span><br><span class="line">        // keep going</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>As we can see from above, if the actual length must be at least as large as the expected length, most likely to avoid any truncated files. Though it can easily be larger, which will just produce a warning - though processing of the dex file will continue. However, the same corrupt file dialog with this logging message comes up when loaded in IDA Pro; <a target="_blank" rel="noopener" href="http://www.strazzere.com/blog/wp-content/uploads/2013/02/corrupt-file1.png"><img src="http://www.strazzere.com/blog/wp-content/uploads/2013/02/corrupt-file1.png" alt="Corrupt File Dialog"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Loading file &#x27;/Users/tstrazzere/reverse/targets/ida/classes-test.dex&#x27; into database...</span><br><span class="line">Detected file format: Android DEX file version 53.0</span><br><span class="line">ERROR: stored file size (438844) != expected (438845)</span><br></pre></td></tr></table></figure>
+<p>This was also fixed on the same timeline as the other issue I reported to Hex-Rays, so if you run across any files like this you will be prompted with this dialog; <a target="_blank" rel="noopener" href="http://www.strazzere.com/blog/wp-content/uploads/2013/02/extra_info.jpg"><img src="http://www.strazzere.com/blog/wp-content/uploads/2013/02/extra_info.jpg" alt="Extra data"></a> Just two small little issues that came about when looking at the implementation of the file format. These edge-cases always seem to exist in ever system, especially when creating reversing&#x2F;disassembling&#x2F;analyzing tools.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&text=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&title=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&is_video=false&description=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Loose Documentation Leads to Easy Disassembler Breakages&body=Check out this article: https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&title=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&title=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&title=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&title=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&name=Loose Documentation Leads to Easy Disassembler Breakages&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/&t=Loose Documentation Leads to Easy Disassembler Breakages"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

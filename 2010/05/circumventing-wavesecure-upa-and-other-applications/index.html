@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Continuing with the tread of “stealth” and “locking” devices I’ve decided to look at WaveSecure. I’ve been getting many emails regardin the Uninstall Protection Add-on. The concept behind WaveSecure a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Circumventing WaveSecure UPA and other applications">
+<meta property="og:url" content="https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Continuing with the tread of “stealth” and “locking” devices I’ve decided to look at WaveSecure. I’ve been getting many emails regardin the Uninstall Protection Add-on. The concept behind WaveSecure a">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2010/05/device-locked-180x300.png">
+<meta property="article:published_time" content="2010-05-07T20:24:52.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.088Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="android os">
+<meta property="article:tag" content="locked">
+<meta property="article:tag" content="locking phone">
+<meta property="article:tag" content="pm disable">
+<meta property="article:tag" content="safe mode">
+<meta property="article:tag" content="Uninstall Protection Add-On">
+<meta property="article:tag" content="unlocking phone">
+<meta property="article:tag" content="WaveSecure">
+<meta property="article:tag" content="WaveSecure UPA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://173.230.150.16/blog/wp-content/uploads/2010/05/device-locked-180x300.png">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Circumventing WaveSecure UPA and other applications</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2010/05/protect-from-viking-killer-wait-what/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2010/05/revisiting-the-full-stealth-mobile-spy-from-retina-x/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&text=Circumventing WaveSecure UPA and other applications"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&title=Circumventing WaveSecure UPA and other applications"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&is_video=false&description=Circumventing WaveSecure UPA and other applications"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Circumventing WaveSecure UPA and other applications&body=Check out this article: https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&title=Circumventing WaveSecure UPA and other applications"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&title=Circumventing WaveSecure UPA and other applications"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&title=Circumventing WaveSecure UPA and other applications"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&title=Circumventing WaveSecure UPA and other applications"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&name=Circumventing WaveSecure UPA and other applications&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&t=Circumventing WaveSecure UPA and other applications"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Circumventing WaveSecure UPA and other applications
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2010-05-07T20:24:52.000Z" class="dt-published" itemprop="datePublished">2010-05-07</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Uninstall-Protection-Add-On/" rel="tag">Uninstall Protection Add-On</a>, <a class="p-category" href="/tags/WaveSecure/" rel="tag">WaveSecure</a>, <a class="p-category" href="/tags/WaveSecure-UPA/" rel="tag">WaveSecure UPA</a>, <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/android-os/" rel="tag">android os</a>, <a class="p-category" href="/tags/locked/" rel="tag">locked</a>, <a class="p-category" href="/tags/locking-phone/" rel="tag">locking phone</a>, <a class="p-category" href="/tags/pm-disable/" rel="tag">pm disable</a>, <a class="p-category" href="/tags/safe-mode/" rel="tag">safe mode</a>, <a class="p-category" href="/tags/unlocking-phone/" rel="tag">unlocking phone</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>Continuing with the tread of “stealth” and “locking” devices I’ve decided to look at <a target="_blank" rel="noopener" href="https://www.wavesecure.com/">WaveSecure</a>. I’ve been getting many emails regardin the <em>Uninstall Protection Add-on</em>. The concept behind WaveSecure and the UPA is that they monitor each other - locking the phone if either one is installed. Seems like a pretty slick way to protect the application - though like everything else in the world, there are loop holes. I’ve gotten a few emails from people asking how secure it really is, and even how to circumvent it if they forget the password or locked the phone. While I’m never sure what these peoples intentions really are, assuming they’re not lying to me there is a good use case for knowing how to remove program that “lock down” your phone.<br><img src="http://173.230.150.16/blog/wp-content/uploads/2010/05/device-locked-180x300.png" alt="Ops? How&#39;d that happen!?" title="Ops? How&#39;d that happen!?"><br>When removing either WaveSecure or the UPA program, you’ll be prompted with a locked phone - as shown by the picture above. How do we get around that? How can we make this better? Well, there is a quick way to get around this that can work for or against you. If you’ve enabled debug mode on your phone which allows your to connect via ADB then your in luck - this is really easy. Simply using adb we can quickly disable the locking program.</p>
+<p>If the Uninstall Protection Add-on was removed from your phone, then WaveSecure is the application locking your phone. The inverse is also true, this is important to know since we need to know which package to disable. UPA’s package name is “com.wsandroid.uninstall_listener” while the main application (WaveSecure) package name is “com.wsandroid”. Following the instructions below you can quickly disable the nessicary application to get into your phone;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell pm disable</span><br></pre></td></tr></table></figure>
+<p>This will disable the package, as long as adb has root access - otherwise it will attempt to kill the process which should also gain you access. This method should also work for nearly any package you wish to disable.</p>
+<p>The second method for getting around this lock is rebooting the phone into <em>Safe Mode</em> - this will prevent any applications that are not system based from starting up. This includes any malware, spyware or locking applications. The good (bad?) thing about this is that you do not need to be rooted or have adb enabled to get into Safe Mode. Safe Mode can be booted into by holding “Menu” during boot up, though googling for specific directions for your phone might yield different results.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&text=Circumventing WaveSecure UPA and other applications"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&title=Circumventing WaveSecure UPA and other applications"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&is_video=false&description=Circumventing WaveSecure UPA and other applications"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Circumventing WaveSecure UPA and other applications&body=Check out this article: https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&title=Circumventing WaveSecure UPA and other applications"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&title=Circumventing WaveSecure UPA and other applications"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&title=Circumventing WaveSecure UPA and other applications"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&title=Circumventing WaveSecure UPA and other applications"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&name=Circumventing WaveSecure UPA and other applications&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2010/05/circumventing-wavesecure-upa-and-other-applications/&t=Circumventing WaveSecure UPA and other applications"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

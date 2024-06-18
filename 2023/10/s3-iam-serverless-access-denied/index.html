@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="s3 IAM woes when using serverlessRecently I was attempting to deploy a new lambda server over some existing aws architecture, the s3 buckets already existed as well as lots of permissioning. This shou">
+<meta property="og:type" content="article">
+<meta property="og:title" content="S3, IAM, Serverless and Access Denied">
+<meta property="og:url" content="https://strazzere.com/2023/10/s3-iam-serverless-access-denied/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="s3 IAM woes when using serverlessRecently I was attempting to deploy a new lambda server over some existing aws architecture, the s3 buckets already existed as well as lots of permissioning. This shou">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-10-17T07:00:00.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.096Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="typescript">
+<meta property="article:tag" content="s3">
+<meta property="article:tag" content="iam">
+<meta property="article:tag" content="serverless">
+<meta property="article:tag" content="aws">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>S3, IAM, Serverless and Access Denied</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/05/generic-functions-for-timing/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/10/home-assistant-and-the-house-fan/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&text=S3, IAM, Serverless and Access Denied"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&title=S3, IAM, Serverless and Access Denied"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&is_video=false&description=S3, IAM, Serverless and Access Denied"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=S3, IAM, Serverless and Access Denied&body=Check out this article: https://strazzere.com/2023/10/s3-iam-serverless-access-denied/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&title=S3, IAM, Serverless and Access Denied"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&title=S3, IAM, Serverless and Access Denied"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&title=S3, IAM, Serverless and Access Denied"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&title=S3, IAM, Serverless and Access Denied"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&name=S3, IAM, Serverless and Access Denied&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&t=S3, IAM, Serverless and Access Denied"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#s3-IAM-woes-when-using-serverless"><span class="toc-number">1.</span> <span class="toc-text">s3 IAM woes when using serverless</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Finding-the-permissions"><span class="toc-number">1.1.</span> <span class="toc-text">Finding the permissions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Over-permissioning-for-Testing"><span class="toc-number">1.2.</span> <span class="toc-text">Over-permissioning for Testing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Minimizing-permissions"><span class="toc-number">1.3.</span> <span class="toc-text">Minimizing permissions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Final-minimization-of-scope"><span class="toc-number">2.</span> <span class="toc-text">Final minimization of scope</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        S3, IAM, Serverless and Access Denied
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-10-17T07:00:00.000Z" class="dt-published" itemprop="datePublished">2023-10-17</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/aws/">aws</a> › <a class="category-link" href="/categories/aws/typescript/">typescript</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/aws/" rel="tag">aws</a>, <a class="p-category" href="/tags/iam/" rel="tag">iam</a>, <a class="p-category" href="/tags/s3/" rel="tag">s3</a>, <a class="p-category" href="/tags/serverless/" rel="tag">serverless</a>, <a class="p-category" href="/tags/typescript/" rel="tag">typescript</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="s3-IAM-woes-when-using-serverless"><a href="#s3-IAM-woes-when-using-serverless" class="headerlink" title="s3 IAM woes when using serverless"></a>s3 IAM woes when using serverless</h2><p>Recently I was attempting to deploy a new lambda server over some existing aws architecture, the s3 buckets already existed as well as lots of permissioning. This should be easy? Arguably it was easy and probably would have been easier if I already knew AWS&#x2F;IAM&#x2F;etc - though I don’t so pain was in store for me.</p>
+<p>In general my <a target="_blank" rel="noopener" href="https://www.serverless.com/">serverless</a> configuration for the aws&#x2F;iam permissions looked like this;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">provider:</span><br><span class="line">  name: aws</span><br><span class="line">  runtime: nodejs18.x</span><br><span class="line">  region: us-gov-west-1</span><br><span class="line">  endpointType: REGIONAL</span><br><span class="line">  iam:</span><br><span class="line">    role:</span><br><span class="line">      statements:</span><br><span class="line">        - Effect: Allow</span><br><span class="line">          Action:</span><br><span class="line">            - s3:GetObject</span><br><span class="line">            - s3:ListObject</span><br><span class="line">          Resource:</span><br><span class="line">            - &#x27;arn:aws-us-gov:s3:::bucket-name/*&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>Which I thought would be ok, as this was the generic snippet of code in which I was attempting to list a buckets objects and get tagging information on them;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">    const client = new S3Client(&#123;</span><br><span class="line">      region,</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    const command = new ListObjectsV2Command(&#123;</span><br><span class="line">      Bucket: &#x27;bucket-name&#x27;,</span><br><span class="line">      Delimiter: &#x27;/&#x27;,</span><br><span class="line">      Prefix: &#x27;some/folder/struct/inside/bucket/,</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    const &#123; Contents &#125; = await client.send(command);</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">        const command = new GetObjectTaggingCommand(&#123;</span><br><span class="line">          Bucket: bucket,</span><br><span class="line">          Key: object.Key,</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        const &#123; TagSet &#125; = await client.send(command).then();</span><br></pre></td></tr></table></figure>
+
+<p>This worked fine locally when running <code>serverless --offline</code> as the <code>S3Client</code> would grab my local AWS credentials which had (seemingly) the same permissions. This was a sort of, false reality for me, as it took me a moment to even realize that this was happening. After figuring it out, of course it was using my local credentials which had already been over permissioned. Though when <code>serverless</code> bundled and pushed everything utilizing <code>CloudFormation</code>, it was not provisioning the correct permissions for the lambda. This lead in the <code>client.send</code> throwing an <code>Access Denied</code> error. So helpful, just tell me what permission I need already.</p>
+<h3 id="Finding-the-permissions"><a href="#Finding-the-permissions" class="headerlink" title="Finding the permissions"></a>Finding the permissions</h3><p>Per some Googling and reading of the documentation, the command <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/classes/listobjectsv2command.html">ListObjectsV2Command</a>;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">To use this operation, you must have READ access to the bucket.</span><br><span class="line"></span><br><span class="line">To use this action in an Identity and Access Management (IAM) policy, you must have permission to perform the s3:ListBucket action. The bucket owner has this permission by default and can grant this permission to others. For more information about permissions, see Permissions Related to Bucket Subresource Operations and Managing Access Permissions to Your Amazon S3 Resources in the Amazon S3 User Guide.</span><br></pre></td></tr></table></figure>
+
+<p>So we will need <code>READ</code> access, meaing we should be able to <code>s3:ListBucket</code>. I assumed <code>READ</code> meant <code>s3:GetObject</code>, so I think we got it, it looks like we already had this?</p>
+<p>For <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectTagging.html">GetObjectTaggingCommand</a> the documentation states;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">To use this operation, you must have permission to perform the s3:GetObjectTagging action. By default, the GET action returns information about current version of an object. For a versioned bucket, you can have multiple versions of an object in your bucket. To retrieve tags of any other version, use the versionId query parameter. You also need permission for the s3:GetObjectVersionTagging action.</span><br></pre></td></tr></table></figure>
+
+<p>So <code>s3:GetObjectTagging</code> is likely enough? Even though we haven’t gotten to this line yet in our execution.</p>
+<h3 id="Over-permissioning-for-Testing"><a href="#Over-permissioning-for-Testing" class="headerlink" title="Over-permissioning for Testing"></a>Over-permissioning for Testing</h3><p>Annoyingly I tried many permutations and couldn’t seem to get anything right, so I tried just over permissioning it to see if this would simply allow it;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- Effect: Allow</span><br><span class="line">  Action:</span><br><span class="line">    - s3:*</span><br><span class="line">  Resource:</span><br><span class="line">    - &#x27;arn:aws-us-gov:s3:::*&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>This above one worked - as excepted. At least at this point we know it is possible and we can try to trim down the permissions.</p>
+<h3 id="Minimizing-permissions"><a href="#Minimizing-permissions" class="headerlink" title="Minimizing permissions"></a>Minimizing permissions</h3><p>Re-(re-re-re-)reading AWS docs, I tried to break out the permissions into different roles to avoid over permissioning things. Something I had missed originally was that you want to literally list a bucket (root directory) with no glob when specifying <code>s3:ListBucket</code> which is required for <code>ListObjectsV2Command</code> so this should work;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">iam:</span><br><span class="line">  role:</span><br><span class="line">    statements:</span><br><span class="line">      - Effect: Allow</span><br><span class="line">        Action:</span><br><span class="line">          - s3:ListObject</span><br><span class="line">        Resource:</span><br><span class="line">          - &#x27;arn:aws-us-gov:s3:::bucket-name/*&#x27;</span><br><span class="line">      - Effect: Allow</span><br><span class="line">        Action:</span><br><span class="line">          - s3:ListBucket</span><br><span class="line">        Resource:</span><br><span class="line">          - &#x27;arn:aws-us-gov:s3:::bucket-name&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>This allowed our <code>ListObjectsV2Command</code> to work! Now we got an error on the <code>GetObjectTaggingCommand</code>. Digging back into this side, I added the <code>s3:GetObject</code> and <code>s3:GetObjectTagging</code> permissions to the globbed bucket;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">iam:</span><br><span class="line">  role:</span><br><span class="line">    statements:</span><br><span class="line">      - Effect: Allow</span><br><span class="line">        Action:</span><br><span class="line">          - s3:GetObject</span><br><span class="line">          - s3:ListObject</span><br><span class="line">          - s3:GetObjectTagging</span><br><span class="line">        Resource:</span><br><span class="line">          - &#x27;arn:aws-us-gov:s3:::bucket-name/*&#x27;</span><br><span class="line">      - Effect: Allow</span><br><span class="line">        Action:</span><br><span class="line">          - s3:ListBucket</span><br><span class="line">        Resource:</span><br><span class="line">          - &#x27;arn:aws-us-gov:s3:::bucket-name&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>Excellent, this worked as well. Now to minimize the scope of what this lambda is allowed to access. </p>
+<h2 id="Final-minimization-of-scope"><a href="#Final-minimization-of-scope" class="headerlink" title="Final minimization of scope"></a>Final minimization of scope</h2><p>Since I originally didn’t set up these buckets, there actually had been a decent amount of files stored here and while this lambda doesn’t try to interact with it, I just don’t want to let it even have permissions to look at those files. Per the example, I abstracted it to <code>some/folder/struct/inside/bucket/</code> and let’s pretend I also want to access <code>some/other/folder</code>;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">iam:</span><br><span class="line">  role:</span><br><span class="line">    statements:</span><br><span class="line">      - Effect: Allow</span><br><span class="line">        Action:</span><br><span class="line">          - s3:GetObject</span><br><span class="line">          - s3:ListObject</span><br><span class="line">          - s3:GetObjectTagging</span><br><span class="line">        Resource:</span><br><span class="line">          - &#x27;arn:aws-us-gov:s3:::bucket-name/some/other/folder/*&#x27;</span><br><span class="line">          - &#x27;arn:aws-us-gov:s3:::bucket-name/some/folder/struct/inside/bucket/*&#x27;</span><br><span class="line">      - Effect: Allow</span><br><span class="line">        Action:</span><br><span class="line">          - s3:ListBucket</span><br><span class="line">        Resource:</span><br><span class="line">          - &#x27;arn:aws-us-gov:s3:::bucket-name&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>Bingo! Once you see it all layed out and have done it once, it all makes more sense and seems simple. Though, when you’re grinding for a day or two on the issue and waiting for the lambda to compile&#x2F;upload&#x2F;etc it can be quiet annoying…</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#s3-IAM-woes-when-using-serverless"><span class="toc-number">1.</span> <span class="toc-text">s3 IAM woes when using serverless</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Finding-the-permissions"><span class="toc-number">1.1.</span> <span class="toc-text">Finding the permissions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Over-permissioning-for-Testing"><span class="toc-number">1.2.</span> <span class="toc-text">Over-permissioning for Testing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Minimizing-permissions"><span class="toc-number">1.3.</span> <span class="toc-text">Minimizing permissions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Final-minimization-of-scope"><span class="toc-number">2.</span> <span class="toc-text">Final minimization of scope</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&text=S3, IAM, Serverless and Access Denied"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&title=S3, IAM, Serverless and Access Denied"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&is_video=false&description=S3, IAM, Serverless and Access Denied"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=S3, IAM, Serverless and Access Denied&body=Check out this article: https://strazzere.com/2023/10/s3-iam-serverless-access-denied/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&title=S3, IAM, Serverless and Access Denied"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&title=S3, IAM, Serverless and Access Denied"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&title=S3, IAM, Serverless and Access Denied"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&title=S3, IAM, Serverless and Access Denied"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&name=S3, IAM, Serverless and Access Denied&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2023/10/s3-iam-serverless-access-denied/&t=S3, IAM, Serverless and Access Denied"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

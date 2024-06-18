@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Previously I wrote about how to uniquely identify Android devices without special permissions. However, maybe you want to get into the nitty-gritty and get an even more unique identifier for the devic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Uniquely Identifying Android Devices with special permissions">
+<meta property="og:url" content="https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Previously I wrote about how to uniquely identify Android devices without special permissions. However, maybe you want to get into the nitty-gritty and get an even more unique identifier for the devic">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2008-11-26T19:29:43.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.096Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="g1">
+<meta property="article:tag" content="code">
+<meta property="article:tag" content="secure code">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="unique id">
+<meta property="article:tag" content="hardward id">
+<meta property="article:tag" content="identifiers">
+<meta property="article:tag" content="phone number">
+<meta property="article:tag" content="READ_PHONE_STATE">
+<meta property="article:tag" content="unique">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Uniquely Identifying Android Devices with special permissions</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2008/12/more-identifiers-without-special-permissions/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2008/11/uniquely-identifying-android-devices-without-special-permissions/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&text=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&title=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&is_video=false&description=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Uniquely Identifying Android Devices with special permissions&body=Check out this article: https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&title=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&title=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&title=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&title=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&name=Uniquely Identifying Android Devices with special permissions&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&t=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Uniquely Identifying Android Devices with special permissions
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2008-11-26T19:29:43.000Z" class="dt-published" itemprop="datePublished">2008-11-26</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/coding/">coding</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/READ-PHONE-STATE/" rel="tag">READ_PHONE_STATE</a>, <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/code/" rel="tag">code</a>, <a class="p-category" href="/tags/g1/" rel="tag">g1</a>, <a class="p-category" href="/tags/hardward-id/" rel="tag">hardward id</a>, <a class="p-category" href="/tags/identifiers/" rel="tag">identifiers</a>, <a class="p-category" href="/tags/java/" rel="tag">java</a>, <a class="p-category" href="/tags/phone-number/" rel="tag">phone number</a>, <a class="p-category" href="/tags/secure-code/" rel="tag">secure code</a>, <a class="p-category" href="/tags/unique/" rel="tag">unique</a>, <a class="p-category" href="/tags/unique-id/" rel="tag">unique id</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>Previously I wrote about how to <a href="http://strazzere.com/blog/?p=113">uniquely identify Android devices without special permissions</a>. However, maybe you want to get into the nitty-gritty and get an even more unique identifier for the device. This can be done, but you need special permissions. Essentially what I mean by “special permissions” is that the user will be prompted when installing that “this application tries to do this”. “This” referring to (in this specific case) <em>Reading Phone State</em>. This doesn’t mean it’s doing anything bad, however users might be turned off if your calculator wants to read the phones state etc. This is just how Google has set up the installation of applications, so that a user is properly notified of what an application is given permission to do.</p>
+<p>What are the kind of identifiers we can get with this special permission? We can grade the “Device ID” which is the IMEI number, the phone number, Software Version (not sure if it’s currently being used?), Sim Serial Number and Subscriber ID.</p>
+<p>That should be enough unique identifiers for <em>anyone</em> to come up with some hash! Heck, phone number alone should be enough since it would be readily known by a customer and easy to use.</p>
+<p>To get these values add the following somewhere in your program;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import android.telephony.*;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">		TelephonyManager mTelephonyMgr =</span><br><span class="line">        	(TelephonyManager)getSystemService(TELEPHONY_SERVICE);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		String imei = mTelephonyMgr.getDeviceId(); // Requires READ_PHONE_STATE</span><br><span class="line">        String phoneNumber=mTelephonyMgr.getLine1Number(); // Requires READ_PHONE_STATE</span><br><span class="line">        String softwareVer = mTelephonyMgr.getDeviceSoftwareVersion(); // Requires READ_PHONE_STATE</span><br><span class="line">        String simSerial = mTelephonyMgr.getSimSerialNumber(); // Requires READ_PHONE_STATE</span><br><span class="line">        String subscriberId = mTelephonyMgr.getSubscriberId(); // Requires READ_PHONE_STATE</span><br></pre></td></tr></table></figure>
+
+<p>Note that you MUST add permission access to <code>android.permission.READ_PHONE_STATE</code> otherwise your program will force close. This is added in the <code>AndroidManifest.xml</code> like the following;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;uses-permission android:name=&quot;android.permission.READ_PHONE_STATE&quot;&gt;&lt;/uses-permission&gt;</span><br></pre></td></tr></table></figure>
+
+<p>On the emulator it will output things like the following;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DeviceId(IMEI) = 000000000000000</span><br><span class="line">DeviceSoftwareVersion = null</span><br><span class="line">Line1Number = 15555218135</span><br><span class="line">SimSerialNumber = 89014103211118510720</span><br><span class="line">SubscriberId(IMSI) = 310995000000000</span><br></pre></td></tr></table></figure>
+<p>One should also note that a real device currently returns “00” for Device Software Version, so it’s possible that this is something reserved for future use. These could all easily be used in some type of registration algorithm that you want to tie to a certain device. Also if you choose your identifiers properly you could allow your registration code to be complaint across all versions of your product. Using a phone number for example could allow a user to use your application on any phone they put their SIM card into. If you want to prevent this you could tie it to both the device ID and the phone number.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&text=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&title=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&is_video=false&description=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Uniquely Identifying Android Devices with special permissions&body=Check out this article: https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&title=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&title=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&title=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&title=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&name=Uniquely Identifying Android Devices with special permissions&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2008/11/uniquely-identifying-android-devices-with-special-permissions/&t=Uniquely Identifying Android Devices with special permissions"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

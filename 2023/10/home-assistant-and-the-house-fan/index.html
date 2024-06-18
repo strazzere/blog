@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Home Assistant and the Wole House FanDuring COVID my wife and I moved to a new place - which presented the opportunity to redo some simple home automation things I haphazardly set up in our old place.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Home Assistant and the Whole House Fan">
+<meta property="og:url" content="https://strazzere.com/2023/10/home-assistant-and-the-house-fan/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Home Assistant and the Wole House FanDuring COVID my wife and I moved to a new place - which presented the opportunity to redo some simple home automation things I haphazardly set up in our old place.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://strazzere.com/images/eggtimerswitch.png">
+<meta property="article:published_time" content="2023-10-06T07:00:00.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.091Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="electrical">
+<meta property="article:tag" content="homeautomation">
+<meta property="article:tag" content="homeassistant">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://strazzere.com/images/eggtimerswitch.png">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Home Assistant and the Whole House Fan</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/10/s3-iam-serverless-access-denied/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/11/hot-reloading-native-shim/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&text=Home Assistant and the Whole House Fan"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&title=Home Assistant and the Whole House Fan"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&is_video=false&description=Home Assistant and the Whole House Fan"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Home Assistant and the Whole House Fan&body=Check out this article: https://strazzere.com/2023/10/home-assistant-and-the-house-fan/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&title=Home Assistant and the Whole House Fan"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&title=Home Assistant and the Whole House Fan"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&title=Home Assistant and the Whole House Fan"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&title=Home Assistant and the Whole House Fan"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&name=Home Assistant and the Whole House Fan&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&t=Home Assistant and the Whole House Fan"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Home-Assistant-and-the-Wole-House-Fan"><span class="toc-number">1.</span> <span class="toc-text">Home Assistant and the Wole House Fan</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Whole-House-Fan-Switch"><span class="toc-number">1.1.</span> <span class="toc-text">The Whole House Fan Switch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Detecting-manual-switch-usage-vs-automation-user"><span class="toc-number">1.2.</span> <span class="toc-text">Detecting manual switch usage vs automation user</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#After-thoughts"><span class="toc-number">1.3.</span> <span class="toc-text">After thoughts</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Home Assistant and the Whole House Fan
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-10-06T07:00:00.000Z" class="dt-published" itemprop="datePublished">2023-10-06</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/homeautomation/">homeautomation</a> › <a class="category-link" href="/categories/homeautomation/electrical/">electrical</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/electrical/" rel="tag">electrical</a>, <a class="p-category" href="/tags/homeassistant/" rel="tag">homeassistant</a>, <a class="p-category" href="/tags/homeautomation/" rel="tag">homeautomation</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Home-Assistant-and-the-Wole-House-Fan"><a href="#Home-Assistant-and-the-Wole-House-Fan" class="headerlink" title="Home Assistant and the Wole House Fan"></a>Home Assistant and the Wole House Fan</h2><p>During COVID my wife and I moved to a new place - which presented the opportunity to redo some simple home automation things I haphazardly set up in our old place. Nothing was really the same, but this time I wanted to try out doing things “right” using zigbee and wifi automations and to try and tie it all together with <a target="_blank" rel="noopener" href="https://github.com/home-assistant">Home Assistant</a>. This all went pretty well except for one item I always wanted to automate but never found a great solution for.</p>
+<p>Before I go any further, I want to preface the rest with, I’m not an electrician, I guessed at some things and I also just experimented to see what would work. There could be better ways to do this all, but this is mostly just a stream of thought of my experience while I’m flying for work and a documentation for myself later if I ever need to redo this in the future. Best of luck if you’re trying this for yourself!</p>
+<h3 id="The-Whole-House-Fan-Switch"><a href="#The-Whole-House-Fan-Switch" class="headerlink" title="The Whole House Fan Switch"></a>The Whole House Fan Switch</h3><p>Below is the switch which I never knew what to do with. In case you never have heard of or seen these things (I hadn’t) - a whole house fan basically acts as an air exchange. Large fan in your ceiling that goes to your attic&#x2F;roof which often has two speeds. Crack open your windows (which is a must, or you’re create a vaccuum and break something) and the air will get pulled in and into the attic. This works great for the summer months and can also be a great way to just clear the house of any unfortunate smells. The speed and useful of these fans is even easily seen on temp&#x2F;humidity monitors that are place in the house. With that said, here is a photo of the switch in question that controls the whole house fan;</p>
+<p><img src="/images/eggtimerswitch.png" alt="Gotta love the beige"></p>
+<p>Clearly a Lutron Caseta switch wouldn’t just drop in here, and I wasn’t sure what the load was on the whole house fan. If you Google for a solution, most folks say it’s pretty easy, just “find a relay that will work, and wire it in circuit with your switches”. Generally speaking, I understand this, practically speaking, I don’t know why I would want a relay and then what type of IoT switch should I do? I had a few of the <code>SonOff Mini Extreme 4 (MINIR4)</code>‘s kicking around from when I was toying with them in a few switches for some projects, so I figured maybe this would would. They are rated for 10A and looking at the fan switch in the ceiling, it claimed to never pull more than that. I likely should have verified this with a multimeter, though I didn’t bother. The wiring of behind the timer and hi&#x2F;low switch was like the following;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">         ____</span><br><span class="line">        |FAN |</span><br><span class="line">        |____|</span><br><span class="line">         ||||</span><br><span class="line">        //  \\</span><br><span class="line">Ground_//    \\ &lt;-- High (black) \ Low (red) speed wires</span><br><span class="line">Common_/      \\</span><br><span class="line">      |       | \</span><br><span class="line">Load  |       |  \</span><br><span class="line"> __|__|_    __|___|_</span><br><span class="line">| Timer |  | High | |</span><br><span class="line">|_______|  |____Low_|</span><br><span class="line">  |   |       |  |</span><br><span class="line">  G   +-------+  G</span><br><span class="line">        Load</span><br></pre></td></tr></table></figure>
+
+<p>Above is my “simplified” look at the wiring. So the timer controls passing electricity (load) to the high &#x2F; low switch, which will only occur if the egg timer dial has been switched this causes the fan to receive power and be “on”. The power goes to the high &#x2F; low switch which will toggle sending the power to one of the two wires based on the speed setting. If the high toggle is set, it chooses the black wire, low setting the red wire.</p>
+<p>So essentially all we want to do is interrupt this by inserting the <code>minir4</code> into this circuit so we can trigger the power on when we want to remotely or automatically. The new diagram ends up being;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">                          ____</span><br><span class="line">                          |FAN |</span><br><span class="line">                          |____|</span><br><span class="line">                          ||||</span><br><span class="line">                          // \\</span><br><span class="line">                  Ground_//   \\ &lt;-- High (black) \ Low (red) speed wires</span><br><span class="line">         _________Common_/    | \</span><br><span class="line"> _____  |   __________        |  \</span><br><span class="line">|     N-+  |  +---+   |       |   \</span><br><span class="line">| M   N----+  |  _|___|_    __|___|_</span><br><span class="line">| I  Lo-------+ | Timer |  | High | |</span><br><span class="line">| N  Li---Load  |_______|  |____Low_|</span><br><span class="line">| I  S1----      |   |       |  |</span><br><span class="line">| V  S2-+ |      G   |       |  G</span><br><span class="line">| 4   | | +----------+       |</span><br><span class="line">|_____| +--------------------+</span><br></pre></td></tr></table></figure>
+
+<p>This is likely a very bad diagram, but essentially you’re taking the neutral (common&#x2F;white) from the fan, and timer into the <code>miniv4</code>, the Line&#x2F;Load in from the timer and sending it back to the timer via Line&#x2F;Load Out. Then taking the switch (load) out of the timer into S1 and connecting S2 to the high&#x2F;low toggle.</p>
+<p>Once this was done I just “attached” the device before closing up the panel using the Sonoff app - tested that I could toggle the switch and it worked! Was pretty simple once I had drawn out the diagram on paper. The hardest part was actually just removing the egg timer dial without breaking it.</p>
+<p>Though, once I had added the Sonoff integraiton to Home Assistant, I suddenly realized I had a new issue I didn’t think of. Once you toggle the fan via HA - there was no way to manually turn the fan off. This was because the egg timer was “off” but the <code>miniv4</code> could be toggled on. This lead to a funny moment where you could “turn if off” by toggling the egg timer, but when the timer ran out, the fan would be back on.</p>
+<p>This brings me to the next section which is, how the heck do you detect a human interaction (egg timer dial) vs a Home Assistant user action - so that I could set an automation to turn off the fan via a trigger after a certain amount of time. Interestingly enough, this took longer to figure out than the wiring diagram.</p>
+<h3 id="Detecting-manual-switch-usage-vs-automation-user"><a href="#Detecting-manual-switch-usage-vs-automation-user" class="headerlink" title="Detecting manual switch usage vs automation user"></a>Detecting manual switch usage vs automation user</h3><p>This was suprisingly “difficult” in the sense that, the Home Assistant forums where full of interesting information, however most of it either was out dated or never seemed to work for me. The templating in HA is nice, but also can be quiet painful. Essentially the script&#x2F;trigger I would want would follow these rules;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. Did a user request the whole house fan? If so continue...</span><br><span class="line">2. Is there a window open? If so continue...</span><br><span class="line">3. Trigger an alert to primary user notifying that the fan has started and will auto shut off in 45 minutes.</span><br><span class="line">4. Turn off fan after 45 minutes.</span><br></pre></td></tr></table></figure>
+
+<p>This to me felt like it should be pretty easy to accomplish, which once you know what you’re doing is “straight forward” (I guess?), though it took lots of debugging and running “traces” - which drove my toddler to think there might be a demon controlling the fan as it open and shut many times over the next few hours.</p>
+<p>Anyway the fix to this was to use a <code>value_template</code> which there is a decent amount of documentation for, however at least from what I read - it all seems kind of conflicting. The templating yaml code is essentially Python and I basically dumped the states of the traces when performing the action physically and then running it via Home Assistant. This led me to see that when the <code>to_state.context.user_id</code> value is <code>null</code> (or for Python, specifically <code>none</code>) it was a physical trigger. So the code ended up being the following;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">alias: Fan automatic timer</span><br><span class="line">description: &quot;&quot;</span><br><span class="line">trigger:</span><br><span class="line">  - platform: state</span><br><span class="line">    entity_id:</span><br><span class="line">      - switch.sonoff_1001e850a7_1</span><br><span class="line">    from: &quot;off&quot;</span><br><span class="line">    to: &quot;on&quot;</span><br><span class="line">    id: fan_on</span><br><span class="line">condition:</span><br><span class="line">  - condition: trigger</span><br><span class="line">    id:</span><br><span class="line">      - fan_on</span><br><span class="line">    enabled: true</span><br><span class="line">  - condition: template</span><br><span class="line">    value_template: &quot;&#123;&#123; trigger.to_state.context.user_id != none &#125;&#125;&quot;</span><br><span class="line">action:</span><br><span class="line">  - device_id: 07e82d65e020441ecce1cf2da26e32eb</span><br><span class="line">    domain: mobile_app</span><br><span class="line">    type: notify</span><br><span class="line">    message: Detecting app change of fan &#123;&#123; result &#125;&#125;</span><br><span class="line">    title: will turn off in 45 minutes</span><br><span class="line">  - delay:</span><br><span class="line">      hours: 0</span><br><span class="line">      minutes: 45</span><br><span class="line">      seconds: 0</span><br><span class="line">      milliseconds: 0</span><br><span class="line">  - type: turn_off</span><br><span class="line">    device_id: deb4e8b79881e8854a980502cae4e8bd</span><br><span class="line">    entity_id: d5695d15d10298b56812c899ad57d206</span><br><span class="line">    domain: switch</span><br><span class="line">    enabled: true</span><br><span class="line">mode: single</span><br></pre></td></tr></table></figure>
+
+<p>So when the switch (<code>switch.sonoff_1001e850a7_1</code>) is triggered from <code>off</code> to <code>on</code>, we check if the <code>trigger.to_state.context.user_id != none</code> and if that is true, we send a mobile_app notification mentioning this, then delay a task of turning on the entity after <code>45</code> minutes.</p>
+<h3 id="After-thoughts"><a href="#After-thoughts" class="headerlink" title="After thoughts"></a>After thoughts</h3><p>I kind of wished I had installed a lutron switch or second <code>mini4v</code> on the high&#x2F;low toggle. However it would then need to be manually labeled.</p>
+<p>I’ll try to clean up this post as I have time - but this was a bit quick as I was writing it all before a flight I had to take.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Home-Assistant-and-the-Wole-House-Fan"><span class="toc-number">1.</span> <span class="toc-text">Home Assistant and the Wole House Fan</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Whole-House-Fan-Switch"><span class="toc-number">1.1.</span> <span class="toc-text">The Whole House Fan Switch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Detecting-manual-switch-usage-vs-automation-user"><span class="toc-number">1.2.</span> <span class="toc-text">Detecting manual switch usage vs automation user</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#After-thoughts"><span class="toc-number">1.3.</span> <span class="toc-text">After thoughts</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&text=Home Assistant and the Whole House Fan"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&title=Home Assistant and the Whole House Fan"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&is_video=false&description=Home Assistant and the Whole House Fan"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Home Assistant and the Whole House Fan&body=Check out this article: https://strazzere.com/2023/10/home-assistant-and-the-house-fan/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&title=Home Assistant and the Whole House Fan"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&title=Home Assistant and the Whole House Fan"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&title=Home Assistant and the Whole House Fan"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&title=Home Assistant and the Whole House Fan"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&name=Home Assistant and the Whole House Fan&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2023/10/home-assistant-and-the-house-fan/&t=Home Assistant and the Whole House Fan"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

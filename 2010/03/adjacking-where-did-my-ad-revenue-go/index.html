@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It’s been a while since I’ve posted any article, sadly between work, contracts after work, spam, having a life and volleyball I don’t have much time to spend on my blog. Research is still going strong">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Adjacking... Where did my ad revenue go?">
+<meta property="og:url" content="https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="It’s been a while since I’ve posted any article, sadly between work, contracts after work, spam, having a life and volleyball I don’t have much time to spend on my blog. Research is still going strong">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/08/android-money.jpg">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/01/strictly_confidential-230x300.jpg">
+<meta property="article:published_time" content="2010-03-18T04:28:53.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.086Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="adjacking">
+<meta property="article:tag" content="admob">
+<meta property="article:tag" content="adsense">
+<meta property="article:tag" content="android money">
+<meta property="article:tag" content="mobile">
+<meta property="article:tag" content="monetizing">
+<meta property="article:tag" content="money">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/08/android-money.jpg">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Adjacking... Where did my ad revenue go?</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2010/03/brutal-google-coding-humor/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2009/11/an-update-on-the-archos-5-android-rooting/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&text=Adjacking... Where did my ad revenue go?"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&title=Adjacking... Where did my ad revenue go?"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&is_video=false&description=Adjacking... Where did my ad revenue go?"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Adjacking... Where did my ad revenue go?&body=Check out this article: https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&title=Adjacking... Where did my ad revenue go?"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&title=Adjacking... Where did my ad revenue go?"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&title=Adjacking... Where did my ad revenue go?"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&title=Adjacking... Where did my ad revenue go?"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&name=Adjacking... Where did my ad revenue go?&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&t=Adjacking... Where did my ad revenue go?"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Adjacking... Where did my ad revenue go?
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2010-03-18T04:28:53.000Z" class="dt-published" itemprop="datePublished">2010-03-17</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/other/">other</a> › <a class="category-link" href="/categories/other/secure-code/">secure code</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/adjacking/" rel="tag">adjacking</a>, <a class="p-category" href="/tags/admob/" rel="tag">admob</a>, <a class="p-category" href="/tags/adsense/" rel="tag">adsense</a>, <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/android-money/" rel="tag">android money</a>, <a class="p-category" href="/tags/mobile/" rel="tag">mobile</a>, <a class="p-category" href="/tags/monetizing/" rel="tag">monetizing</a>, <a class="p-category" href="/tags/money/" rel="tag">money</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="http://173.230.150.16/blog/wp-content/uploads/2009/08/android-money.jpg" alt="Make money, money..." title="Easy cash with no work!"><br>It’s been a while since I’ve posted any article, sadly between work, contracts after work, spam, having a life and volleyball I don’t have much time to spend on my blog. Research is still going strong - but very little has trickled out from me over the past few months.</p>
+<p>Something I’d like to finally post has come to my attention. Approximately a year ago when I first started looking into the mobile ad networks, I thought of something sinister. While I never intend to do anything evil, since I’m always looking for ways to protect myself, my first thoughts always seem to be, “how do I abuse this?” It all started when people started trying to think of ways to monetize their application. Do we charge up front, or do we try to make a few bucks off a huge user-base using ads?</p>
+<p>My first question is, how are the ads secured? Much like other applications that are tracked by application, most use a “application id” or “publisher id”. This is a super-secret code that is used for identifying traffic from you, right? Alright, well unlike a website advertisement, which has a referrer - mobile ads have no actual way to differentiate traffic other than this “unique” id.</p>
+<p>So what? Whats the issue with that? Well, there is a big issue with this. There is a coined term, “adjacking”, that essentially means “falsified” clicks. Originally this term meant you hijacked the javascript of google adsense, and made a click anywhere on your website appear to be a click on your adsense ad. Though, I’m “word-jacking” this term, because I feel my definition is a little more appropriate. Essentially, with the ability to easily decompile&#x2F;modify an apk file - someone can quiet easily steal your ad traffic, this hi-jacking your ads… Adjacking.</p>
+<p>Is this something new? No - but beware of it. I’ve had this article lying around for a bit, more uninterested in publishing for the idea that people would actually attempt to do this if I brought it up. Upon first writing this, I quickly made a program that attempted to make a database of signatures of programs. This program downloaded legit (free) applications and grabbed the signature from the META-INF folder of the apk. Then it attempted to find versions available for download on the internet…. For the most part, the version where always the same - with a rare instance of someone resigning it with little modification to the file, often to help localize it. Though now, I’ve seen and heard of an increase of people downloading their application, replacing the ID in the apk, and replacing it with their own.<br><img src="http://173.230.150.16/blog/wp-content/uploads/2009/01/strictly_confidential-230x300.jpg" alt="Keep your code secure!" title="Keep your code secure!"><br>What to do about this? Well, hopefully the ad networks figure something out, though I’m not sure they honestly care much. I’ve sent emails to a few of the big providers with no responses and a few “we’ll look into it” replies. I don’t see a big downside for them - maybe if more people complain they’ll get the hint. I’m sure right now they’ll just get the traffic, for traffic’s sake. Most applications that have been modified probably don’t drive in much or take away much from other people. Though if they do, they could “act” upon these and actually shut people down… Will the correct developer ever see this money? Probably not… Though if your try hard enough you might see something.</p>
+<p>The sad part is, most of the people modifying the applications are now no better than a scripting kiddie. There are enough tools available now to make this an easy job. Maybe if people start looking into this, these people will be rooted out - since they must fill in “legit” information to open an account. </p>
+<p>Anyways, I’ve been looking at some protection schemes for this, hopefully I’ll have time to post some soon. I’ll post a little tutorial on obfuscating (manually) your adsense&#x2F;admob&#x2F;blah code to protect yourself :)</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&text=Adjacking... Where did my ad revenue go?"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&title=Adjacking... Where did my ad revenue go?"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&is_video=false&description=Adjacking... Where did my ad revenue go?"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Adjacking... Where did my ad revenue go?&body=Check out this article: https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&title=Adjacking... Where did my ad revenue go?"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&title=Adjacking... Where did my ad revenue go?"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&title=Adjacking... Where did my ad revenue go?"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&title=Adjacking... Where did my ad revenue go?"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&name=Adjacking... Where did my ad revenue go?&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2010/03/adjacking-where-did-my-ad-revenue-go/&t=Adjacking... Where did my ad revenue go?"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

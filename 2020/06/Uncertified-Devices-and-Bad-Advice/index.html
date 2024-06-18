@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Emulators with official appsNothing new about folks wanting to have emulators which look like real devices. This has been a want that has been around for a while, and a wildly helpful project is the O">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Uncertified Devices and Bad Advice">
+<meta property="og:url" content="https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Emulators with official appsNothing new about folks wanting to have emulators which look like real devices. This has been a want that has been around for a while, and a wildly helpful project is the O">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://strazzere.com/images/action-required.png">
+<meta property="og:image" content="https://strazzere.com/images/directions.png">
+<meta property="article:published_time" content="2020-06-07T07:00:00.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.085Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="reverse-engineering">
+<meta property="article:tag" content="emulator">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://strazzere.com/images/action-required.png">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Uncertified Devices and Bad Advice</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/09/android-usb-accessories-and-frida/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2020/05/Tales-from-the-crash-dlopen-and-dlerror/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&text=Uncertified Devices and Bad Advice"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&title=Uncertified Devices and Bad Advice"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&is_video=false&description=Uncertified Devices and Bad Advice"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Uncertified Devices and Bad Advice&body=Check out this article: https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&title=Uncertified Devices and Bad Advice"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&title=Uncertified Devices and Bad Advice"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&title=Uncertified Devices and Bad Advice"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&title=Uncertified Devices and Bad Advice"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&name=Uncertified Devices and Bad Advice&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&t=Uncertified Devices and Bad Advice"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Emulators-with-official-apps"><span class="toc-number">1.</span> <span class="toc-text">Emulators with official apps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Adding-a-Uncertified-Device-to-an-exception-list"><span class="toc-number">2.</span> <span class="toc-text">Adding a Uncertified Device to an exception list</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Simple-fix"><span class="toc-number">3.</span> <span class="toc-text">Simple fix</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Uncertified Devices and Bad Advice
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-06-07T07:00:00.000Z" class="dt-published" itemprop="datePublished">2020-06-07</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/reverse-engineering/">reverse engineering</a> › <a class="category-link" href="/categories/android/reverse-engineering/emulator/">emulator</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/emulator/" rel="tag">emulator</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse-engineering</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Emulators-with-official-apps"><a href="#Emulators-with-official-apps" class="headerlink" title="Emulators with official apps"></a>Emulators with official apps</h2><p>Nothing new about folks wanting to have emulators which look like real devices. This has been a want that has been around for a while, and a wildly helpful project is the <a target="_blank" rel="noopener" href="https://opengapps.org/">OpenGapps Project</a> which will build these apps for you and assist in getting the installed and set up. Though upon doing this, you’ll often see some crashes and the following screens;</p>
+<p><img src="/images/action-required.png" alt="Annoying"></p>
+<p>Annoying, right? Of course this isn’t certified, but whatever - let’s just bypass this by registering our device at the link provided <a target="_blank" rel="noopener" href="https://www.google.com/android/uncertified/">https://www.google.com/android/uncertified/</a> which looks like the following;<br><img src="/images/directions.png" alt="Seems reasonable"></p>
+<h2 id="Adding-a-Uncertified-Device-to-an-exception-list"><a href="#Adding-a-Uncertified-Device-to-an-exception-list" class="headerlink" title="Adding a Uncertified Device to an exception list"></a>Adding a Uncertified Device to an exception list</h2><p>The wordage on this page recently changed, it appears about a month ago, to now have those explicit instructions. Looking at them, it’s unclear to me if these could ever work on a device;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ adb root</span><br><span class="line">$ adb shell &#x27;sqlite3 /data/data/com.google.android.gsf/databases/gservices.db \ </span><br><span class="line">    &quot;select * from main where name = &quot;android_id&quot;;&quot;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>Most custom roms aren’t just plain emulators with root enabled, this won’t work at all, as you don’t inherently have <code>adb</code> with <code>root</code> access. Whatever, likely just a silly assumption, and since we are using an emulator with root we don’t really care right now. The latter part is more interesting and confusing. If we reduce it to one line can you see what’s likely going to (not) happen?</p>
+<p><code>adb shell &#39;sqlite3 /data/data/com.google.android.gsf/databases/gservices.db &quot;select * from main where name = &quot;android_id&quot;;&quot;&#39;</code></p>
+<p>Ok, so, your shell is going to run <code>adb shell &#39;pipe whatever this command is to the devices shell&#39;</code>, right?</p>
+<p>Then the <code>sqlite3 /data/data/com.google.android.gsf/databases/gservices.db &quot;select * from main where name = &quot;android_id&quot;;&quot;</code> part is going to run the <code>sqlite3</code> command pass in an argument for the file, <code>/data/data/com.google.android.gsf/databases/gservices.db</code> and then a query, quoted so that it won’t be parsed as multiple arguments <code>&quot;select * from main where name = &quot;android_id&quot;;&quot;</code>.</p>
+<p>Except that last bit, seems horribly wrong? The output from running this on a (relatively) stock emulator will net the following;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell &#x27;sqlite3 /data/data/com.google.android.gsf/databases/gservices.db &quot;select * from main where name = &quot;android_id&quot;;&quot;&#x27;</span><br><span class="line">Error: no such column: android_id</span><br></pre></td></tr></table></figure>
+
+<p>Note the error, <code>no such column: android_id</code>, even though that SQL is not attempting to use <code>android_id</code> as a column, this is meant to be the key, <code>name</code> is the column we’re meant to be pivoting on.</p>
+<h2 id="Simple-fix"><a href="#Simple-fix" class="headerlink" title="Simple fix"></a>Simple fix</h2><p>So the fix should be obvious, escape the key name and keep the SQL from getting broken up</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell &#x27;sqlite3 /data/data/com.google.android.gsf/databases/gservices.db &quot;select * from main where name = \&quot;android_id\&quot;;&quot;&#x27;</span><br><span class="line">android_id|437766DEADBEEF7953</span><br></pre></td></tr></table></figure>
+
+<p>Nothing overly complicated, obviously, though it can be annoying when good instructions&#x2F;directions are changed to things that won’t work out of the box. Maybe more proof reading next time, though not like I do that, this post is likely riddled with errors or maybe this only affected my own set ups? Oh well I guess?</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Emulators-with-official-apps"><span class="toc-number">1.</span> <span class="toc-text">Emulators with official apps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Adding-a-Uncertified-Device-to-an-exception-list"><span class="toc-number">2.</span> <span class="toc-text">Adding a Uncertified Device to an exception list</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Simple-fix"><span class="toc-number">3.</span> <span class="toc-text">Simple fix</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&text=Uncertified Devices and Bad Advice"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&title=Uncertified Devices and Bad Advice"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&is_video=false&description=Uncertified Devices and Bad Advice"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Uncertified Devices and Bad Advice&body=Check out this article: https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&title=Uncertified Devices and Bad Advice"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&title=Uncertified Devices and Bad Advice"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&title=Uncertified Devices and Bad Advice"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&title=Uncertified Devices and Bad Advice"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&name=Uncertified Devices and Bad Advice&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2020/06/Uncertified-Devices-and-Bad-Advice/&t=Uncertified Devices and Bad Advice"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

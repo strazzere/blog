@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Adding timing for debuggabilityIn a rather large and hard (annoying?) to debug electron application I’ve been working on. Between things running in the main process and the renderer process, having to">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Generic functions with generic arguments for timing">
+<meta property="og:url" content="https://strazzere.com/2024/05/generic-functions-for-timing/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Adding timing for debuggabilityIn a rather large and hard (annoying?) to debug electron application I’ve been working on. Between things running in the main process and the renderer process, having to">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-05-09T07:00:00.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.090Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="typescript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Generic functions with generic arguments for timing</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/06/frida-stack-making-life-a-bit-nicer/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/10/s3-iam-serverless-access-denied/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2024/05/generic-functions-for-timing/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2024/05/generic-functions-for-timing/&text=Generic functions with generic arguments for timing"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2024/05/generic-functions-for-timing/&title=Generic functions with generic arguments for timing"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2024/05/generic-functions-for-timing/&is_video=false&description=Generic functions with generic arguments for timing"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Generic functions with generic arguments for timing&body=Check out this article: https://strazzere.com/2024/05/generic-functions-for-timing/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2024/05/generic-functions-for-timing/&title=Generic functions with generic arguments for timing"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2024/05/generic-functions-for-timing/&title=Generic functions with generic arguments for timing"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2024/05/generic-functions-for-timing/&title=Generic functions with generic arguments for timing"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2024/05/generic-functions-for-timing/&title=Generic functions with generic arguments for timing"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2024/05/generic-functions-for-timing/&name=Generic functions with generic arguments for timing&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2024/05/generic-functions-for-timing/&t=Generic functions with generic arguments for timing"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Adding-timing-for-debuggability"><span class="toc-number">1.</span> <span class="toc-text">Adding timing for debuggability</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#First-few-passes"><span class="toc-number">1.1.</span> <span class="toc-text">First few passes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Signal-handling"><span class="toc-number">1.2.</span> <span class="toc-text">Signal handling</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finalizing-the-code"><span class="toc-number">2.</span> <span class="toc-text">Finalizing the code</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Generic functions with generic arguments for timing
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-05-09T07:00:00.000Z" class="dt-published" itemprop="datePublished">2024-05-09</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/typescript/">typescript</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/typescript/" rel="tag">typescript</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Adding-timing-for-debuggability"><a href="#Adding-timing-for-debuggability" class="headerlink" title="Adding timing for debuggability"></a>Adding timing for debuggability</h2><p>In a rather large and hard (annoying?) to debug electron application I’ve been working on. Between things running in the main process and the renderer process, having to <code>Promise.race</code> different types of extended calls to usb and serial devices - it can be complicated to know exactly what is going on and what is failing. Utilizing the <code>Chrome Inspector</code> has yielded good results, though sometimes it is just important to have good timing with logs during a development build. Specificially I’ve found this almost required when testing across platforms as Windows handles <code>libusb</code> interactions substantially differently from Linux&#x2F;MacOS.</p>
+<h3 id="First-few-passes"><a href="#First-few-passes" class="headerlink" title="First few passes"></a>First few passes</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// eslint-disable-next-line @typescript-eslint/no-explicit-any</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">AnyFunction</span> = <span class="function">(<span class="params">...args: <span class="built_in">any</span>[]</span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">timingFunctionWrap</span>(<span class="params">f: AnyFunction, ...args: Parameters&lt;<span class="keyword">typeof</span> f&gt;</span>): <span class="title class_">ReturnType</span>&lt;<span class="keyword">typeof</span> f&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">time</span>(f.<span class="property">name</span>)</span><br><span class="line">  <span class="keyword">let</span> result = <span class="title function_">f</span>(...args)</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">timeEnd</span>(f.<span class="property">name</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This worked well for a few functions I had, though when getting heavier into device communications I needed to also handle <code>async</code> functions. Wanting to generalize this even more, it lead to the code looking like so;</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// eslint-disable-next-line @typescript-eslint/no-explicit-any</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">AnyFunction</span> = <span class="function">(<span class="params">...args: <span class="built_in">any</span>[]</span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">timingFunctionWrap</span>(<span class="params">f: AnyFunction, ...args: Parameters&lt;<span class="keyword">typeof</span> f&gt;</span>): <span class="title class_">Promise</span>&lt;<span class="title class_">ReturnType</span>&lt;<span class="keyword">typeof</span> f&gt;&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">time</span>(f.<span class="property">name</span>)</span><br><span class="line">  <span class="keyword">let</span> result = <span class="title function_">f</span>(...args)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (result <span class="keyword">instanceof</span> <span class="title class_">Promise</span>) &#123;</span><br><span class="line">    result = <span class="keyword">await</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(result)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">timeEnd</span>(f.<span class="property">name</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This also worked well, and is pretty close to what I ended up. The only final part of the functionality that I wanted to add was signal handling which was not as straight forward as I had originally expected.</p>
+<h3 id="Signal-handling"><a href="#Signal-handling" class="headerlink" title="Signal handling"></a>Signal handling</h3><p>Some of my device communications end up passing around an <code>AbortSignal</code> as a means of not waiting forever incase disconnects or timeouts occur. This is often an optional parameter for the functions, so it isn’t something I can just build into the <code>AnyFunction</code> type like I had hoped;</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">AnyFunctionWithAbortSignal</span> = <span class="function">(<span class="params">...args: [...<span class="built_in">any</span>[], signal: AbortSignal]</span>) =&gt;</span> <span class="built_in">any</span>;</span><br></pre></td></tr></table></figure>
+
+<p>This above bit is not viable since the function prototypes often contain signal as <code>signal?: AbortSignal</code>. In all honesty, we probably could just change many places in the code to no longer have the signal be optional, as it is essentially always used. Though now this feels like a code golf and I wanted to find out a solution without refactoring everything. </p>
+<p>This lead to the following code;</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// eslint-disable-next-line @typescript-eslint/no-explicit-any</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">AnyFunction</span> = <span class="function">(<span class="params">...args: <span class="built_in">any</span>[]</span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">timingFunctionWrap</span>(<span class="params">f: AnyFunction, ...args: Parameters&lt;<span class="keyword">typeof</span> f&gt;</span>): <span class="title class_">Promise</span>&lt;<span class="title class_">ReturnType</span>&lt;<span class="keyword">typeof</span> f&gt;&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">time</span>(f.<span class="property">name</span>)</span><br><span class="line">  <span class="keyword">let</span> result = <span class="title function_">f</span>(...args)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (result <span class="keyword">instanceof</span> <span class="title class_">Promise</span>) &#123;</span><br><span class="line">    result = <span class="keyword">await</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(result)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">timeEnd</span>(f.<span class="property">name</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> signal = args.<span class="title function_">pop</span>() <span class="keyword">as</span> <span class="title class_">AbortSignal</span></span><br><span class="line">  <span class="keyword">if</span> (signal &amp;&amp; signal.<span class="property">aborted</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;f.name&#125;</span> was aborted`</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The above works, <em>for me</em>, however it does have an issue because we are making an assertion without checking. This is just assuming that whatever the last argument is inherently always an <code>AbortSignal</code>. Thinking about it for a bit, I needed to have a guard, as I can’t just check the using the <code>instanceof</code> and we can make this an assertion using <code>is</code> like this;</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// eslint-disable-next-line @typescript-eslint/no-explicit-any</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isAbortSignal</span>(<span class="params">signal: <span class="built_in">any</span></span>): signal is <span class="title class_">AbortSignal</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> signal <span class="keyword">instanceof</span> <span class="title class_">AbortSignal</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Pulling this into it’s own function allows us to utilize the <code>is</code> and let the linter know everything below this the type of the object.</p>
+<h2 id="Finalizing-the-code"><a href="#Finalizing-the-code" class="headerlink" title="Finalizing the code"></a>Finalizing the code</h2><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// eslint-disable-next-line @typescript-eslint/no-explicit-any</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">AnyFunction</span> = <span class="function">(<span class="params">...args: <span class="built_in">any</span>[]</span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// eslint-disable-next-line @typescript-eslint/no-explicit-any</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isAbortSignal</span>(<span class="params">signal: <span class="built_in">any</span></span>): signal is <span class="title class_">AbortSignal</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> signal <span class="keyword">instanceof</span> <span class="title class_">AbortSignal</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">timingFunctionWrap</span>(<span class="params">f: AnyFunction, ...args: Parameters&lt;<span class="keyword">typeof</span> f&gt;</span>): <span class="title class_">Promise</span>&lt;<span class="title class_">ReturnType</span>&lt;<span class="keyword">typeof</span> f&gt;&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">time</span>(f.<span class="property">name</span>)</span><br><span class="line">  <span class="keyword">let</span> result = <span class="title function_">f</span>(...args)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (result <span class="keyword">instanceof</span> <span class="title class_">Promise</span>) &#123;</span><br><span class="line">    result = <span class="keyword">await</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(result)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">timeEnd</span>(f.<span class="property">name</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> signal = args.<span class="title function_">pop</span>()</span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_">isAbortSignal</span>(signal) &amp;&amp; signal.<span class="property">aborted</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;f.name&#125;</span> was aborted`</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>So now we have a neat little function which can wrap any function, assert the time it took to finish and notify us if it was aborted.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Adding-timing-for-debuggability"><span class="toc-number">1.</span> <span class="toc-text">Adding timing for debuggability</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#First-few-passes"><span class="toc-number">1.1.</span> <span class="toc-text">First few passes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Signal-handling"><span class="toc-number">1.2.</span> <span class="toc-text">Signal handling</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finalizing-the-code"><span class="toc-number">2.</span> <span class="toc-text">Finalizing the code</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2024/05/generic-functions-for-timing/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2024/05/generic-functions-for-timing/&text=Generic functions with generic arguments for timing"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2024/05/generic-functions-for-timing/&title=Generic functions with generic arguments for timing"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2024/05/generic-functions-for-timing/&is_video=false&description=Generic functions with generic arguments for timing"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Generic functions with generic arguments for timing&body=Check out this article: https://strazzere.com/2024/05/generic-functions-for-timing/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2024/05/generic-functions-for-timing/&title=Generic functions with generic arguments for timing"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2024/05/generic-functions-for-timing/&title=Generic functions with generic arguments for timing"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2024/05/generic-functions-for-timing/&title=Generic functions with generic arguments for timing"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2024/05/generic-functions-for-timing/&title=Generic functions with generic arguments for timing"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2024/05/generic-functions-for-timing/&name=Generic functions with generic arguments for timing&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2024/05/generic-functions-for-timing/&t=Generic functions with generic arguments for timing"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Found this post I ment to put up yesterday, it was actually on an usb drive but I figured I’d throw it up here incase anyone else wanted the information… Enjoy! Been playing around with the Vending.ap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vending.apk aka Market.apk">
+<meta property="og:url" content="https://strazzere.com/2008/12/vendingapk-aka-marketapk/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Found this post I ment to put up yesterday, it was actually on an usb drive but I figured I’d throw it up here incase anyone else wanted the information… Enjoy! Been playing around with the Vending.ap">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2008-12-04T05:58:32.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.097Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="g1">
+<meta property="article:tag" content="market">
+<meta property="article:tag" content="vending.apk">
+<meta property="article:tag" content="market.apk">
+<meta property="article:tag" content="no dex?">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Vending.apk aka Market.apk</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2008/12/the-reverser-and-the-programmer/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2008/12/unknownhostexception-on-androidos/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2008/12/vendingapk-aka-marketapk/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&text=Vending.apk aka Market.apk"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&title=Vending.apk aka Market.apk"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&is_video=false&description=Vending.apk aka Market.apk"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Vending.apk aka Market.apk&body=Check out this article: https://strazzere.com/2008/12/vendingapk-aka-marketapk/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&title=Vending.apk aka Market.apk"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&title=Vending.apk aka Market.apk"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&title=Vending.apk aka Market.apk"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&title=Vending.apk aka Market.apk"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&name=Vending.apk aka Market.apk&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&t=Vending.apk aka Market.apk"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Vending.apk aka Market.apk
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2008-12-04T05:58:32.000Z" class="dt-published" itemprop="datePublished">2008-12-03</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/other/">other</a> › <a class="category-link" href="/categories/android/other/reverse-engineering/">reverse engineering</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/g1/" rel="tag">g1</a>, <a class="p-category" href="/tags/market/" rel="tag">market</a>, <a class="p-category" href="/tags/market-apk/" rel="tag">market.apk</a>, <a class="p-category" href="/tags/no-dex/" rel="tag">no dex?</a>, <a class="p-category" href="/tags/vending-apk/" rel="tag">vending.apk</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>Found this post I ment to put up yesterday, it was actually on an usb drive but I figured I’d throw it up here incase anyone else wanted the information… Enjoy!</p>
+<p>Been playing around with the Vending.apk - which is present only on the G1 device currently, not on the emulator. If you’ve been following any of the threads over at xda-dev you might have seen one discussing how to move the market’s cache to the sdcard. When I re-find this thread I will link it, but for now that’s besides the point. I’m sure other people have been looking for a “market.apk” though after looking at this thread you’ll realize that it is actually “Vending.apk”. Though oddly enough, this .apk does not contain a dalvik-executable (.dex file), though it contains other files that you would normally find in .apk’s.<br>The structure of the Vending.apk from my phone was the following;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line">+ Vending.apk</span><br><span class="line">|</span><br><span class="line">|–+ META-INF</span><br><span class="line">| |</span><br><span class="line">| |– CERT.RSA</span><br><span class="line">| |– CERT.SF</span><br><span class="line">| — MANIFEST.MF</span><br><span class="line">|</span><br><span class="line">|–+res</span><br><span class="line">| |</span><br><span class="line">| |–+ drawable</span><br><span class="line">| | |</span><br><span class="line">| | |– applications.png</span><br><span class="line">| | |– border_youtube_thumbnail.9.png</span><br><span class="line">| | |– border_youtube_thumbnail_pressed.9.png</span><br><span class="line">| | |– border_youtube_thumbnail_selected.9.png</span><br><span class="line">| | |– bottombar_portrait_565.png</span><br><span class="line">| | |– btn_plus_default.png</span><br><span class="line">| | |– checkout_button.png</span><br><span class="line">| | |– dark_header.9.png</span><br><span class="line">| | |– dark_header_dithered.xml</span><br><span class="line">| | |– dots.png</span><br><span class="line">| | |– dotted_line_480px.png</span><br><span class="line">| | |– google_checkout_logo.png</span><br><span class="line">| | |– ic_dialog_flag.png</span><br><span class="line">| | |– ic_dialog_rate.png</span><br><span class="line">| | |– ic_launcher_androidmarket.png</span><br><span class="line">| | |– ic_maps_preferences.png</span><br><span class="line">| | |– ic_menu_clear_rating.png</span><br><span class="line">| | |– ic_menu_flag_content.png</span><br><span class="line">| | |– ic_menu_home.png</span><br><span class="line">| | |– ic_menu_info_details.png</span><br><span class="line">| | |– ic_menu_my_downloads.png</span><br><span class="line">| | |– ic_menu_search.png</span><br><span class="line">| | |– ic_menu_security_setting.png</span><br><span class="line">| | |– ic_menu_stop.png</span><br><span class="line">| | |– ic_vm_application.png</span><br><span class="line">| | |– ic_vm_games.png</span><br><span class="line">| | |– ic_vm_my_downloads.png</span><br><span class="line">| | |– ic_vm_search.png</span><br><span class="line">| | |– ic_vm_thumbnail_big.png</span><br><span class="line">| | |– ic_youtube_add_favorite.png</span><br><span class="line">| | |– menu_favorites.png</span><br><span class="line">| | |– menu_recents.png</span><br><span class="line">| | |– ringtones.png</span><br><span class="line">| | |– star_empty.png</span><br><span class="line">| | |– star_full.png</span><br><span class="line">| | |– star_half.png</span><br><span class="line">| | |– stat_sys_install_complete.png</span><br><span class="line">| | |– thumbnail_background.xml</span><br><span class="line">| | |– vending.png</span><br><span class="line">| | |– vending_small.png</span><br><span class="line">| | |– wallpapers.png</span><br><span class="line">| | |– youtube_carousel_big_default.9.png</span><br><span class="line">| | |– youtube_carousel_big_pressed.9.png</span><br><span class="line">| | |– youtube_carousel_big_selected.9.png</span><br><span class="line">| | |– youtube_carousel_small_default.png</span><br><span class="line">| | |– youtube_carousel_small_pressed.png</span><br><span class="line">| | — youtube_carousel_small_selected.png</span><br><span class="line">| |</span><br><span class="line">| |–+ drawable-finger</span><br><span class="line">| | |</span><br><span class="line">| | |– ic_network_error.png</span><br><span class="line">| | |– ic_tab_newest.xml</span><br><span class="line">| | |– ic_tab_newest_selected.png</span><br><span class="line">| | |– ic_tab_newest_unselected.png</span><br><span class="line">| | |– ic_tab_popular.xml</span><br><span class="line">| | |– ic_tab_popular_selected.png</span><br><span class="line">| | — ic_tab_popular_unselected.png</span><br><span class="line">| |</span><br><span class="line">| |–+ layout</span><br><span class="line">| | |</span><br><span class="line">| | |– asset_browser_carousel.xml</span><br><span class="line">| | |– asset_browser_list_item.xml</span><br><span class="line">| | |– asset_category_browser.xml</span><br><span class="line">| | |– asset_info.xml</span><br><span class="line">| | |– asset_info_description.xml</span><br><span class="line">| | |– asset_info_download_progress.xml</span><br><span class="line">| | |– asset_info_downloads_ratings_header.xml</span><br><span class="line">| | |– asset_info_my_review.xml</span><br><span class="line">| | |– asset_info_section_header.xml</span><br><span class="line">| | |– asset_info_simple_1_medium.xml</span><br><span class="line">| | |– asset_info_simple_2_medium.xml</span><br><span class="line">| | |– asset_list.xml</span><br><span class="line">| | |– asset_list_footer.xml</span><br><span class="line">| | |– asset_list_snippet.xml</span><br><span class="line">| | |– asset_snippet.xml</span><br><span class="line">| | |– asset_thumbnail.xml</span><br><span class="line">| | |– buypage.xml</span><br><span class="line">| | |– combined_results_footer.xml</span><br><span class="line">| | |– combined_results_header.xml</span><br><span class="line">| | |– combined_results_missing.xml</span><br><span class="line">| | |– comment_list_item.xml</span><br><span class="line">| | |– comments_activity.xml</span><br><span class="line">| | |– confirm_permissions.xml</span><br><span class="line">| | |– download_progress.xml</span><br><span class="line">| | |– flag_content.xml</span><br><span class="line">| | |– flag_content_message.xml</span><br><span class="line">| | |– fullscreen_loading_indicator.xml</span><br><span class="line">| | |– my_downloads_activity.xml</span><br><span class="line">| | |– search_no_results.xml</span><br><span class="line">| | |– set_rating.xml</span><br><span class="line">| | |– tos.xml</span><br><span class="line">| | |– uninstall_application.xml</span><br><span class="line">| | — write_review.xml</span><br><span class="line">| |</span><br><span class="line">| |–+ menu</span><br><span class="line">| | |</span><br><span class="line">| | — base.xml</span><br><span class="line">| |</span><br><span class="line">| |–+ xml</span><br><span class="line">| | |</span><br><span class="line">| | |– searchable.xml</span><br><span class="line">| |</span><br><span class="line">|</span><br><span class="line">|– AndroidManifest.xml</span><br><span class="line">— resources.arsc</span><br></pre></td></tr></table></figure>
+
+<p>Looks like they have includes some interesting things, <em>buypage.xml</em>, <em>AndroidManifest.xml</em> (this includes the intents and permissions the applications uses). I tried like many other people I’m sure, installing “Vending.apk” onto the emulator, but you will get a <code>Failure [-11]</code> when pushing it through adb.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2008/12/vendingapk-aka-marketapk/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&text=Vending.apk aka Market.apk"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&title=Vending.apk aka Market.apk"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&is_video=false&description=Vending.apk aka Market.apk"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Vending.apk aka Market.apk&body=Check out this article: https://strazzere.com/2008/12/vendingapk-aka-marketapk/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&title=Vending.apk aka Market.apk"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&title=Vending.apk aka Market.apk"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&title=Vending.apk aka Market.apk"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&title=Vending.apk aka Market.apk"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&name=Vending.apk aka Market.apk&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2008/12/vendingapk-aka-marketapk/&t=Vending.apk aka Market.apk"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

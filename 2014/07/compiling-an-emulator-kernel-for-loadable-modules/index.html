@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="So you want to rootkit the emulator? These are rough notes I took while attempt to get this working on my own machine (OSX 10.8.5) - results may vary. According to random posts I’ve seen, OSX is a bit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Compiling an Android Emulator Kernel for Loadable Kernel Modules">
+<meta property="og:url" content="https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="So you want to rootkit the emulator? These are rough notes I took while attempt to get this working on my own machine (OSX 10.8.5) - results may vary. According to random posts I’ve seen, OSX is a bit">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-07-21T03:47:39.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.088Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="emulator">
+<meta property="article:tag" content="kernel">
+<meta property="article:tag" content="compile">
+<meta property="article:tag" content="LKM">
+<meta property="article:tag" content="qemu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Compiling an Android Emulator Kernel for Loadable Kernel Modules</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2014/07/follow-up-on-android-lkms/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2013/02/loose-documentation-leads-to-easy-disassembler-breakages/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&text=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&title=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&is_video=false&description=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Compiling an Android Emulator Kernel for Loadable Kernel Modules&body=Check out this article: https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&title=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&title=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&title=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&title=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&name=Compiling an Android Emulator Kernel for Loadable Kernel Modules&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&t=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Compiling an Android Emulator Kernel for Loadable Kernel Modules
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2014-07-21T03:47:39.000Z" class="dt-published" itemprop="datePublished">2014-07-20</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/coding/">coding</a> › <a class="category-link" href="/categories/android/coding/reverse-engineering/">reverse engineering</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/LKM/" rel="tag">LKM</a>, <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/compile/" rel="tag">compile</a>, <a class="p-category" href="/tags/emulator/" rel="tag">emulator</a>, <a class="p-category" href="/tags/kernel/" rel="tag">kernel</a>, <a class="p-category" href="/tags/qemu/" rel="tag">qemu</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>So you want to rootkit the emulator? These are rough notes I took while attempt to get this working on my own machine (OSX 10.8.5) - results may vary. According to random posts I’ve seen, OSX is a bit finicky and no one really gets it to work right - Ubuntu everything is apparently just peachy. You’ve been warned though, YMMV.<br><em>If on OSX, you must install libelf - this was the only dependency I was missing. If you don’t have this the build will randomly fail and not be exceptionally helpful about why.</em><br><strong>Building the Kernel</strong><br>Clone emulator kernel directory then get the branch of the kernel we want</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://android.googlesource.com/kernel/goldfish</span><br><span class="line">...</span><br><span class="line">cd goldfish</span><br><span class="line">git checkout -t origin/android-goldfish-2.6.29 -b goldfish</span><br></pre></td></tr></table></figure>
+<p>Before we build the kernel we must configure it, though we don’t want the default configuration (this doesn’t actually let the emulator boot) and we want to ensure LKM support is present. Note that the feature to load is seperate from the unload feature, you must enable both. Let’s first copy the configuration for <code>goldfish_armv7_defconfig</code>. Then manually change the LKM state (<code>goldfish_armv7_defconfig</code> will default to having modules enabled and loadable, but not unloadable) to any features we need.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make ARCH=arm goldfish_armv7_defconfig ...</span><br><span class="line">make ARCH=arm menuconfig</span><br></pre></td></tr></table></figure>
+<p>If you are compiling on OSX, you will want to manually edit the <code>.config</code> file to not include <code>CONFIG_NETFILTER</code>, simply comment this line out before proceeding. You will be prompted to confirm this change prior to compiling as well. If you do not make this change you’ll see an issue similar to this appear;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make[2]: *** No rule to make target \`net/netfilter/xt_CONNMARK.o&#x27;, needed by \`net/netfilter/built-in.o&#x27;. Stop.</span><br><span class="line">make[1]: *** [net/netfilter] Error 2</span><br><span class="line">make: *** [net] Error 2</span><br></pre></td></tr></table></figure>
+<p>Compile the kernel, modify the <code>CROSS_COMPILE</code> switch as necessary for your builders setup;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make ARCH=arm SUB_ARCH=arm CROSS_COMPILE=$ANDROID_NDK_ROOT/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/arm-linux-androideabi-</span><br></pre></td></tr></table></figure>
+<p>If you are unsure where to point <em>CROSS_COMPILE</em>, you can try below to help narrow it down, assuming you have</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ANDROID_NDK_ROOT set;</span><br><span class="line">find $ANDROID_NDK_ROOT | grep &#x27;\\-gcc$&#x27;</span><br></pre></td></tr></table></figure>
+<p><strong>Making the Emulator use the Newly Compiled Kernel</strong><br>The easiest way to use the kernel immediately is to just point an already existing AVD image at it via the emulator command;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emulator -kernel arch/arm/boot/zImage -avd -verbose</span><br></pre></td></tr></table></figure>
+<p>You don’t need -verbose, obviously, though it would be helpful the first time to watch for the potential segfault or if the kernel image was bad. If the “android” doesn’t appear in the emulator box and nothing is streaming to the console, you likely borked one of the above steps. You should try to enable the “Use Host GPU” setting for the avd as well, since this appears to drastically improve performance of the emulator for most MacBook Pros. Another potential way to use the kernel is to copy the kernel from <code>arch/arm/boot/zImage</code> into one of your platforms, this will cause all AVDs using that platform to use the customer kernel. The path for that is something like <code>$ANDROID_SDK_ROOT/system-images/android-17/armeabi-v7a/kernel-qem</code>. If you run into something like below (verbose output from emulator command, happen almost immediately);</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">emulator: Kernel parameters: qemu.gles=0 qemu=1 console=ttyS0 android.qemud=ttyS1 android.checkjni=1 ndns=3 </span><br><span class="line">emulator: Trace file name is not set</span><br><span class="line"></span><br><span class="line">emulator: autoconfig: -scale 0.821094</span><br><span class="line">Segmentation fault: 11</span><br></pre></td></tr></table></figure>
+<p>This is likely from some weirdness in the avd from not shutting down properly (or just using it, the emulator is horrid). The easiest way to recover is just kill it (<code>rm -rf ~/.android/avd/*</code>) and recreate the avd.</p>
+<p><strong>Making a LKM</strong><br>Shortly I’ll post an example to github, but for now here is a very simple LKM that should compile fine. Makefile, should be fully complete, you may need to change the path of both <code>KERNEL_DIR</code> and <code>CCPATH</code>;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">obj-m := android_module.o</span><br><span class="line">KERNEL_DIR := ~/repo/android-kern/goldfish/</span><br><span class="line">CCPATH := $(ANDROID_NDK_ROOT)/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/</span><br><span class="line">CCPATH_EXT := $(CCPATH)arm-linux-androideabi-</span><br><span class="line">EXTRA_CFLAGS=-fno-pic</span><br><span class="line">ARCH=arm</span><br><span class="line">SUBARCH=arm</span><br><span class="line"></span><br><span class="line">all:</span><br><span class="line">        make ARCH=arm CROSS_COMPILE=$(CCPATH_EXT) -C $(KERNEL_DIR) M=$(PWD) modules</span><br><span class="line">clean:</span><br><span class="line">        make -C $(KERNEL_DIR) M=$(PWD) clean</span><br><span class="line">        rm -rf *.c~</span><br><span class="line">        rm -rf *.o</span><br><span class="line">        rm -f modules.order</span><br></pre></td></tr></table></figure>
+
+<p>The helloworld code for android_module;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;linux/module.h&gt;</span><br><span class="line">#include &lt;linux/kernel.h&gt;</span><br><span class="line"></span><br><span class="line">int init_module(void)</span><br><span class="line">&#123;</span><br><span class="line">  printk(KERN_ALERT &quot;Hello android kernel...\\n&quot;);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br><span class="line">void cleanup_module(void)</span><br><span class="line">&#123;</span><br><span class="line">  printk(KERN_INFO &quot;Goodbye android kernel...\\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MODULE_AUTHOR(&quot;Tim &#x27;diff&#x27; Strazzere&quot;);</span><br><span class="line">MODULE_LICENSE(&quot;GPL&quot;); // This prevents a &quot;module license &#x27;unspecified&#x27; taints kernel.&quot; msg</span><br><span class="line">MODULE_VERSION(&quot;1&quot;);</span><br><span class="line">MODULE_DESCRIPTION(&quot;Ptracers gunna ptrace&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>Dump both of these into any directory and run make after making the appropriate changes. You should then have an android_module.ko file. From here just push it to the emulator via adb, then use insmod&#x2F;lsmod&#x2F;rmmod as needed and enjoy. Depending on the time I have for the rest of the week, I’ll try to dump some kernel modules I’ve written and used for malware analysis on my github.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&text=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&title=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&is_video=false&description=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Compiling an Android Emulator Kernel for Loadable Kernel Modules&body=Check out this article: https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&title=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&title=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&title=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&title=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&name=Compiling an Android Emulator Kernel for Loadable Kernel Modules&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2014/07/compiling-an-emulator-kernel-for-loadable-modules/&t=Compiling an Android Emulator Kernel for Loadable Kernel Modules"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

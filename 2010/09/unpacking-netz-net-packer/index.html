@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It’s actually pretty trivial to do this, though it seemed like something that could be mildly interesting to post on. While it’s written in C# .Net itself, it means we can pretty much see exactly what">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unpacking &quot;netz .Net packer&quot;">
+<meta property="og:url" content="https://strazzere.com/2010/09/unpacking-netz-net-packer/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="It’s actually pretty trivial to do this, though it seemed like something that could be mildly interesting to post on. While it’s written in C# .Net itself, it means we can pretty much see exactly what">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2010-09-02T00:11:27.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.097Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="reversing">
+<meta property="article:tag" content=".net unpacking">
+<meta property="article:tag" content="netz">
+<meta property="article:tag" content="unpacker">
+<meta property="article:tag" content="unpacking">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Unpacking &#34;netz .Net packer&#34;</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2010/09/getinstallerpackagename-take-that-mr-pirate/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2010/08/sc2-for-mac-os-x-and-memory-readingwriting/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2010/09/unpacking-netz-net-packer/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&text=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&title=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&is_video=false&description=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Unpacking &#34;netz .Net packer&#34;&body=Check out this article: https://strazzere.com/2010/09/unpacking-netz-net-packer/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&title=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&title=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&title=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&title=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&name=Unpacking &#34;netz .Net packer&#34;&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2010/09/unpacking-netz-net-packer/&t=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Unpacking &#34;netz .Net packer&#34;
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2010-09-02T00:11:27.000Z" class="dt-published" itemprop="datePublished">2010-09-01</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/random/">random</a> › <a class="category-link" href="/categories/random/reversing/">reversing</a> › <a class="category-link" href="/categories/random/reversing/windows/">windows</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/net-unpacking/" rel="tag">.net unpacking</a>, <a class="p-category" href="/tags/netz/" rel="tag">netz</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>, <a class="p-category" href="/tags/reversing/" rel="tag">reversing</a>, <a class="p-category" href="/tags/unpacker/" rel="tag">unpacker</a>, <a class="p-category" href="/tags/unpacking/" rel="tag">unpacking</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>It’s actually pretty trivial to do this, though it seemed like something that could be mildly interesting to post on. While it’s written in C# .Net itself, it means we can pretty much see exactly whats going on - so it’s lends itself to be a pretty easy example for people who have never actually done any unpacking before. It also lets to understand the concept of unpacking from a programmers prospective of actually packing it.</p>
+<p>A little backstory to this is, someone sent me a “hack” for diablo2 and said it wasn’t working for them. Why they sent me this? I have no idea, but I figured I’d just take a look at it and see what was going on. Turns out it was a password stealer for d2 written in .Net - pretty cool looking stuff. The funny part about it all was that since this was “packed” with netz the person who sent me it couldn’t use reflector on it (and succeed) - thus why they sent it to me I guess. Anyway, let’s get down to the actual meat of the post. </p>
+<p>Identification of netz is pretty simple - if you open up the application in Reflector, you’ll see the namespace <code>nets</code>. Also it will almost always be accompanied by a <code>zip.dll</code>, which is used for decompressing the resource. Essentially the main function we want to look at is <code>StartApp</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public static int StartApp(string[] args)</span><br><span class="line">&#123;</span><br><span class="line">    byte[] resource = GetResource(&quot;213213-2131223-2134234-234&quot;);</span><br><span class="line">    if (resource == null)</span><br><span class="line">    &#123;</span><br><span class="line">        throw new Exception(&quot;application data cannot be found&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    int num = InvokeApp(GetAssembly(resource), args);</span><br><span class="line">    resource = null;</span><br><span class="line">    return num;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>From here we can see that a resource of bytes is going to be loaded, and <code>GetAssembly</code> is called with it as an argument. Go dump the resource listed here into some directory, I named mine <code>virgin.dump</code>. <code>GetAssembly</code> is a pretty simple function that I’m not going to dive into, it essentially calls <code>UnZip(byte[] data)</code>. This code is a little more interesting and is doing the most work we’re interested in, here is small snippet;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">private static MemoryStream UnZip(byte[] data) &#123;</span><br><span class="line">    MemoryStream baseInputStream = null;</span><br><span class="line">    MemoryStream stream2 = null;</span><br><span class="line">    InflaterInputStream stream3 = null;</span><br><span class="line"></span><br><span class="line">    baseInputStream = new MemoryStream(data);</span><br><span class="line">    stream2 = new MemoryStream();</span><br><span class="line">    stream3 = new InflaterInputStream(baseInputStream);</span><br><span class="line">    byte[] buffer = new byte[data.Length];</span><br><span class="line">    while (true)</span><br><span class="line">    &#123;</span><br><span class="line">       int count = stream3.Read(buffer, 0, buffer.Length);</span><br><span class="line">        if (count &lt;= 0)</span><br><span class="line">        &#123;</span><br><span class="line">           break;</span><br><span class="line">        &#125;</span><br><span class="line">        stream2.Write(buffer, 0, count);</span><br><span class="line">    &#125;</span><br><span class="line">    stream2.Flush();</span><br><span class="line">    stream2.Seek(0L, SeekOrigin.Begin);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Ah, this looks familiar! In fact - thanks to Reflector it’s pretty much almost exactly Java code. All we need to do is inflate the resource and dump it to a file - there isn’t any encryption or anything special about it at all. Basically by looking at the code above, I through together a small little resource inflater:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import java.io.FileInputStream;</span><br><span class="line">import java.io.FileOutputStream;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.util.zip.InflaterInputStream;</span><br><span class="line"></span><br><span class="line">public class inflater &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            FileInputStream inStream = new FileInputStream(args[0]);</span><br><span class="line">            InflaterInputStream inflaterStream = new InflaterInputStream(inStream);</span><br><span class="line">            FileOutputStream outStreams = new FileOutputStream(args[0] + &quot;_unpacked&quot;);</span><br><span class="line">            for (int c = inflaterStream.read(); c != -1; c = inflaterStream.read()) &#123;</span><br><span class="line">                outStreams.write(c);</span><br><span class="line">            &#125;</span><br><span class="line">            outStreams.close();</span><br><span class="line">        &#125; catch (IOException ex) &#123;</span><br><span class="line">            System.err.println(ex);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Is this anything special? No, but it worked for me and my quick little need for it. Could you use a Generic .Net unpacker? Of course, I just did this since I wasn’t running Windows and didn’t want to fire up a VM instance just to debug and dump a little .Net application. :)</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2010/09/unpacking-netz-net-packer/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&text=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&title=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&is_video=false&description=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Unpacking &#34;netz .Net packer&#34;&body=Check out this article: https://strazzere.com/2010/09/unpacking-netz-net-packer/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&title=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&title=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&title=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&title=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2010/09/unpacking-netz-net-packer/&name=Unpacking &#34;netz .Net packer&#34;&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2010/09/unpacking-netz-net-packer/&t=Unpacking &#34;netz .Net packer&#34;"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

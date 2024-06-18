@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="So haven’t been around for a while, due to the flu. So it gave me plenty of time to play PapiJump and PapiRiver. Though I kind of got interested in the method of high scores so I took a more indepth l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="papihack?!">
+<meta property="og:url" content="https://strazzere.com/2009/01/papihack/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="So haven’t been around for a while, due to the flu. So it gave me plenty of time to play PapiJump and PapiRiver. Though I kind of got interested in the method of high scores so I took a more indepth l">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/01/papijump-04-200x300.png">
+<meta property="article:published_time" content="2009-01-21T01:21:14.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.094Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="bytecode">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="games">
+<meta property="article:tag" content="high score">
+<meta property="article:tag" content="papicheat">
+<meta property="article:tag" content="papihack">
+<meta property="article:tag" content="papihack.java">
+<meta property="article:tag" content="papijump">
+<meta property="article:tag" content="papipwn">
+<meta property="article:tag" content="papiriver">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/01/papijump-04-200x300.png">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>papihack?!</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2009/01/using-dedexer-by-gabor/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2009/01/dexdump-alternatives/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/01/papihack/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/01/papihack/&text=papihack?!"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/01/papihack/&title=papihack?!"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/01/papihack/&is_video=false&description=papihack?!"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=papihack?!&body=Check out this article: https://strazzere.com/2009/01/papihack/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/01/papihack/&title=papihack?!"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/01/papihack/&title=papihack?!"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/01/papihack/&title=papihack?!"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/01/papihack/&title=papihack?!"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/01/papihack/&name=papihack?!&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/01/papihack/&t=papihack?!"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        papihack?!
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2009-01-21T01:21:14.000Z" class="dt-published" itemprop="datePublished">2009-01-20</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/bytecode/" rel="tag">bytecode</a>, <a class="p-category" href="/tags/games/" rel="tag">games</a>, <a class="p-category" href="/tags/high-score/" rel="tag">high score</a>, <a class="p-category" href="/tags/java/" rel="tag">java</a>, <a class="p-category" href="/tags/papicheat/" rel="tag">papicheat</a>, <a class="p-category" href="/tags/papihack/" rel="tag">papihack</a>, <a class="p-category" href="/tags/papihack-java/" rel="tag">papihack.java</a>, <a class="p-category" href="/tags/papijump/" rel="tag">papijump</a>, <a class="p-category" href="/tags/papipwn/" rel="tag">papipwn</a>, <a class="p-category" href="/tags/papiriver/" rel="tag">papiriver</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="http://173.230.150.16/blog/wp-content/uploads/2009/01/papijump-04-200x300.png" alt="Oh no, papihack!" title="13371337?! Oh no! papihack!"><br>So haven’t been around for a while, due to the flu. So it gave me plenty of time to play PapiJump and PapiRiver. Though I kind of got interested in the method of high scores so I took a more indepth look at it. I’ll posted all the code to emulator a papi* score submit. I took out the little tidbit that actually sends the request, so this just prints to the screen. I’ve also removed the “secret keys” which wouldn’t be too hard to find if your <em>really</em> wanted to use this.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * @file papihack.java</span><br><span class="line"> *</span><br><span class="line"> * @author Tim Strazzere</span><br><span class="line"> *</span><br><span class="line"> * @date Jan 20th, 2009 (finished same day)</span><br><span class="line"> *</span><br><span class="line"> * @desc:</span><br><span class="line"> *    An attempt to spoof the high score function of papijump,</span><br><span class="line"> *    and papiriver since they are just different secret keys</span><br><span class="line"> *</span><br><span class="line"> *    should produce a url similar to:</span><br><span class="line"> *</span><br><span class="line"> *    http://www.sunflat.net/android/cmd/postSc?gid=2001&amp;v=1.0.1&amp;lid=1&amp;tid=4232145dfg8432145&amp;dt=1232488839&amp;sc=39927&amp;ha=1007200355&amp;tt=1&amp;tn=T-Mobile+G1+Vi116143</span><br><span class="line"> *    [broken down]</span><br><span class="line"> *    http://www.sunflat.net/android/cmd/postSc?</span><br><span class="line"> *    // game id</span><br><span class="line"> *    gid=2000</span><br><span class="line"> *    // game version</span><br><span class="line"> *    &amp;v=1.0.0</span><br><span class="line"> *    // license?</span><br><span class="line"> *    &amp;lid=1</span><br><span class="line"> *    // terminal id</span><br><span class="line"> *    &amp;tid=4232145dfg8432145</span><br><span class="line"> *    // date / 1000</span><br><span class="line"> *    &amp;dt=1232171270</span><br><span class="line"> *</span><br><span class="line"> *    // score?</span><br><span class="line"> *    &amp;sc=844</span><br><span class="line"> *    // CRC&#x27;ed hash</span><br><span class="line"> *    &amp;ha=3817043337</span><br><span class="line"> *</span><br><span class="line"> *    // eh? always 1</span><br><span class="line"> *    &amp;tt=1</span><br><span class="line"> *    // terminal name</span><br><span class="line"> *    &amp;tn=T-Mobile+G1+Vi116143</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">import java.io.UnsupportedEncodingException;</span><br><span class="line">import java.util.Date;</span><br><span class="line">import java.util.zip.CRC32;</span><br><span class="line">import java.util.zip.Checksum;</span><br><span class="line"></span><br><span class="line">public class papihack &#123;</span><br><span class="line">	public static void main(String[] args) throws UnsupportedEncodingException&#123;</span><br><span class="line">		String comma = &quot;,&quot;;</span><br><span class="line">		//String appVersion = &quot;1.0.0&quot;; // version for papijump</span><br><span class="line">		String appVersion = &quot;1.0.1&quot;; // version for papiriver</span><br><span class="line">		//String secretKey = &quot;6977616e74746f6368656174&quot;; // secret key for papijump</span><br><span class="line">		String secretKey = &quot;69276d616368656174657221&quot;; // secret key for papriver</span><br><span class="line">		String terminalName = &quot;T-Mobile G1 Vi116143&quot;; // (Build.Model + &quot; Vi&quot; + Build.Version.Incremental) (needs to be websafe)</span><br><span class="line">		String terminalID = &quot;4232145dfg8432145&quot;; // (Android_ID)</span><br><span class="line">		//String gameID = &quot;2000&quot;; // papijump game id</span><br><span class="line">		String gameID = &quot;2001&quot;; // papiriver game id</span><br><span class="line">		String lid = &quot;1&quot;;</span><br><span class="line">		String score = &quot;39927&quot;; // score you want</span><br><span class="line">		String postUrl = &quot;http://www.sunflat.net/android/cmd/postSc?&quot;;</span><br><span class="line"></span><br><span class="line">		Date date = new Date();</span><br><span class="line">    	long dateLong = date.getTime()/1000;</span><br><span class="line"></span><br><span class="line">    	StringBuilder hash = new StringBuilder();</span><br><span class="line">    	hash.append(gameID + comma</span><br><span class="line">    			+ appVersion + comma</span><br><span class="line">    			+ lid + comma</span><br><span class="line">    			+ terminalID + comma</span><br><span class="line">    			+ dateLong + comma</span><br><span class="line">    			+ secretKey + comma</span><br><span class="line">    			+ score);</span><br><span class="line">    	StringBuilder newHash = new StringBuilder(hash.toString().valueOf(hash));</span><br><span class="line"></span><br><span class="line">    	newHash.append(&quot;,tt1&quot;);</span><br><span class="line"></span><br><span class="line">    	Checksum checksum = new CRC32();</span><br><span class="line">    	byte[] bytes = new byte[1024];</span><br><span class="line">    	int len = newHash.toString().length();</span><br><span class="line">    	Long value;</span><br><span class="line"></span><br><span class="line">    	bytes = newHash.toString().getBytes(&quot;UTF-8&quot;);</span><br><span class="line">    	checksum.update(bytes, 0, len);</span><br><span class="line">    	value = checksum.getValue();</span><br><span class="line"></span><br><span class="line">    	StringBuilder url = new StringBuilder();</span><br><span class="line">    	url.append(postUrl);</span><br><span class="line">    	url.append(&quot;gid=&quot; + gameID);</span><br><span class="line">    	url.append(&quot;v=&quot; + appVersion);</span><br><span class="line">    	url.append(&quot;lid=&quot; + lid);</span><br><span class="line">    	url.append(&quot;tid=&quot; + terminalID);</span><br><span class="line">    	url.append(&quot;dt=&quot; + dateLong);</span><br><span class="line">    	url.append(&quot;sc=&quot; + score);</span><br><span class="line">    	url.append(&quot;ha=&quot; + value.toString());</span><br><span class="line">    	url.append(&quot;tt=1&quot;); // const ?</span><br><span class="line">    	url.append(&quot;tn=&quot; + terminalName);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    	System.out.println(url.toString());</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Ah, also - kudos to anyone who figures out what I replaced the keys with. It’s sort of a little joke…</p>
+<p>On a little after thought, maybe it should be called papipwn? Eh - oh well, either way it will be easily bannable&#x2F;removable by the administrators. It’s not hard as they are linked to your specific android id so I wouldn’t recommend using this or if you do, going over board with it.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/01/papihack/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/01/papihack/&text=papihack?!"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/01/papihack/&title=papihack?!"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/01/papihack/&is_video=false&description=papihack?!"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=papihack?!&body=Check out this article: https://strazzere.com/2009/01/papihack/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/01/papihack/&title=papihack?!"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/01/papihack/&title=papihack?!"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/01/papihack/&title=papihack?!"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/01/papihack/&title=papihack?!"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/01/papihack/&name=papihack?!&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/01/papihack/&t=papihack?!"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

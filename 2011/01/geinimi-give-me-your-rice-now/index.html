@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="So lately I’ve had the pleasure of reversing the latest Android threat, Geinimi, and boy - it sure is something else! I don’t want to go too much into depth for it here as it’s already been torn apart">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Geinimi - Give me your rice... NOW!">
+<meta property="og:url" content="https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="So lately I’ve had the pleasure of reversing the latest Android threat, Geinimi, and boy - it sure is something else! I don’t want to go too much into depth for it here as it’s already been torn apart">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2011-01-08T00:57:17.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.090Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="google">
+<meta property="article:tag" content="detection">
+<meta property="article:tag" content="geinimi">
+<meta property="article:tag" content="lookout">
+<meta property="article:tag" content="nmap">
+<meta property="article:tag" content="teardown">
+<meta property="article:tag" content="trojan">
+<meta property="article:tag" content="virus">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Geinimi - Give me your rice... NOW!</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2011/03/detecting-android-devices-that-are-blocking-ads/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2010/11/insecure-spyware-and-the-ransomware-counterparts/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&text=Geinimi - Give me your rice... NOW!"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&title=Geinimi - Give me your rice... NOW!"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&is_video=false&description=Geinimi - Give me your rice... NOW!"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Geinimi - Give me your rice... NOW!&body=Check out this article: https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&title=Geinimi - Give me your rice... NOW!"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&title=Geinimi - Give me your rice... NOW!"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&title=Geinimi - Give me your rice... NOW!"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&title=Geinimi - Give me your rice... NOW!"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&name=Geinimi - Give me your rice... NOW!&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&t=Geinimi - Give me your rice... NOW!"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Geinimi - Give me your rice... NOW!
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2011-01-08T00:57:17.000Z" class="dt-published" itemprop="datePublished">2011-01-07</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/detection/" rel="tag">detection</a>, <a class="p-category" href="/tags/geinimi/" rel="tag">geinimi</a>, <a class="p-category" href="/tags/google/" rel="tag">google</a>, <a class="p-category" href="/tags/lookout/" rel="tag">lookout</a>, <a class="p-category" href="/tags/nmap/" rel="tag">nmap</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>, <a class="p-category" href="/tags/teardown/" rel="tag">teardown</a>, <a class="p-category" href="/tags/trojan/" rel="tag">trojan</a>, <a class="p-category" href="/tags/virus/" rel="tag">virus</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>So lately I’ve had the pleasure of reversing the latest Android threat, <a target="_blank" rel="noopener" href="http://blog.mylookout.com/2010/12/geinimi_trojan/">Geinimi</a>, and boy - it sure is something else!</p>
+<p>I don’t want to go too much into depth for it here as it’s already been torn apart and posted on my works blog. Our <a target="_blank" rel="noopener" href="http://blog.mylookout.com/2011/01/geinimi-trojan-technical-analysis/">latest release</a> has all the technical details outlined and a <a target="_blank" rel="noopener" href="http://blog.mylookout.com/_media/Geinimi_Trojan_Teardown.pdf">full teardown in pdf form</a>.</p>
+<p>Something I will post here is a nerfed script from Jaime Blasco, a newly found friend of mine who works for AlienVault. He posted a <a target="_blank" rel="noopener" href="http://www.alienvault.com/blog/jaime/2011/Jan/04">nifty nmap script</a> for detecting Geinimi infected devices. His original script can be found on his blog post, though I’m done some minor improvements to it;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">description = [[</span><br><span class="line">Detect if Geinimi trojan is present</span><br><span class="line">]]</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">-- @output</span><br><span class="line">-- PORT   STATE SERVICE</span><br><span class="line">-- 5432/tcp open  postgresql</span><br><span class="line">-- |_geinimi: Geinimi trojan present</span><br><span class="line">-- 8791/tcp open</span><br><span class="line">-- |_geinimi: Geinimi CMD plugin found and accepting commands</span><br><span class="line"></span><br><span class="line">description = &quot;Scan for Geinimi Trojan&quot;</span><br><span class="line"></span><br><span class="line">author = &quot;(Original) - Jaime Blasco jaime.blasco@alienvault.com (Updates) - Tim Strazzere tim.strazzere@mylookout.com&quot;</span><br><span class="line"></span><br><span class="line">license = &quot;Same as Nmap--See http://nmap.org/book/man-legal.html&quot;</span><br><span class="line"></span><br><span class="line">categories = &#123;&quot;discovery&quot;, &quot;safe&quot;&#125;</span><br><span class="line"></span><br><span class="line">require &quot;comm&quot;</span><br><span class="line">require &quot;shortport&quot;</span><br><span class="line">local stdnse = require &quot;stdnse&quot;</span><br><span class="line"></span><br><span class="line">portrule = shortport.portnumber(&#123;5432, 4501, 6543, 8791&#125;, &#123;&quot;tcp&quot;&#125;)</span><br><span class="line"></span><br><span class="line">action = function(host, port)</span><br><span class="line">       local try = nmap.new_try()</span><br><span class="line">       if (port.number == 8791) then</span><br><span class="line">          local response = try(comm.exchange(host, port, &quot;hi,xiaolu&quot;, &#123;lines=100, proto=port.protocol, timeout=5000&#125;))</span><br><span class="line">          if (response:find &quot;hi,liqian&quot;) then</span><br><span class="line">             local response = try(comm.exchange(host, port, &quot;CMD id&quot;, &#123;lines=100, proto=port.protocol, timeout=5000&#125;))</span><br><span class="line">             if (response:find &quot;command ok&quot;) then</span><br><span class="line">                try(comm.exchange(host, port, &quot;bye&quot;, &#123;lines=100, proto=port.protocol, timeout=5000&#125;))</span><br><span class="line">                return &quot;Geinimi CMD plugin found and accepting commands&quot;</span><br><span class="line">             else</span><br><span class="line">                return &quot;Geinimi CMD plugin found, but not accepting commands&quot;</span><br><span class="line">             end</span><br><span class="line">          end</span><br><span class="line">       else</span><br><span class="line">          local response = try(comm.exchange(host, port, &quot;hi,are you online?&quot;, &#123;lines=100, proto=port.protocol, timeout=5000&#125;))</span><br><span class="line">          if (response:find &quot;yes,I&#x27;m online!&quot;) then</span><br><span class="line">             return &quot;Geinimi trojan present&quot;</span><br><span class="line">          end</span><br><span class="line">       end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>Essentially I’ve added the three extra ports that the main Geinimi service will bind too. The main port is still 5432, though it can attempt to connect on the other two ports. The other thing I’ve added was a check to the presumed command plugin that a Geinimi device may also have, which is bound on port 8791.</p>
+<p>Hopefully everyone enjoys the teardown and maybe this script would be useful for anyone who is interested in auditing their network of multiple Android devices.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&text=Geinimi - Give me your rice... NOW!"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&title=Geinimi - Give me your rice... NOW!"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&is_video=false&description=Geinimi - Give me your rice... NOW!"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Geinimi - Give me your rice... NOW!&body=Check out this article: https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&title=Geinimi - Give me your rice... NOW!"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&title=Geinimi - Give me your rice... NOW!"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&title=Geinimi - Give me your rice... NOW!"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&title=Geinimi - Give me your rice... NOW!"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&name=Geinimi - Give me your rice... NOW!&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2011/01/geinimi-give-me-your-rice-now/&t=Geinimi - Give me your rice... NOW!"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

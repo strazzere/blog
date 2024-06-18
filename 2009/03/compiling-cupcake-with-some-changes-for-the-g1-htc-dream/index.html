@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Currently working on some random things on the Android OS source - which of course if I can get my little, “additions”, to work properly I’ll be releasing them. Though I was having a few problems gett">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Compiling cupcake with some changes for the G1 (HTC Dream)">
+<meta property="og:url" content="https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Currently working on some random things on the Android OS source - which of course if I can get my little, “additions”, to work properly I’ll be releasing them. Though I was having a few problems gett">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/03/android-cupcake-200x300.jpg">
+<meta property="article:published_time" content="2009-03-24T06:34:32.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.088Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="android os">
+<meta property="article:tag" content="g1">
+<meta property="article:tag" content="google">
+<meta property="article:tag" content="compile">
+<meta property="article:tag" content="cupcake">
+<meta property="article:tag" content="donut">
+<meta property="article:tag" content="extract-files.sh">
+<meta property="article:tag" content="make">
+<meta property="article:tag" content="master">
+<meta property="article:tag" content="source.android.com">
+<meta property="article:tag" content="tmobile">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/03/android-cupcake-200x300.jpg">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Compiling cupcake with some changes for the G1 (HTC Dream)</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2009/04/android-turrent-defense-badge-system-under-the-hood/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2009/03/spoofing-your-android-id/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&text=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&title=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&is_video=false&description=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Compiling cupcake with some changes for the G1 (HTC Dream)&body=Check out this article: https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&title=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&title=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&title=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&title=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&name=Compiling cupcake with some changes for the G1 (HTC Dream)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&t=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Compiling cupcake with some changes for the G1 (HTC Dream)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2009-03-24T06:34:32.000Z" class="dt-published" itemprop="datePublished">2009-03-23</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/coding/">coding</a> › <a class="category-link" href="/categories/android/coding/updating/">updating</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/android-os/" rel="tag">android os</a>, <a class="p-category" href="/tags/compile/" rel="tag">compile</a>, <a class="p-category" href="/tags/cupcake/" rel="tag">cupcake</a>, <a class="p-category" href="/tags/donut/" rel="tag">donut</a>, <a class="p-category" href="/tags/extract-files-sh/" rel="tag">extract-files.sh</a>, <a class="p-category" href="/tags/g1/" rel="tag">g1</a>, <a class="p-category" href="/tags/google/" rel="tag">google</a>, <a class="p-category" href="/tags/make/" rel="tag">make</a>, <a class="p-category" href="/tags/master/" rel="tag">master</a>, <a class="p-category" href="/tags/source-android-com/" rel="tag">source.android.com</a>, <a class="p-category" href="/tags/tmobile/" rel="tag">tmobile</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="http://173.230.150.16/blog/wp-content/uploads/2009/03/android-cupcake-200x300.jpg" alt="Easier than baking a cake!" title="Compiling cupcake..."><br>Currently working on some random things on the <a target="_blank" rel="noopener" href="http://source.android.com/">Android OS source</a> - which of course if I can get my little, “additions”, to work properly I’ll be releasing them. Though I was having a few problems getting the code to compile - so I figured I’d throw together this post just in case anyone else is having similar trouble.</p>
+<p>Essentially in the post I was originally reading <a target="_blank" rel="noopener" href="http://forum.xda-developers.com/showthread.php?t=462512">here</a>, stated the following;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">At the time of writing, the Android Dream build was broken. I needed to do the following to make it work:</span><br><span class="line">* Several (relatively minor) changes in the Dream audio driver code to fix compilation issues.</span><br><span class="line">* Copied libOmxCore.so to mydroid/out/target/product/dream/system/lib (this was a missing step in the Building for Dream documentation, and something that should be in the HTC provided script)</span><br></pre></td></tr></table></figure>
+<p>Well that wasn’t the problem I was getting though – the error I had been getting was actually:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">In file included from frameworks/base/libs/audioflinger/AudioResamplerCubic.cpp:20:</span><br><span class="line">system/core/include/cutils/log.h:68:1: warning: this is the location of the previous definition</span><br><span class="line">target thumb C++: libaudioflinger &lt;= frameworks/base/libs/audioflinger/AudioFlinger.cpp make: *** No rule to make target out/target/product/dream/obj/lib/libaudio.so’, needed by out/target/product/dream/obj/SHARED_LIBRARIES/libaudioflinger_intermediates/LINKED/libaudioflinger.so’. Stop.</span><br><span class="line">…</span><br><span class="line">make: *** No rule to make target /tmp/dream/target/product/dream/obj/lib/libcamera.so&#x27;, needed by /tmp/dream/target/product/dream/obj/SHARED_LIBRARIES/libcameraservice_intermediates/LINKED/libcameraservice.so’. Stop.</span><br><span class="line">…</span><br><span class="line">make: *** No rule to make target /tmp/dream/target/product/dream/obj/lib/libOmxCore.so&#x27;, needed by /tmp/dream/target/product/dream/obj/SHARED_LIBRARIES/libopencorecommon_intermediates/LINKED/libopencorecommon.so’. Stop.</span><br><span class="line">…</span><br><span class="line">/media/other-storage/mydroid/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin/../lib/gcc/arm-eabi/4.2.1/../../../../arm-eabi/bin/ld: warning: librpc.so, needed by /tmp/dream/target/product/dream/obj/lib/libaudio.so, not found (try using -rpath or -rpath-link)</span><br><span class="line">…</span><br><span class="line">make: *** No rule to make target /tmp/dream/target/product/dream/system/lib/libaudio.so&#x27;, needed by /tmp/dream/target/product/dream/system/lib/libaudioflinger.so’. Stop.</span><br><span class="line">…</span><br><span class="line">make: *** No rule to make target /tmp/dream/target/product/dream/system/lib/libcamera.so&#x27;, needed by /tmp/dream/target/product/dream/system/lib/libcameraservice.so’. Stop.</span><br><span class="line">…</span><br><span class="line">make: *** No rule to make target /tmp/dream/target/product/dream/system/lib/libOmxCore.so&#x27;, needed by /tmp/dream/target/product/dream/system/lib/libopencorecommon.so’. Stop.</span><br></pre></td></tr></table></figure>
+<p>(This list was compiled over multiple re-runs of make)</p>
+<p>The simple fix was essentially what was stated in the original post, though it just took me a few minutes to figure this out. After running the locate command like a mad man and not finding anything on my developer machine, I finally reread <em>everything</em> and checked the device for the file – and there it was!</p>
+<p>I just ended up throwing this into my <code>extract-files.sh</code>;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">adb pull /system/lib/libaudio.so proprietary/libaudio.so</span><br><span class="line">adb pull /system/lib/libcamera.so proprietary/libcamera.so</span><br><span class="line">adb pull /system/lib/libOmxCore.so proprietary/libOmxCore.so</span><br><span class="line">adb pull /system/lib/librpc.so proprietary/librpc.so</span><br></pre></td></tr></table></figure>
+<p>So my resulting file looked like this;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line"></span><br><span class="line">mkdir -p proprietary</span><br><span class="line">adb pull /system/etc/AudioFilter.csv proprietary/AudioFilter.csv</span><br><span class="line">adb pull /system/etc/AudioPara4.csv proprietary/AudioPara4.csv</span><br><span class="line">adb pull /system/etc/gps.conf proprietary/gps.conf</span><br><span class="line">adb pull /system/bin/akmd proprietary/akmd</span><br><span class="line">adb pull /system/lib/libhtc_ril.so proprietary/libhtc_ril.so</span><br><span class="line">adb pull /system/lib/libaudioeq.so proprietary/libaudioeq.so</span><br><span class="line">adb pull /system/lib/libqcamera.so proprietary/libqcamera.so</span><br><span class="line">adb pull /system/lib/libaudio.so proprietary/libaudio.so</span><br><span class="line">adb pull /system/lib/libcameraservice.so proprietary/libcameraservice.so</span><br><span class="line">adb pull /system/lib/libcamera.so proprietary/libcamera.so</span><br><span class="line">adb pull /system/lib/libOmxCore.so proprietary/libOmxCore.so</span><br><span class="line">adb pull /system/lib/librpc.so proprietary/librpc.so</span><br><span class="line">chmod 755 proprietary/akmd</span><br><span class="line"></span><br><span class="line">adb pull /system/etc/wifi/Fw1251r1c.bin proprietary/Fw1251r1c.bin</span><br><span class="line">adb pull /system/etc/wifi/tiwlan.ini proprietary/tiwlan.ini</span><br></pre></td></tr></table></figure>
+
+<p><code>libaudio.so</code>, <code>libcameraservice.so</code>, <code>libcamera.so</code>, <code>libOmxCore.so</code>, <code>librpc.so</code> then needed to be copied over to <code>TARGET/dream/target/product/dream/obj/lib/</code> and also to the locked folder <code>TARGET/dream/target/product/dream/system/lib/</code></p>
+<p>Ta-da! After approximately 10 runs, it finally compiled for me… Hopefully this helps anyone who ran into the same problems as me.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&text=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&title=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&is_video=false&description=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Compiling cupcake with some changes for the G1 (HTC Dream)&body=Check out this article: https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&title=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&title=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&title=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&title=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&name=Compiling cupcake with some changes for the G1 (HTC Dream)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/&t=Compiling cupcake with some changes for the G1 (HTC Dream)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

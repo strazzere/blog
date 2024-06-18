@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="So recently I got an email asking about spoofing your Android ID, normally I just redirect people to my other articles, but I guess this one was different. The person specifically was looking to test">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Detecting an emulator, and getting around detection">
+<meta property="og:url" content="https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="So recently I got an email asking about spoofing your Android ID, normally I just redirect people to my other articles, but I guess this one was different. The person specifically was looking to test">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2010-09-23T22:10:40.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.089Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="emulator">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="Android_ID">
+<meta property="article:tag" content="android.provider.system.settings">
+<meta property="article:tag" content="emulator detection">
+<meta property="article:tag" content="secure.android_id">
+<meta property="article:tag" content="spoof id">
+<meta property="article:tag" content="spoofing android_id">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Detecting an emulator, and getting around detection</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2010/10/back-to-the-basics/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2010/09/getinstallerpackagename-take-that-mr-pirate/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&text=Detecting an emulator, and getting around detection"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&title=Detecting an emulator, and getting around detection"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&is_video=false&description=Detecting an emulator, and getting around detection"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Detecting an emulator, and getting around detection&body=Check out this article: https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&title=Detecting an emulator, and getting around detection"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&title=Detecting an emulator, and getting around detection"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&title=Detecting an emulator, and getting around detection"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&title=Detecting an emulator, and getting around detection"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&name=Detecting an emulator, and getting around detection&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&t=Detecting an emulator, and getting around detection"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Detecting an emulator, and getting around detection
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2010-09-23T22:10:40.000Z" class="dt-published" itemprop="datePublished">2010-09-23</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/reverse-engineering/">reverse engineering</a> › <a class="category-link" href="/categories/android/reverse-engineering/secure-code/">secure code</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Android-ID/" rel="tag">Android_ID</a>, <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/android-provider-system-settings/" rel="tag">android.provider.system.settings</a>, <a class="p-category" href="/tags/emulator/" rel="tag">emulator</a>, <a class="p-category" href="/tags/emulator-detection/" rel="tag">emulator detection</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>, <a class="p-category" href="/tags/secure-android-id/" rel="tag">secure.android_id</a>, <a class="p-category" href="/tags/spoof-id/" rel="tag">spoof id</a>, <a class="p-category" href="/tags/spoofing-android-id/" rel="tag">spoofing android_id</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>So recently I got an email asking about spoofing your Android ID, normally I just redirect people to my other articles, but I guess this one was different. The person specifically was looking to test applications on their emulator, and needed to avoid “emulator detection”. It didn’t seem like anything tricky - but I googled quick with not many results returned. The things that where returned where pretty… Well - overcomplicated. My first thought was that this should just be located in one of the many sqlite3 db’s - and it turns out it was. Simple little work around yet again, have to love those!</p>
+<p>First off, lets see how most applications detect emulators. It’s done using a simple call to <em>Secure.getString()</em> using <em>Secure.ANDROID_ID</em> (previously this was done using <em>System.getString()</em> and <em>System.ANDROID_ID</em>, though these methods are now deprecated). The “detection” often relies on this returning <em>null</em> when it is read inside an emulator. With this said, below is a normal emulator detection snippet;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);</span><br><span class="line">if (android_id == null) &#123;</span><br><span class="line">  // This was run inside an emulator, don&#x27;t let the user continue!</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  // Oh ok, everythings normal, lets keep going</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Very simple, doesn’t do anything to complicated, just checks for <em>null</em> being returned. So how can we get this to not return <code>null</code> in an emulator? Easy – just a simple sqlite3 insert command!</p>
+<p>Open a shell to your emulator, and navigate to <code>/data/data/com.android.providers.settings/databases/</code>, open up the db in sqlite3 and insert a value using <code>androidid</code> as the key, like the following;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># cd /data/data/com.android.providers.settings/databases</span><br><span class="line"># sqlite3 settings.db</span><br><span class="line">SQLite version 3.6.22</span><br><span class="line">Enter &quot;.help&quot; for instructions</span><br><span class="line">Enter SQL statements terminated with a &quot;;&quot;</span><br><span class="line">sqlite&gt; insert into secure (&#x27;name&#x27;, &#x27;value&#x27; ) values (&#x27;android_id&#x27;,&#x27;deadbeef4badcafe&#x27;);</span><br><span class="line">sqlite&gt; .exit</span><br></pre></td></tr></table></figure>
+<p>That’s all you need to do. Now all programs that use that method for detecting if it is an emulator will be returned the value you’ve entered as the <code>android_id</code>.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&text=Detecting an emulator, and getting around detection"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&title=Detecting an emulator, and getting around detection"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&is_video=false&description=Detecting an emulator, and getting around detection"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Detecting an emulator, and getting around detection&body=Check out this article: https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&title=Detecting an emulator, and getting around detection"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&title=Detecting an emulator, and getting around detection"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&title=Detecting an emulator, and getting around detection"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&title=Detecting an emulator, and getting around detection"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&name=Detecting an emulator, and getting around detection&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2010/09/detecting-an-emulator-and-getting-around-them-it/&t=Detecting an emulator, and getting around detection"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

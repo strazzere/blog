@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Ah, so you want to make money fast and do little work, while charging a boat load of money? Well, welcome to the bandwagon! First, you need to throw together a hastily made scam product, something to">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cash in on Android - make &quot;stealth&quot; applications!">
+<meta property="og:url" content="https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="Ah, so you want to make money fast and do little work, while charging a boat load of money? Well, welcome to the bandwagon! First, you need to throw together a hastily made scam product, something to">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/08/android-money.jpg">
+<meta property="article:published_time" content="2009-08-27T23:16:11.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.088Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="android money">
+<meta property="article:tag" content="g1">
+<meta property="article:tag" content="android stealth">
+<meta property="article:tag" content="android.permission">
+<meta property="article:tag" content="mobistealth">
+<meta property="article:tag" content="mytouch">
+<meta property="article:tag" content="privacy concerns">
+<meta property="article:tag" content="sarcasm">
+<meta property="article:tag" content="stealth">
+<meta property="article:tag" content="vaporware">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/08/android-money.jpg">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Cash in on Android - make &#34;stealth&#34; applications!</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2009/08/gather-packets-from-your-android-without-arp-spoofing/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2009/07/google-voice/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&text=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&title=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&is_video=false&description=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cash in on Android - make &#34;stealth&#34; applications!&body=Check out this article: https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&title=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&title=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&title=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&title=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&name=Cash in on Android - make &#34;stealth&#34; applications!&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&t=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Cash in on Android - make &#34;stealth&#34; applications!
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2009-08-27T23:16:11.000Z" class="dt-published" itemprop="datePublished">2009-08-27</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/other/">other</a> › <a class="category-link" href="/categories/android/other/random/">random</a> › <a class="category-link" href="/categories/android/other/random/secure-code/">secure code</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android/" rel="tag">android</a>, <a class="p-category" href="/tags/android-money/" rel="tag">android money</a>, <a class="p-category" href="/tags/android-stealth/" rel="tag">android stealth</a>, <a class="p-category" href="/tags/android-permission/" rel="tag">android.permission</a>, <a class="p-category" href="/tags/g1/" rel="tag">g1</a>, <a class="p-category" href="/tags/mobistealth/" rel="tag">mobistealth</a>, <a class="p-category" href="/tags/mytouch/" rel="tag">mytouch</a>, <a class="p-category" href="/tags/privacy-concerns/" rel="tag">privacy concerns</a>, <a class="p-category" href="/tags/sarcasm/" rel="tag">sarcasm</a>, <a class="p-category" href="/tags/stealth/" rel="tag">stealth</a>, <a class="p-category" href="/tags/vaporware/" rel="tag">vaporware</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="http://173.230.150.16/blog/wp-content/uploads/2009/08/android-money.jpg" alt="Make money, money..." title="Easy cash with no work!"><br><sarcasm> Ah, so you want to make money fast and do little work, while charging a boat load of money? Well, welcome to the bandwagon! First, you need to throw together a hastily made <del>scam</del> product, something to slurp up all your phones information and let it be viewable from a website… Something that just uses all the android permissions you can wrap your mind around;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">android.permission.Access_Fine_location</span><br><span class="line">android.permission.Access_Network_State</span><br><span class="line">android.permission.Battery_Stats</span><br><span class="line">android.permission.Camera</span><br><span class="line">android.permission.Read_Calendar</span><br><span class="line">android.permission.Read_Contacts</span><br><span class="line">android.permission.Read_owner_Data</span><br><span class="line">android.permission.Read_Phone_State</span><br><span class="line">android.permission.Read_SMS</span><br><span class="line">android.permission.Receive_MMS</span><br><span class="line">android.permission.Receive_SMS</span><br></pre></td></tr></table></figure>
+<p>This is just a small list of “useful” things people seem to well, deem “useful” in knowing. Next set up a simple method to dump all this data onto the device and prepare it for transfer. <sarcasm>One would assume you’d encrypt this information and send it securely, though - that might take development time so why bother wasting your resources? </sarcasm> Hardcode values into your product for “securely” connecting to your server and have it dump information off.</p>
+<p>Next to make your claim of application being “stealth” be correct, change your manifest from:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>To</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;category android:name=&quot;android.intent.category.INFO&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>This makes the application not appear on the launcher, also known as the tray. People tend to associate this with “stealth”. <sarcasm> Most people know stealth equates to, no icon! Just because it still registers as an application under application management doesn’t mean people will find it! </sarcasm></p>
+<p>For your web page and server, simply chose a small host - like the one I use for my blog. Dirt cheap, plenty of space and plenty of bandwidth - it’s probably against the TOS to do such a thing, but who cares? Bluehost is only $6.95 a month - if you get <strong>one customer</strong> you could <strong>cover your server costs!</strong></p>
+<p>Next set up a simple web interface that displays this data being dumped onto the servers. That will let you cull the data for your users - what they’re going to be paying for of course. Next thing is to spiff up your web site and make it look flashy. Put things like “ONLY $99.99 PER YEAR”, because by adding “only” it somehow makes it seem like a deal. Then throw some banners saying “guaranteed” and “uptime certified” without references to what this actually means - it just makes it seem more legit. Obviously you should add some things stating to “protect children” or catch your “cheating spouse” because well, those sound like valid uses to such an application. Try to stay away from words like “over-protective”, “spying” or “snooping” as it may make a potential user realize the reasons they might <em>really</em> use this product. Another great thing to add to the website is pictures of phones which potentially will exist or haven’t come out yet. Just assume that all Android Software will be the same and all devices will work prior to testing on them, simple say they are supported. By supporting more phones, you look more important and appear to be trustworthy since you’ve claimed you phone works on Hero models. Most average people don’t have a Hero phone, if you have one, well – you must not be average! Oh, don’t forget to write up a quick and easy EULA, saying essentially:</p>
+<blockquote>
+<p>We’re not evil, we don’t sell your information, we just use it for you! If you have an issue with the functionality of our program, we’ll work to fix it. If we can’t fix it, we’ll give you a refund. Don’t do this if it’s illegal. If you do something illegal - then it’s your fault, not ours.</p>
+</blockquote>
+<p>While this obviously isn’t much of a EULA, you can’t say you didn’t say so! Besides, this type of “guarantee” is perfect and bulletproof. If there is a bug - then you fix it, if it’s simply “I don’t like this product”, well - sorry? That’s not a <em>problem</em> with the <em>software</em>, that’s a problem with your outlook of our software… Silly customer!</p>
+<p>There you go, that’s a pretty straight forward tutorial on how to make tons of cash with an everyday program that does little to no work. Simply market this tool to people of ages 16 to 30, and you’ll get plenty of people who won’t read your “fine print” (all two sentences of it) and you’ll cash in! Last but not least, once you grab the money - you haven’t guarenteed functionality beyond seven days of people purchase, so take your money, close your server and go to your next <del>scam</del> application</sarcasm></p>
+<p><em>Note: I hope people could detect my sarcasm tags…</em></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&text=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&title=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&is_video=false&description=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cash in on Android - make &#34;stealth&#34; applications!&body=Check out this article: https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&title=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&title=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&title=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&title=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&name=Cash in on Android - make &#34;stealth&#34; applications!&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/08/cash-in-on-android-make-stealth-applications/&t=Cash in on Android - make &#34;stealth&#34; applications!"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

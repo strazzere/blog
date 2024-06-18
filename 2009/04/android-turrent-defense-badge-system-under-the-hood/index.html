@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="A recent addition to the android market has been ATD, Android Turret Defense. This is a Plox-like game, though it has the “maze” strategy element combined in it. Strangely – it reminds me of a few old">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Turrent Defense &quot;Badge System&quot; under the hood">
+<meta property="og:url" content="https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/index.html">
+<meta property="og:site_name" content="Strazzere">
+<meta property="og:description" content="A recent addition to the android market has been ATD, Android Turret Defense. This is a Plox-like game, though it has the “maze” strategy element combined in it. Strangely – it reminds me of a few old">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/04/mad_v101_20090328_runmode-200x300.png">
+<meta property="article:published_time" content="2009-04-03T21:48:54.000Z">
+<meta property="article:modified_time" content="2024-06-18T21:20:59.086Z">
+<meta property="article:author" content="Tim Strazzere">
+<meta property="article:tag" content="dex">
+<meta property="article:tag" content="dex bytecode">
+<meta property="article:tag" content="reverse engineering">
+<meta property="article:tag" content="android os">
+<meta property="article:tag" content="g1">
+<meta property="article:tag" content="android turrent defense">
+<meta property="article:tag" content="atd">
+<meta property="article:tag" content="badge">
+<meta property="article:tag" content="badge system">
+<meta property="article:tag" content="bytecode">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://173.230.150.16/blog/wp-content/uploads/2009/04/mad_v101_20090328_runmode-200x300.png">
+<meta name="twitter:creator" content="@timstrazz">
+    
+    
+      
+        
+          
+            <link rel="shortcut icon" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=48">
+          
+        
+      
+      
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=192" sizes="192x192">
+          
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/6a4b43066d19111e850cb14b45eacf93?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Android Turrent Defense &#34;Badge System&#34; under the hood</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166943540-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166943540-1');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Strazzere" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2009/04/overclock-and-underclocking-your-g1/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2009/03/compiling-cupcake-with-some-changes-for-the-g1-htc-dream/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&text=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&title=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&is_video=false&description=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android Turrent Defense &#34;Badge System&#34; under the hood&body=Check out this article: https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&title=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&title=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&title=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&title=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&name=Android Turrent Defense &#34;Badge System&#34; under the hood&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&t=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Android Turrent Defense &#34;Badge System&#34; under the hood
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Tim Strazzere</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2009-04-03T21:48:54.000Z" class="dt-published" itemprop="datePublished">2009-04-03</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a> › <a class="category-link" href="/categories/android/coding/">coding</a> › <a class="category-link" href="/categories/android/coding/reverse-engineering/">reverse engineering</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/android-os/" rel="tag">android os</a>, <a class="p-category" href="/tags/android-turrent-defense/" rel="tag">android turrent defense</a>, <a class="p-category" href="/tags/atd/" rel="tag">atd</a>, <a class="p-category" href="/tags/badge/" rel="tag">badge</a>, <a class="p-category" href="/tags/badge-system/" rel="tag">badge system</a>, <a class="p-category" href="/tags/bytecode/" rel="tag">bytecode</a>, <a class="p-category" href="/tags/dex/" rel="tag">dex</a>, <a class="p-category" href="/tags/dex-bytecode/" rel="tag">dex bytecode</a>, <a class="p-category" href="/tags/g1/" rel="tag">g1</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="http://173.230.150.16/blog/wp-content/uploads/2009/04/mad_v101_20090328_runmode-200x300.png" alt="Pew pew! Take that green circles!" title="Pew pew! Take that green circles!"><br>A recent addition to the android market has been ATD, Android Turret Defense. This is a Plox-like game, though it has the “maze” strategy element combined in it. Strangely – it reminds me of a few old maps I used to play with friend for starcraft… Anyway I finally got around to beating it which isn’t too difficult once you get the hang of placing turrets and a get a decent strategy. At the end it awards you with a “badge code” – not sure exactly what the author intends to use this for, but I decided to take a look at how these are created. I was interested in how they where generated, and to see if people could easily replicate them, or if there would be any deterrents to keep people from just sharing them. Again, this is possibly completely useless information, since we have no idea <em>what</em> these codes will be used for. The <em>could</em> be used for tournaments, downloads, prizes - or maybe to just “give” you an image of a badge… As of right now we just don’t know.<br>Below is a dump of the function we will be analyzing with my comments in it (highlighted green), they should be pretty easy to follow:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line">.method private createBadgeCode()Ljava/lang/String;</span><br><span class="line">// Date now = New Date();</span><br><span class="line">new-instance v2,java/util/Date</span><br><span class="line">invoke-direct &#123;v2&#125;,java/util/Date/ ; ()V</span><br><span class="line"></span><br><span class="line">// SimpleDateFormat dateFormat = new SimpleDateFormat(“yyMMddhhmm”);</span><br><span class="line">new-instance v5,java/text/SimpleDateFormat</span><br><span class="line">const-string v7,”yyMMddhhmm”</span><br><span class="line">invoke-direct &#123;v5,v7&#125;,java/text/SimpleDateFormat/ ; (Ljava/lang/String;)V</span><br><span class="line"></span><br><span class="line">// StringBuilder raw = new StringBuilder();</span><br><span class="line">new-instance v7,java/lang/StringBuilder</span><br><span class="line">invoke-direct &#123;v7&#125;,java/lang/StringBuilder/ ; ()V</span><br><span class="line"></span><br><span class="line">// raw.append(dateFormat.format(now));</span><br><span class="line">invoke-virtual &#123;v5,v2&#125;,java/text/SimpleDateFormat/format ; format(Ljava/util/Date;)Ljava/lang/String;</span><br><span class="line">move-result-object v8</span><br><span class="line">invoke-virtual &#123;v7,v8&#125;,java/lang/StringBuilder/append ; append(Ljava/lang/String;)Ljava/lang/StringBuilder;</span><br><span class="line">move-result-object v7</span><br><span class="line"></span><br><span class="line">// raw.append(difficulty);</span><br><span class="line">iget v8,v12,tx/games/atd_world.difficulty I</span><br><span class="line">invoke-virtual &#123;v7,v8&#125;,java/lang/StringBuilder/append ; append(I)Ljava/lang/StringBuilder;</span><br><span class="line">move-result-object v7</span><br><span class="line"></span><br><span class="line">// raw.append(“tensaix2j”);</span><br><span class="line">const-string v8,”tensaix2j”</span><br><span class="line">invoke-virtual &#123;v7,v8&#125;,java/lang/StringBuilder/append ; append(Ljava/lang/String;)Ljava/lang/StringBuilder;</span><br><span class="line">move-result-object v7</span><br><span class="line"></span><br><span class="line">// Bytes[] rawbytes = raw.toString.getBytes;</span><br><span class="line">invoke-virtual &#123;v7&#125;,java/lang/StringBuilder/toString ; toString()Ljava/lang/String;</span><br><span class="line">move-result-object v4</span><br><span class="line">invoke-virtual &#123;v4&#125;,java/lang/String/getBytes ; getBytes()[B</span><br><span class="line">move-result-object v0</span><br><span class="line"></span><br><span class="line">/* Below code refined;</span><br><span class="line">int sum = 0;</span><br><span class="line"></span><br><span class="line">for(int i = 0; i &lt; rawbytes.length(); i++) sum += rawbytes[i]; */</span><br><span class="line">const/4 v6,0</span><br><span class="line">const/4 v3,0</span><br><span class="line">l3c1e:</span><br><span class="line">// length = rawbytes.length();</span><br><span class="line">array-length v7</span><br><span class="line"></span><br><span class="line">// if( v3 &gt; v7 ) goto: l3c30</span><br><span class="line">if-ge v3,v7,l3c30</span><br><span class="line"></span><br><span class="line">// v7 = rawbytes(v0);</span><br><span class="line">aget-byte v7,v0,v3</span><br><span class="line"></span><br><span class="line">// v6 += v7;</span><br><span class="line">add-int/2addr v6,v7</span><br><span class="line"></span><br><span class="line">// v3 ++;</span><br><span class="line">add-int/lit8 v3,v3,1</span><br><span class="line">goto l3c1e</span><br><span class="line"></span><br><span class="line">l3c30:</span><br><span class="line"></span><br><span class="line">// StringBuilder badge = new StringBuilder();</span><br><span class="line">new-instance v7,java/lang/StringBuilder</span><br><span class="line">invoke-direct &#123;v7&#125;,java/lang/StringBuilder/ ; ()V</span><br><span class="line"></span><br><span class="line">// v8 = Math.random();</span><br><span class="line">invoke-static &#123;&#125;,java/lang/Math/random ; random()D</span><br><span class="line">nop</span><br><span class="line">move-result-wide v8</span><br><span class="line"></span><br><span class="line">// v10 = 4652007308841189376;</span><br><span class="line">const-wide v10,4652007308841189376 ; 0x408f400000000000</span><br><span class="line"></span><br><span class="line">// v8 = Math.round(v8*v10);</span><br><span class="line">mul-double/2addr v8,v10</span><br><span class="line"></span><br><span class="line">// I thought it only took one variable??</span><br><span class="line">invoke-static &#123;v8,v9&#125;,java/lang/Math/round ; round(D)J</span><br><span class="line">move-result-wide v8</span><br><span class="line"></span><br><span class="line">// v10 = 1000</span><br><span class="line">const-wide/16 v10,1000</span><br><span class="line"></span><br><span class="line">// v8 += v10;</span><br><span class="line">add-long/2addr v8,v10</span><br><span class="line"></span><br><span class="line">// badge.append(v8);</span><br><span class="line">invoke-virtual &#123;v7,v8,v9&#125;,java/lang/StringBuilder/append ; append(J)Ljava/lang/StringBuilder;</span><br><span class="line">move-result-object v7</span><br><span class="line"></span><br><span class="line">// badge.append(dateFormat.format(now));</span><br><span class="line">invoke-virtual &#123;v5,v2&#125;,java/text/SimpleDateFormat/format ; format(Ljava/util/Date;)Ljava/lang/String;</span><br><span class="line">move-result-object v8</span><br><span class="line">invoke-virtual &#123;v7,v8&#125;,java/lang/StringBuilder/append ; append(Ljava/lang/String;)Ljava/lang/StringBuilder;</span><br><span class="line">move-result-object v7</span><br><span class="line"></span><br><span class="line">// badge.append(difficulty);</span><br><span class="line">iget v8,v12,tx/games/atd_world.difficulty I</span><br><span class="line">invoke-virtual &#123;v7,v8&#125;,java/lang/StringBuilder/append ; append(I)Ljava/lang/StringBuilder;</span><br><span class="line">move-result-object v7</span><br><span class="line"></span><br><span class="line">// badge.append(sum);</span><br><span class="line">invoke-virtual &#123;v7,v6&#125;,java/lang/StringBuilder/append ; append(I)Ljava/lang/StringBuilder;</span><br><span class="line">move-result-object v7</span><br><span class="line"></span><br><span class="line">// return badge.toString();</span><br><span class="line">invoke-virtual &#123;v7&#125;,java/lang/StringBuilder/toString ; toString()Ljava/lang/String;</span><br><span class="line">move-result-object v1</span><br><span class="line">return-object v1</span><br><span class="line">.end method</span><br></pre></td></tr></table></figure>
+<p>An example of the output of this function is;<br><em>1310090403121501473</em></p>
+<p>Broken down the output looks like this;<br><strong>1310</strong>090403121501473, (round(random * const)+1000<br>1310<strong>0904031215</strong>01473, Date in yyMMddhhmm format.<br>13100904031215<strong>0</strong>1473, “0” Difficulty, Noob &#x3D; 0, Normal &#x3D; 1, Pro &#x3D; 3<br>131009040312150<strong>1473</strong>, sum of bytes (date + difficulty + “tensaix2”)</p>
+<p>I’ll post more later if the “badge system” is every finished and released. Hopefully this serves as a decent example on how to reverse simple android programs… Enjoy!</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&text=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&title=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&is_video=false&description=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android Turrent Defense &#34;Badge System&#34; under the hood&body=Check out this article: https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&title=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&title=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&title=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&title=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&name=Android Turrent Defense &#34;Badge System&#34; under the hood&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://strazzere.com/2009/04/android-turrent-defense-badge-system-under-the-hood/&t=Android Turrent Defense &#34;Badge System&#34; under the hood"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2008-2024
+    Tim Strazzere
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/strazzere">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
