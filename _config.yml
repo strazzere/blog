@@ -96,6 +96,15 @@ ignore:
 ## Themes: https://hexo.io/themes/
 theme: cactus
 
+feed:
+  # Generate both atom and rss2 feeds
+  type:
+    - atom
+    - rss2
+  path:
+    - atom.xml
+    - rss2.xml
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
