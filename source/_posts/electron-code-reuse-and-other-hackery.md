@@ -19,7 +19,9 @@ After a few years of dealing with a rather large [Electron](https://www.electron
 `Electron` gives us a method, [app.isPackaged](https://www.electronjs.org/docs/latest/api/app#appispackaged-readonly) through it's main API, however this isn't useful to use unless we want to import `electron` into all of our code. Specifically it let's us determine
 
 ```
-A boolean property that returns true if the app is packaged, false otherwise. For many apps, this property can be used to distinguish development and production environments.
+A boolean property that returns true if the app is packaged,
+false otherwise. For many apps, this property can be used to
+distinguish development and production environments.
 ```
 
 ## Are we in electron or not?
