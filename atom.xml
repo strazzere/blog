@@ -6,7 +6,7 @@
   <link href="https://strazzere.com/atom.xml" rel="self"/>
   
   <link href="https://strazzere.com/"/>
-  <updated>2024-06-18T22:26:37.104Z</updated>
+  <updated>2025-02-06T20:16:02.091Z</updated>
   <id>https://strazzere.com/</id>
   
   <author>
@@ -15,6 +15,61 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Electron code reuse, and other hackery</title>
+    <link href="https://strazzere.com/2025/02/electron-code-reuse-and-other-hackery/"/>
+    <id>https://strazzere.com/2025/02/electron-code-reuse-and-other-hackery/</id>
+    <published>2025-02-06T18:34:57.000Z</published>
+    <updated>2025-02-06T20:16:02.091Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Electron-and-local-environments"><a href="#Electron-and-local-environments" class="headerlink" title="Electron and local environments"></a>Electron and local environments</h1><p>After a few years of dealing with a rather large <a href="https://www.electronjs.org/">Electron</a> application. I’ve found a few different ways to approach things – as with anyone dealing with large bohemoth codebases, it feels natural to carve it up and chunk out the code into more managable pieces. This leads us from having one large, insanely unplanned renderer, to having “nicer” (though not great) smaller packages which can be reused across the renderer, the main process and even outside in other non-electron focused services. This can lead to interesting problems though, such as making the code aware (without caring) where it is being executed. The <code>electron</code> package itself tends to abstract these things away whether the code is run on Windows&#x2F;MacOS&#x2F;Linux - however what about when you aren’t utilizing the target code <em>within</em> <code>Electron</code> anymore?</p><h2 id="isPackaged"><a href="#isPackaged" class="headerlink" title="isPackaged"></a>isPackaged</h2><p><code>Electron</code> gives us a method, <a href="https://www.electronjs.org/docs/latest/api/app#appispackaged-readonly">app.isPackaged</a> through it’s main API, however this isn’t useful to use unless we want to import <code>electron</code> into all of our code. Specifically it let’s us determine</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A boolean property that returns true if the app is packaged, false otherwise. For many apps, this property can be used to distinguish development and production environments.</span><br></pre></td></tr></table></figure><h2 id="Are-we-in-electron-or-not"><a href="#Are-we-in-electron-or-not" class="headerlink" title="Are we in electron or not?"></a>Are we in electron or not?</h2><p>There are a few <a href="https://www.electronjs.org/docs/latest/api/process">process</a> properties which are interesting in Electron. Specifically <a href="https://www.electronjs.org/docs/latest/api/process">process.resourcePath</a> and <a href="https://www.electronjs.org/docs/latest/api/process#processtype-readonly">process.type</a>. These are both extremely interesting to me, as often in code I need to get an asset file - though the path for such a file will change depending on if it is packaged, running as development <code>electron</code> or as <code>node-js</code>.</p><p>So, what we want to do, is check to see if <code>process.resourcesPath</code> returns anything - which it will not in <code>node.js</code>. If it does return something, we want to check if it returns something <em>with</em> <code>app.asar</code> inside it. This would mean (based on how we bundle things for distribution) that <code>electron</code> is bundled. This does mean, we will need to ignore expected <code>typescript</code> errors, as the type checking doesn’t expect <code>resourcePath</code> to ever exist on the <code>process</code> object. This lands us to this type of statement;</p><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @@ts-expect-error</span></span><br><span class="line"><span class="keyword">const</span> isPackaged = process?.<span class="property">resourcesPath</span></span><br><span class="line">  ? fs.<span class="title function_">pathExistsSync</span>(path.<span class="title function_">join</span>(process.<span class="property">resourcesPath</span>, <span class="string">&quot;app.asar&quot;</span>))</span><br><span class="line">  : <span class="literal">false</span>;</span><br></pre></td></tr></table></figure><p>Now you can properly write functions to handle code differently based on whether the code is inside the <code>main</code> process, <code>renderer</code> or being run by some of your <code>node-js</code> code directly. Here is a prototype function I came up with which is semi-specific for my usecase, due to the local compile locations (<code>elect/</code> vs <code>elect/js</code> vs <code>src/cli/</code>);</p><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Handle getting the resource correctly based on if the electron</span></span><br><span class="line"><span class="comment"> * application is packages, main or renderer in dev mode.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; <span class="variable">fileName</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> &#123;<span class="type">string</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">getResourcePath</span>(<span class="params"><span class="attr">fileName</span>: <span class="built_in">string</span></span>): <span class="built_in">string</span> &#123;</span><br><span class="line">  <span class="comment">// @@ts-expect-error</span></span><br><span class="line">  <span class="keyword">const</span> isPackaged = process?.<span class="property">resourcesPath</span></span><br><span class="line">    ? fs.<span class="title function_">pathExistsSync</span>(path.<span class="title function_">join</span>(process.<span class="property">resourcesPath</span>, <span class="string">&quot;app.asar&quot;</span>))</span><br><span class="line">    : <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isPackaged) &#123;</span><br><span class="line">    <span class="comment">// @@ts-expect-error</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(</span><br><span class="line">      <span class="string">`isPackaged <span class="subst">$&#123;isPackaged&#125;</span> : <span class="subst">$&#123;path.join(process.resourcesPath, <span class="string">&quot;app.asar&quot;</span>)&#125;</span>`</span>,</span><br><span class="line">    );</span><br><span class="line">    <span class="comment">// @@ts-expect-error</span></span><br><span class="line">    <span class="keyword">return</span> path.<span class="title function_">join</span>(<span class="string">`<span class="subst">$&#123;process.resourcesPath&#125;</span>/app.asar/`</span>, fileName);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// renderer (type renderer) is run out of elect/</span></span><br><span class="line">  <span class="comment">// main (type browser) is run out of elect/js/</span></span><br><span class="line">  <span class="comment">// node (type undefined) is run out of src/cli/</span></span><br><span class="line">  <span class="comment">// @@ts-expect-error</span></span><br><span class="line">  <span class="keyword">const</span> isRenderer =</span><br><span class="line">    <span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">hasOwnProperty</span>.<span class="title function_">call</span>(process, <span class="string">&quot;type&quot;</span>) &amp;&amp;</span><br><span class="line">    process.<span class="property">type</span> === <span class="string">&quot;renderer&quot;</span>;</span><br><span class="line">  <span class="keyword">return</span> path.<span class="title function_">join</span>(</span><br><span class="line">    isRenderer ? <span class="string">`<span class="subst">$&#123;__dirname&#125;</span>/../`</span> : <span class="string">`<span class="subst">$&#123;__dirname&#125;</span>/../../`</span>,</span><br><span class="line">    fileName,</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Electron-and-local-environments&quot;&gt;&lt;a href=&quot;#Electron-and-local-environments&quot; class=&quot;headerlink&quot; title=&quot;Electron and local environment</summary>
+      
+    
+    
+    
+    <category term="electron" scheme="https://strazzere.com/categories/electron/"/>
+    
+    <category term="typescript" scheme="https://strazzere.com/categories/electron/typescript/"/>
+    
+    
+    <category term="typescript" scheme="https://strazzere.com/tags/typescript/"/>
+    
+    <category term="electron" scheme="https://strazzere.com/tags/electron/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Adventures in mTLS with yubico - forward looking for cac integrations</title>
+    <link href="https://strazzere.com/2024/08/adventures-in-mTLS-with-yubico-forward-looking-for-cac-integrations/"/>
+    <id>https://strazzere.com/2024/08/adventures-in-mTLS-with-yubico-forward-looking-for-cac-integrations/</id>
+    <published>2024-08-16T16:34:57.000Z</published>
+    <updated>2024-08-19T15:50:17.492Z</updated>
+    
+    
+    
+    
+    <category term="aws" scheme="https://strazzere.com/categories/aws/"/>
+    
+    <category term="cac" scheme="https://strazzere.com/categories/aws/cac/"/>
+    
+    
+    <category term="aws" scheme="https://strazzere.com/tags/aws/"/>
+    
+    <category term="yubico" scheme="https://strazzere.com/tags/yubico/"/>
+    
+    <category term="cac" scheme="https://strazzere.com/tags/cac/"/>
+    
+    <category term="nginx" scheme="https://strazzere.com/tags/nginx/"/>
+    
+    <category term="mtls" scheme="https://strazzere.com/tags/mtls/"/>
+    
+  </entry>
   
   <entry>
     <title>frida-stack, making life a bit nicer while reversing unknown issues</title>
@@ -621,92 +676,6 @@
     <category term="presentation" scheme="https://strazzere.com/tags/presentation/"/>
     
     <category term="reverse engineering" scheme="https://strazzere.com/tags/reverse-engineering/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mobile Security Meetup, DexTemplate and smali-mode!</title>
-    <link href="https://strazzere.com/2012/07/mobile-security-meetup-dextemplate-and-smali-mode/"/>
-    <id>https://strazzere.com/2012/07/mobile-security-meetup-dextemplate-and-smali-mode/</id>
-    <published>2012-07-12T05:03:42.000Z</published>
-    <updated>2024-06-18T21:20:59.093Z</updated>
-    
-    <content type="html"><![CDATA[<p>Tonight there was a great meet up at the Lookout HQ, <a href="http://www.meetup.com/Mobile-Security-and-Privacy/">Mobile Security and Privacy</a> - got to meet a bunch of really smart mobile developers. The topic at hand was one close to me, reverse engineering Android applications. The concept was to show developers how easy it is to do and to help them understand how an attacker might see their code. Along with showcasing the normal tools people use in their day to day lives one of my coworkers, Emil, gave a great little presentation on the overview of how reversing is done for Android. After the demonstration, Emil had some prepared <a href="http://www.baksma.li/meetup/">crackmes</a> for people to try, most of the engineers did surprisingly well for not having reversed anything before!</p><p>After talking with a few people who where asking about reversing, I completely forgot that I’ve never really mentioned <a href="http://www.sweetscape.com/010editor/">010 Editor</a>. This is by far one of the best hex editors I’ve ever used, with an excellent ability to use templates. One of the best parts is, a little over half a year ago, they came out with a fully native OSX client. On top of that Jon Larimer has created a DEX template for it available on his <a href="https://github.com/jlarimer/android-stuff/blob/master/DEXTemplate.bt">github</a>. This is definitely a great way to visualize a dex file and help look for anomalies in them.</p><p>Recently I’ve actually submitted some pull requests which Jon has accepted to better parse the dex files. They should be able to parse the latest dex files generated by the jellybean toolkit and even handle some “oddities” that I’ll be releasing at my BlackHat 2012 talk.</p><p>Along my route for completing my <a href="https://www.blackhat.com/html/bh-us-12/bh-us-12-briefings.html#Strazzere">BlackHat talk, Dex Education: Practicing Safe Dex</a>, I finally updated the smali mode for emacs. It’s available on my <a href="https://github.com/strazzere/Emacs-smali/">github</a> page. It should have color parsing for just about all the elements available inside a smali file - along with the newer jumbo opcodes.</p><p>Around the same time as my presentation at BlackHat, I’ll be posting the slides and proof of concepts to my github. So check back soon for some interesting way to break (and fix) disassembly&#x2F;decompilation tools for Android.</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Tonight there was a great meet up at the Lookout HQ, &lt;a href=&quot;http://www.meetup.com/Mobile-Security-and-Privacy/&quot;&gt;Mobile Security and Pri</summary>
-      
-    
-    
-    
-    <category term="android" scheme="https://strazzere.com/categories/android/"/>
-    
-    <category term="reverse engineering" scheme="https://strazzere.com/categories/android/reverse-engineering/"/>
-    
-    
-    <category term="android" scheme="https://strazzere.com/tags/android/"/>
-    
-    <category term="blackhat 2012" scheme="https://strazzere.com/tags/blackhat-2012/"/>
-    
-    <category term="dalvik" scheme="https://strazzere.com/tags/dalvik/"/>
-    
-    <category term="dex" scheme="https://strazzere.com/tags/dex/"/>
-    
-    <category term="reverse engineering" scheme="https://strazzere.com/tags/reverse-engineering/"/>
-    
-    <category term="emacs" scheme="https://strazzere.com/tags/emacs/"/>
-    
-    <category term="smali-mode" scheme="https://strazzere.com/tags/smali-mode/"/>
-    
-    <category term="010 Editor" scheme="https://strazzere.com/tags/010-Editor/"/>
-    
-    <category term="dex education" scheme="https://strazzere.com/tags/dex-education/"/>
-    
-    <category term="dextemplate" scheme="https://strazzere.com/tags/dextemplate/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Static decryption for Android LeNa.[b/c] using IDA Pro</title>
-    <link href="https://strazzere.com/2012/04/static-decryption-for-android-lena-bc/"/>
-    <id>https://strazzere.com/2012/04/static-decryption-for-android-lena-bc/</id>
-    <published>2012-04-08T21:25:24.000Z</published>
-    <updated>2024-06-18T21:20:59.096Z</updated>
-    
-    <content type="html"><![CDATA[<p>Recently at Lookout we blogged about a newer flavor of <a href="http://blog.lookout.com/blog/2012/04/03/security-alert-new-variants-of-legacy-native-lena-identified/">Legacy Native (LeNa)</a>. This variant is extremely similar to the other ones we’ve found in the past and <a href="http://blog.lookout.com/blog/2011/10/20/security-alert-legacy-makes-a-another-appearance-on-android-market-meet-legacy-native-lena/">blogged about in October of 2011</a>, the full tear down I wrote can be found in <a href="http://blog.lookout.com/wp-content/uploads/2011/10/LeNa-Legacy-Native-Teardown_Lookout-Mobile-Security1.pdf">pdf form here</a>. The samples for both LeNa.b and LeNa.c have been added to the <a href="http://contagiominidump.blogspot.com/2012/03/android-dkfbootkit-aka-lenab.html">Contagio Mini Dump</a></p><p>While going through some samples I decided to throw together a quick IDC script for IDA Pro to help decrypt the commands and variables without executing the code. The decryption isn’t hard, in fact it actually ends up just being an XOR with 0xFF. Though if anyone hasn’t ever dealt with IDA Pro or ARM, it might look a bit confusing at first. Below is the decryption function commented from one of specific samples of LeNa;<br><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/04/decryption-function.png" alt="Simple XOR" title="LeNa Decryption Function"><br>The IDC script is really simple, the current version can be found <a href="https://github.com/strazzere/LeNa-Decryption-Script">on github</a> with the current version featured below;</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">/* LeNa-Decryption.idc</span><br><span class="line"> </span><br><span class="line">   Simple decryption script for the LeNa.b/.c variants.</span><br><span class="line"> </span><br><span class="line">   Designed for use on the elf binary that LeNa drops, it works by decrypting the</span><br><span class="line">   encrypted string and dropping the decrypted bytes as a comment where ever the</span><br><span class="line">   string&#x27;s pointer is used.</span><br><span class="line"> </span><br><span class="line">   The decryption is really easy (a MVNS), basically a xor to 0xFF</span><br><span class="line"> </span><br><span class="line">   Timothy Strazzere &lt;Tim.Strazzere@lookout.com&gt;</span><br><span class="line">   March 2012</span><br><span class="line">*/</span><br><span class="line"> </span><br><span class="line">#include &lt;idc.idc&gt;</span><br><span class="line"> </span><br><span class="line">static decrypt_string(void)</span><br><span class="line">&#123;</span><br><span class="line">    auto original_address, ptr, comment;</span><br><span class="line"> </span><br><span class="line">    // This is normally a pointer to a pointer, follow it</span><br><span class="line">    original_address = ptr = Dword(ScreenEA());</span><br><span class="line"> </span><br><span class="line">    // Make sure we retrieved a good address</span><br><span class="line">    if (ptr == BADADDR) &#123;</span><br><span class="line">       Message(&quot;Unable to find a actual encrypted string&#x27;s address!\n&quot;);</span><br><span class="line">       return;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    // XOR until we hit the null byte of the string</span><br><span class="line">    comment = &quot;&quot;;</span><br><span class="line">    while(Byte(ptr) != 0x00) &#123;</span><br><span class="line">        comment = comment + sprintf(&quot;%s&quot;, Byte(ptr) ^ 0xFF);</span><br><span class="line">        ptr++;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    // Drop a comment at the address we originally where pointing too</span><br><span class="line">    MakeRptCmt(original_address, &quot;Decrypted value:  &quot; + comment);</span><br><span class="line"> </span><br><span class="line">    // Drop a comment on all xrefs to this</span><br><span class="line">    auto xref = Dfirst(original_address);</span><br><span class="line">    while(xref != BADADDR) &#123;</span><br><span class="line">        MakeRptCmt(xref, &quot;Decrypted value: &quot; + comment);</span><br><span class="line"> xref = Dnext(original_address, xref);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    // Drop a message in the output window</span><br><span class="line">    Message(&quot;Decrypted string: %s\n&quot;, comment);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">static main(void) &#123;</span><br><span class="line">    // Set hotkey for decryption routine</span><br><span class="line">    if(AddHotkey(&#x27;/&#x27;, &quot;decrypt_string&quot;) != IDCHK_OK) &#123;</span><br><span class="line">        Message(&quot;Something went wrong with adding a hotkey for the decryption routine&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    Message(&quot;Hotkey added!\n&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>The script should be really easy to follow, I tried to comment it well enough. Essentially when you load the script it will bind the function for decrypting to the “&#x2F;“ key. Find the pointer to the encrypted data like below;<br><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/04/encrypted_pointer.png" alt="Highlighted pointer to the encrypted data" title="Highlighted pointer to the encrypted data"><br>Next just follow the pointer to it’s selection in the text section. Once the encrypted pointer is highlighted, simply hit the assigned hot-key “&#x2F;“ and let the script do it’s job. The script will dump the decrypted message to the output window and also add a comment next to the pointer as seen below;<br><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/04/decrypted-1.png"><br>The script also traverses back to all the cross references (xrefs) and will add a comment to all those spots where this variable is used.<br><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/04/decrypted-2.png" alt="The original usage in the decryption function" title="The original usage in the decryption function"><br><img src="http://www.strazzere.com/blog/wp-content/uploads/2012/04/decrypted-3.png" alt="The main use of the decrypted data in another function" title="The main use of the decrypted data in another function"><br>Nothing too fancy or complicated, though it was a nice way to get into IDC scripts for IDA Pro. Also it’s a good way to start segwaying people who may only have used baksmali or dex2jar into using IDA Pro for ARM reversing.</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Recently at Lookout we blogged about a newer flavor of &lt;a href=&quot;http://blog.lookout.com/blog/2012/04/03/security-alert-new-variants-of-le</summary>
-      
-    
-    
-    
-    <category term="android" scheme="https://strazzere.com/categories/android/"/>
-    
-    <category term="reverse engineering" scheme="https://strazzere.com/categories/android/reverse-engineering/"/>
-    
-    
-    <category term="android" scheme="https://strazzere.com/tags/android/"/>
-    
-    <category term="reverse engineering" scheme="https://strazzere.com/tags/reverse-engineering/"/>
-    
-    <category term="malware" scheme="https://strazzere.com/tags/malware/"/>
-    
-    <category term="IDA Pro" scheme="https://strazzere.com/tags/IDA-Pro/"/>
-    
-    <category term="decryption" scheme="https://strazzere.com/tags/decryption/"/>
-    
-    <category term="IDC" scheme="https://strazzere.com/tags/IDC/"/>
-    
-    <category term="legacy native" scheme="https://strazzere.com/tags/legacy-native/"/>
-    
-    <category term="LeNa" scheme="https://strazzere.com/tags/LeNa/"/>
-    
-    <category term="reversing" scheme="https://strazzere.com/tags/reversing/"/>
     
   </entry>
   
